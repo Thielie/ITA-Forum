@@ -16,4 +16,13 @@ echo -e "${GREEN}Visual Studio Code wurde installiert${NC}"
 echo -e "${YELLOW}Installiere Geany...${NC}"
 sudo apt install -y geany
 echo -e "${GREEN}Geany wurde installiert${NC}"
+echo -e "${YELLOW}Apache-Server wird installiert${NC}"
+sudo apt install apache2
+echo -e "${GREEN}Apache-Server wurde installiert${NC}"
+sudo ufw enable
+sudo ufw allow in "Apache"
+echo -e "${YELLOW}MySQL-Server wird installiert${NC}"
+sudo apt install mysql-server
+echo -e "${GREEN}MySQL-Server wurde installiert${NC}"
+
 echo "Installation abgeschlossen."
