@@ -4,18 +4,27 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+#Update von Ubuntu
 echo -e "${YELLOW}Aktualisiere das System...${NC}"
 sudo apt update && sudo apt upgrade -y
 echo -e "${GREEN}Das System wurde aktualisiert!${NC}"
+
+#Chromium Installation
 echo -e "${YELLOW}Installiere Chromium...${NC}"
 sudo apt install -y chromium-browser
 echo -e "${GREEN}Chromium wurde installiert${NC}"
+
+#Visual Studio Code Installation
 echo -e "${YELLOW}Installiere Visual Studio Code...${NC}"
 sudo snap install --classic code
 echo -e "${GREEN}Visual Studio Code wurde installiert${NC}"
+
+#Geany Installation
 echo -e "${YELLOW}Installiere Geany...${NC}"
 sudo apt install -y geany
 echo -e "${GREEN}Geany wurde installiert${NC}"
+
+#LAMP-Stack Installation
 echo -e "${YELLOW}Apache-Server wird installiert${NC}"
 sudo apt install apache2
 echo -e "${GREEN}Apache-Server wurde installiert${NC}"
@@ -33,4 +42,7 @@ echo -e "${GREEN}PHP-Paket wurde installiert${NC}"
 echo -e "${YELLOW}PHP-Paket wird nach Version überprüft${NC}"
 php -v
 echo -e "${GREEN}PHP-Paket wurde nach Version überprüft${NC}"
+
+#WordPress Installation
+
 echo "Installation abgeschlossen."
