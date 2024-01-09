@@ -63,9 +63,12 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 
 # WordPress Installation
 # WordPress-CLI herunterladen und installieren
-echo -e "${YELLOW}Der WordPress-Client wird installiert...${NC}"
-sudo apt-get install -y wp-cli
-echo -e "${GREEN}Der WordPress-Client wurde erfolgreich installiert!${NC}"
+echo -e "${YELLOW}Installiere wp-cli...${NC}"
+run_sudo apt-get install -y curl
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar
+sudo mv wp-cli.phar /usr/local/bin/wp
+echo -e "${GREEN}wp-cli wurde erfolgreich installiert!${NC}"
 
 # WordPress Konfiguration
 echo -e "${YELLOW}WordPress wird konfiguriert...${NC}"
