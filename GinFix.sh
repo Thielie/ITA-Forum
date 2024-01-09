@@ -137,6 +137,7 @@ echo -e "${YELLOW}Der neue Benutzer wird hinzugefügt...${NC}"
 wp user create $NEW_USER $NEW_USER_EMAIL --user_pass=$NEW_USER_PASSWORD --display_name=$NEW_USER --role=subscriber --path="${WP_INSTALL_DIR}"
 echo -e "${GREEN}Der neue Benutzer wurde erfolgreich hinzugefügt!${NC}"
 
+#PHPmyAdmin Installation
 # MySQL-Benutzer für phpMyAdmin konfigurieren
 DB_USER="cit"
 DB_PASSWORD="cit"
@@ -159,7 +160,5 @@ echo "Include /etc/phpmyadmin/apache.conf" | run_sudo tee -a $PHPMYADMIN_CONF_FI
 run_sudo a2enconf phpmyadmin
 run_sudo service apache2 restart
 echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt!${NC}"
-
-echo -e "${GREEN}Die gesamte Installation von phpMyAdmin mit dem Benutzer 'cit' wurde erfolgreich abgeschlossen!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
