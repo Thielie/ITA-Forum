@@ -27,7 +27,7 @@ echo -e "${GREEN}Geany wurde erfolgreich installiert!${NC}"
 #LAMP-Stack Installation#
 #Apache Server installation 
 echo -e "${YELLOW}Apache-Server wird installiert...${NC}"
-sudo apt install apache2
+sudo apt install -y apache2
 echo -e "${GREEN}Apache-Server wurde erfolgreich installiert!${NC}"
 sudo ufw enable
 sudo ufw allow in "Apache"
