@@ -108,7 +108,7 @@ echo -e "${GREEN}Berechtigungen für das ${WP_INSTALL_DIR} Verzeichnis wurden er
 echo -e "${YELLOW}Apache wird konfiguriert...${NC}"
 a2enmod rewrite
 service apache2 restart
-echo -e "${GREEN}Apache wurde erfolgreich konfiguriert!${NC}"
+echo -e "${GREEN}Apache wurde erfolgreich konfiguriert und neu gestartet!${NC}"
 
 # WordPress installieren
 echo -e "${YELLOW}WordPress wird installiert...${NC}"
