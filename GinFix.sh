@@ -56,22 +56,22 @@ echo -e "${GREEN}Der WordPress-Client wurde erfolgreich installiert!${NC}"
 # WordPress Konfiguration
 echo -e "${YELLOW}WordPress wird konfiguriert...${NC}"
 WP_VERSION="latest"
-WP_DB_NAME="wordpress_db"
-WP_DB_USER="wordpress_user"
-WP_DB_PASSWORD="your_password"
+WP_DB_NAME="wordpress"
+WP_DB_USER="root"
+WP_DB_PASSWORD=""
 WP_DB_HOST="localhost"
 WP_TABLE_PREFIX="wp_"
-WP_SITE_URL="http://your_domain.com"
+WP_SITE_URL="localhost"
 WP_ADMIN_USER="admin"
-WP_ADMIN_PASSWORD="admin_password"
+WP_ADMIN_PASSWORD="admin"
 WP_ADMIN_EMAIL="admin@example.com"
 echo -e "${GREEN}WordPress wurde erfolgreich konfiguriert!${NC}"
 
 # Neuer Benutzer Konfiguration
 echo -e "${YELLOW}Ein neuer Benutzer wird konfiguriert...${NC}"
-NEW_USER="new_user"
-NEW_USER_PASSWORD="new_user_password"
-NEW_USER_EMAIL="new_user@example.com"
+NEW_USER="cit"
+NEW_USER_PASSWORD="cit"
+NEW_USER_EMAIL="cit@example.com"
 echo -e "${GREEN}Der neue Benutzer wurde erfolgreich konfiguriert!${NC}"
 
 # Verzeichnis für WordPress-Installation
@@ -91,9 +91,9 @@ echo -e "${GREEN}WordPress wurde erfolgreich heruntergeladen und entpackt!${NC}"
 # WordPress-Konfigurationsdatei erstellen
 echo -e "${YELLOW}Eine WordPress-Konfigurationsdatei wird erstellt...${NC}"
 cp ${WP_INSTALL_DIR}/wp-config-sample.php ${WP_INSTALL_DIR}/wp-config.php
-sed -i "s/database_name_here/$WP_DB_NAME/" ${WP_INSTALL_DIR}/wp-config.php
-sed -i "s/username_here/$WP_DB_USER/" ${WP_INSTALL_DIR}/wp-config.php
-sed -i "s/password_here/$WP_DB_PASSWORD/" ${WP_INSTALL_DIR}/wp-config.php
+sed -i "s/wordpress/$WP_DB_NAME/" ${WP_INSTALL_DIR}/wp-config.php
+sed -i "s/cit/$WP_DB_USER/" ${WP_INSTALL_DIR}/wp-config.php
+sed -i "s/cit/$WP_DB_PASSWORD/" ${WP_INSTALL_DIR}/wp-config.php
 sed -i "s/localhost/$WP_DB_HOST/" ${WP_INSTALL_DIR}/wp-config.php
 sed -i "s/wp_/$WP_TABLE_PREFIX/" ${WP_INSTALL_DIR}/wp-config.php
 echo -e "${GREEN}Die WordPress-Konfigurationsdatei wurde erfolgreich erstellt!${NC}"
@@ -126,8 +126,8 @@ echo -e "${GREEN}WordPress wurde erfolgreich installiert!${NC}"
 #PhpMyAdmin installation und konfiguration'
 #Konfigurationsvariablen
 echo -e "${YELLOW}Konfigurationsvariablen werden erstellt...${NC}"
-DB_USER="ita"
-DB_USER_PASSWORD="ita"
+DB_USER="cit"
+DB_USER_PASSWORD="cit"
 PHPMYADMIN_DIR="/usr/share/phpmyadmin"
 APACHE_CONF_DIR="/etc/apache2/conf-available"
 APACHE_CONF_FILE="phpmyadmin.conf"
