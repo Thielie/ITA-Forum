@@ -25,4 +25,11 @@ echo -e "${YELLOW}MySQL-Server wird installiert${NC}"
 sudo apt install mysql-server
 echo -e "${GREEN}MySQL-Server wurde installiert${NC}"
 
+
+echo -e "${YELLOW}PHP-Paket wird installiert${NC}"
+sudo apt install php libapache2-mod-php php-mysql
+echo -e "${GREEN}PHP-Paket wurde installiert${NC}"
+echo -e "${YELLOW}PHP-Paket wird nach Version überprüft${NC}"
+php -v
+echo -e "${GREEN}PHP-Paket wurde nach Version überprüft${NC}"
 echo "Installation abgeschlossen."
