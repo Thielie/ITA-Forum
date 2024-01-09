@@ -137,39 +137,29 @@ echo -e "${YELLOW}Der neue Benutzer wird hinzugefügt...${NC}"
 wp user create $NEW_USER $NEW_USER_EMAIL --user_pass=$NEW_USER_PASSWORD --display_name=$NEW_USER --role=subscriber --path="${WP_INSTALL_DIR}"
 echo -e "${GREEN}Der neue Benutzer wurde erfolgreich hinzugefügt!${NC}"
 
-# PhpMyAdmin Installation und Konfiguration
-# Konfigurationsvariablen
-echo -e "${YELLOW}Konfigurationsvariablen werden erstellt...${NC}"
+# MySQL-Benutzer für phpMyAdmin konfigurieren
 DB_USER="cit"
-DB_USER_PASSWORD="cit"
-PHPMYADMIN_DIR="/usr/share/phpmyadmin"
-APACHE_CONF_DIR="/etc/apache2/conf-available"
-APACHE_CONF_FILE="phpmyadmin.conf"
-echo -e "${GREEN}Konfigurationsvariablen wurden erfolgreich erstellt!${NC}"
+DB_PASSWORD="cit"
+echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
+sudo mysql -u root -e "CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';"
+sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;"
+sudo mysql -u root -e "FLUSH PRIVILEGES;"
+echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
-# PhpMyAdmin installieren
-echo -e "${YELLOW}PhpMyAdmin wird installiert...${NC}"
-sudo apt-get install -y phpmyadmin
-echo -e "${GREEN}PhpMyAdmin wurde erfolgreich installiert!${NC}"
+# Installiere phpMyAdmin mit Apache2
+echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2...${NC}"
+run_sudo apt-get update
+run_sudo apt-get install -y phpmyadmin
+echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert!${NC}"
 
-# MySQL-Benutzer für PhpMyAdmin konfigurieren
-echo -e "${YELLOW}MySQL-Benutzer wird für PhpMyAdmin konfiguriert...${NC}"
-mysql -u root -p <<MYSQL_SCRIPT
-CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_USER_PASSWORD}';
-GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-MYSQL_SCRIPT
-echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für PhpMyAdmin konfiguriert!${NC}"
-
-# PhpMyAdmin Konfiguration für Apache erstellen
+# PhpMyAdmin-Konfiguration für Apache erstellen
+PHPMYADMIN_CONF_FILE="/etc/apache2/conf-available/phpmyadmin.conf"
 echo -e "${YELLOW}PhpMyAdmin Konfiguration wird für Apache erstellt...${NC}"
-sudo echo "Include $PHPMYADMIN_DIR/apache.conf" > "$APACHE_CONF_DIR/$APACHE_CONF_FILE"
-sudo a2enconf "$APACHE_CONF_FILE"
+echo "Include /etc/phpmyadmin/apache.conf" | run_sudo tee -a $PHPMYADMIN_CONF_FILE
+run_sudo a2enconf phpmyadmin
+run_sudo service apache2 restart
 echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt!${NC}"
 
-# Apache-Server neu starten
-echo -e "${YELLOW}Apache-Server wird neu gestartet...${NC}"
-sudo service apache2 restart
-echo -e "${GREEN}Apache-Server wurde erfolgreich neu gestartet!${NC}"
+echo -e "${GREEN}Die gesamte Installation von phpMyAdmin mit dem Benutzer 'cit' wurde erfolgreich abgeschlossen!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
