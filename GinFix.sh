@@ -111,14 +111,14 @@ sudo cp ${WP_INSTALL_DIR}/wp-config-sample.php ${WP_INSTALL_DIR}/wp-config.php
 sudo sed -i "s/wordpress/$WP_DB_NAME/" ${WP_INSTALL_DIR}/wp-config.php
 sudo sed -i "s/cit/$WP_DB_USER/" ${WP_INSTALL_DIR}/wp-config.php
 sudo sed -i "s/cit/$WP_DB_PASSWORD/" ${WP_INSTALL_DIR}/wp-config.php
-sudo sed -i "s/localhost/$WP_DB_HOST/" ${WP_INSTALL_DIR}/wp-config.php
+sudo sed -i "s/127.0.0.1/$WP_DB_HOST/" ${WP_INSTALL_DIR}/wp-config.php
 sudo sed -i "s/wp_/$WP_TABLE_PREFIX/" ${WP_INSTALL_DIR}/wp-config.php
 echo -e "${GREEN}Die WordPress-Konfigurationsdatei wurde erfolgreich erstellt!${NC}"
 
 # WordPress-Verzeichnis-Berechtigungen setzen
 echo -e "${YELLOW}Berechtigungen für das ${WP_INSTALL_DIR} Verzeichnis werden konfiguriert...${NC}"
 sudo chown -R www-data:www-data ${WP_INSTALL_DIR}
-sudo chmod -R 755 ${WP_INSTALL_DIR}
+sudo chmod -R 777 ${WP_INSTALL_DIR}
 echo -e "${GREEN}Berechtigungen für das ${WP_INSTALL_DIR} Verzeichnis wurden erfolgreich konfiguriert!${NC}"
 
 # Apache-Konfiguration
