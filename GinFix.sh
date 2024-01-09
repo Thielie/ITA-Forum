@@ -22,10 +22,11 @@ echo -e "${GREEN}Apache-Server wurde installiert${NC}"
 sudo ufw enable
 sudo ufw allow in "Apache"
 echo -e "${YELLOW}MySQL-Server wird installiert${NC}"
-sudo apt install mysql-server
-echo -e "${GREEN}MySQL-Server wurde installiert${NC}"
-
-
+mysql_root_password=""
+sudo apt install -y mysql-server
+sudo service mysql start
+sudo systemctl enable mysql
+echo "MySQL Server wurde erfolgreich installiert und gestartet."
 echo -e "${YELLOW}PHP-Paket wird installiert${NC}"
 sudo apt install php libapache2-mod-php php-mysql
 echo -e "${GREEN}PHP-Paket wurde installiert${NC}"
