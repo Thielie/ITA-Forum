@@ -123,6 +123,41 @@ echo -e "${GREEN}Der neue Benutzer wurde erfolgreich hinzugefügt!${NC}"
 # Erfolgsmeldung ausgeben
 echo -e "${GREEN}WordPress wurde erfolgreich installiert!${NC}"
 
+#PhpMyAdmin installation und konfiguration'
+#Konfigurationsvariablen
+echo -e "${YELLOW}Konfigurationsvariablen werden erstellt...${NC}"
+DB_USER="ita"
+DB_USER_PASSWORD="ita"
+PHPMYADMIN_DIR="/usr/share/phpmyadmin"
+APACHE_CONF_DIR="/etc/apache2/conf-available"
+APACHE_CONF_FILE="phpmyadmin.conf"
+echo -e "${GREEN}Konfigurationsvariablen wurden erfolgreich erstellt!${NC}"
+
+#PhpMyAdmin installieren
+echo -e "${YELLOW}PhpMyAdmin wird installiert...${NC}"
+apt-get install -y phpmyadmin
+echo -e "${GREEN}PhpMyAdmin wurde erfolgreich installiert!${NC}"
+
+#MySql-Benutzer für PhpMyAdmin konfigurieren
+echo -e "${YELLOW}MySql-Benutzer wird für PhpMyAdmin konfiguriert...${NC}"
+mysql -u root -p <<MYSQL_SCRIPT
+CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_USER_PASSWORD}';
+GRANT ALL PRIVILEGES ON . TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySql-Benutzer wurde erfolgreich für PhpMyAdmin konfiguriert!${NC}"
+
+#PhpMyAdmin Konfiguration für Apache erstellen
+echo -e "${YELLOW}PhpMyAdmin Konfiguration wird für Apache erstellt...${NC}"
+echo "Include $PHPMYADMIN_DIR/apache.conf" > "$APACHE_CONF_DIR/$APACHE_CONF_FILE"
+a2enconf "$APACHE_CONF_FILE"
+echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt!${NC}"
+
+#Apache-Server neu starten
+echo -e "${YELLOW}Apache-Server wird neu gestartet...${NC}"
+sudo service apache2 restart
+echo -e "${GREEN}Apache-Server wurde erfolgreich neu gestartet!${NC}"
+echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert und konfiguriert. MySQL-Benutzer 'ita' wurde erstellt!${NC}"
 
 echo "Installation abgeschlossen."
 
