@@ -5,9 +5,9 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Ihr sudo-Passwort
-echo -n "Geben Sie Ihr sudo-Passwort ein: "
-read -s PASSWORD
-echo
+#echo -n "Geben Sie Ihr sudo-Passwort ein: "
+#read -s PASSWORD
+#echo
 
 # Überprüfen, ob das Skript mit sudo gestartet wird
 #if [ "$EUID" -ne 0 ]
@@ -15,9 +15,9 @@ echo
 #  exit
 
 # Funktion, um sudo-Befehle mit vorher festgelegtem Passwort auszuführen
-run_sudo() {
-    echo $PASSWORD | sudo -S $@
-}
+#run_sudo() {
+ #   echo $PASSWORD | sudo -S $@
+#}
 
 # Update von Ubuntu
 echo -e "${YELLOW}Aktualisiere das System...${NC}"
