@@ -178,8 +178,7 @@ fi
 
 # Neuen Benutzer für WordPress erstellen
 echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
-sudo -u www-data wp user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR" --user_email="${WP_USER}@example.com"
+sudo -u www-data wp user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR" --user-email="$WP_USER@example.com"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
-
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
