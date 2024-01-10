@@ -157,7 +157,6 @@ sudo -u www-data wp core install \
     --admin_password="$WP_ADMIN_PASSWORD" \
     --admin_email="$WP_ADMIN_EMAIL" \
     --path="$WP_DIR" \
-    --prompt=dbhost,dbname,dbuser,dbpass \
     --debug
 
 # Überprüfen Sie, ob die Installation erfolgreich war
