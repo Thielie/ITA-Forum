@@ -117,15 +117,8 @@ WP_ADMIN_EMAIL="admin@example.com"
 WP_USER="cit"
 WP_USER_PASSWORD="cit"
 
-# Datenbank erstellen
-echo -e "${YELLOW}Datenbank wird erstellt...${NC}"
-sudo mysql -u root <<MYSQL_SCRIPT
-CREATE DATABASE IF NOT EXISTS ${DB_NAME};
-CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
-GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost';
-FLUSH PRIVILEGES;
-MYSQL_SCRIPT
-echo -e "${GREEN}Datenbank wurde erfolgreich erstellt!${NC}"
+# MySQL-Root-Passwort
+MYSQL_ROOT_PASSWORD=""
 
 # WordPress herunterladen und entpacken
 echo -e "${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}"
@@ -149,6 +142,16 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
+# MySQL-Datenbank erstellen
+echo -e "${YELLOW}MySQL-Datenbank wird erstellt...${NC}"
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+CREATE DATABASE IF NOT EXISTS ${DB_NAME};
+CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Datenbank wurde erfolgreich erstellt!${NC}"
+
 # WordPress-Konfigurationsdatei erstellen
 echo -e "${YELLOW}WordPress-Konfigurationsdatei wird erstellt...${NC}"
 sudo cp $WP_DIR/wp-config-sample.php $WP_DIR/wp-config.php
@@ -159,7 +162,7 @@ sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
 echo -e "${GREEN}WordPress-Konfigurationsdatei wurde erfolgreich erstellt!${NC}"
 
 # WordPress Installation mit Datenbankauswahl
-echo -e "${YELLOW}WordPress wird installiert...${NC}"
+echo -e "${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}"
 sudo -u www-data wp core install \
     --url="$WP_URL" \
     --title="$WP_TITLE" \
@@ -175,7 +178,7 @@ sudo -u www-data wp core install \
 
 # Überprüfen Sie, ob die Installation erfolgreich war
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}WordPress wurde erfolgreich über die Befehlszeile installiert!${NC}"
+    echo -e "${GREEN}WordPress wurde erfolgreich in der Datenbank '$DB_NAME' über die Befehlszeile installiert!${NC}"
 else
     echo -e "${RED}Fehler bei der WordPress-Installation.${NC}"
 fi
