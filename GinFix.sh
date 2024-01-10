@@ -20,6 +20,9 @@ NC='\033[0m' # No Color
  #   echo $PASSWORD | sudo -S $@
 #}
 
+# MySQL-Root-Passwort
+MYSQL_ROOT_PASSWORD="root"
+
 # Update von Ubuntu
 echo -e "${YELLOW}Aktualisiere das System...${NC}"
 sudo apt update && sudo apt upgrade -y
@@ -52,6 +55,8 @@ sudo ufw allow in "Apache"
 if ! command -v mysql &> /dev/null
 then
     echo -e "${YELLOW}MySQL-Server wird installiert...${NC}"
+    sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password ${MYSQL_ROOT_PASSWORD}"
+    sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD}"
     sudo apt-get install -y mysql-server
     sudo service mysql start
     sudo systemctl enable mysql
@@ -71,7 +76,7 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 DB_USER="cit"
 DB_PASSWORD="cit"
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
-sudo mysql -u root <<MYSQL_SCRIPT
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
@@ -118,7 +123,7 @@ WP_USER="cit"
 WP_USER_PASSWORD="cit"
 
 # MySQL-Root-Passwort
-MYSQL_ROOT_PASSWORD="cit"
+MYSQL_ROOT_PASSWORD="root"
 
 # WordPress herunterladen und entpacken
 echo -e "${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}"
