@@ -144,7 +144,8 @@ echo -e "${GREEN}WordPress-Konfigurationsdatei wurde erfolgreich erstellt!${NC}"
 # Apache-Konfiguration für mod_rewrite aktivieren
 echo -e "${YELLOW}Aktiviere mod_rewrite in Apache...${NC}"
 sudo a2enmod rewrite
-sudo service apache2 restart
+#sudo service apache2 restart
+sudo systemctl restart apache2
 echo -e "${GREEN}mod_rewrite wurde erfolgreich aktiviert und Apache wurde neu gestartet!${NC}"
 
 # WordPress über die Befehlszeile installieren
