@@ -182,3 +182,5 @@ sudo -u www-data wp user create $WP_USER $WP_USER_PASSWORD --role=author --user_
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
+
+echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
