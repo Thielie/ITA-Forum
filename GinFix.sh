@@ -173,8 +173,7 @@ sudo -u www-data wp core install \
     --dbhost="$DB_HOST" \
     --dbname="$DB_NAME" \
     --dbuser="$DB_USER" \
-    --dbpass="$DB_PASSWORD" \
-    --debug
+    --dbpass="$DB_PASSWORD"
 
 # Überprüfen Sie, ob die Installation erfolgreich war
 if [ $? -eq 0 ]; then
