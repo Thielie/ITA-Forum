@@ -64,7 +64,7 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 # WordPress Installation
 # WordPress-CLI herunterladen und installieren
 echo -e "${YELLOW}Installiere wp-cli...${NC}"
-run_sudo apt-get install -y curl
+sudo apt-get install -y curl
 sudo -u www-data curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 sudo chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
@@ -149,16 +149,16 @@ echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!$
 
 # Installiere phpMyAdmin mit Apache2
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2...${NC}"
-run_sudo apt-get update
-run_sudo apt-get install -y phpmyadmin
+sudo apt-get update
+sudo apt-get install -y phpmyadmin
 echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert!${NC}"
 
 # PhpMyAdmin-Konfiguration für Apache erstellen
 PHPMYADMIN_CONF_FILE="/etc/apache2/conf-available/phpmyadmin.conf"
 echo -e "${YELLOW}PhpMyAdmin Konfiguration wird für Apache erstellt...${NC}"
 echo "Include /etc/phpmyadmin/apache.conf" | run_sudo tee -a $PHPMYADMIN_CONF_FILE
-run_sudo a2enconf phpmyadmin
-run_sudo service apache2 restart
+sudo a2enconf phpmyadmin
+sudo service apache2 restart
 echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
