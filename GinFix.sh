@@ -73,8 +73,9 @@ FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
-# Installiere phpMyAdmin mit Apache2
-echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2...${NC}"
+# Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
+echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
+export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update
 sudo apt-get install -y phpmyadmin
 echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert!${NC}"
