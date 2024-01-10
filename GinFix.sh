@@ -4,22 +4,6 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Ihr sudo-Passwort
-#echo -n "Geben Sie Ihr sudo-Passwort ein: "
-#read -s PASSWORD
-#echo
-
-# Überprüfen, ob das Skript mit sudo gestartet wird
-#if [ "$EUID" -ne 0 ]
-#  then echo "Bitte führen Sie das Skript mit sudo-Rechten aus."
-#  exit
-#fi
-
-# Funktion, um sudo-Befehle mit vorher festgelegtem Passwort auszuführen
-#run_sudo() {
- #   echo $PASSWORD | sudo -S $@
-#}
-
 # MySQL-Root-Passwort
 MYSQL_ROOT_PASSWORD="root"
 
@@ -58,10 +42,18 @@ then
     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password ${MYSQL_ROOT_PASSWORD}"
     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD}"
     sudo apt-get install -y mysql-server
-    sudo service mysql start
+    sudo systemctl start mysql
     sudo systemctl enable mysql
-    echo -e "${GREEN}MySQL-Server wurde erfolgreich installiert!${NC}"
+    echo -e "${GREEN}MySQL-Server wurde erfolgreich installiert und gestartet!${NC}"
 fi
+
+# Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
+echo -e "${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}"
 
 # PHP-Paket wird installiert
 echo -e "${YELLOW}PHP-Paket wird installiert...${NC}"
