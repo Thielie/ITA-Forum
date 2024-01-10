@@ -117,6 +117,16 @@ WP_ADMIN_EMAIL="admin@example.com"
 WP_USER="cit"
 WP_USER_PASSWORD="cit"
 
+# Datenbank erstellen
+echo -e "${YELLOW}Datenbank wird erstellt...${NC}"
+sudo mysql -u root <<MYSQL_SCRIPT
+CREATE DATABASE IF NOT EXISTS ${DB_NAME};
+CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}Datenbank wurde erfolgreich erstellt!${NC}"
+
 # WordPress herunterladen und entpacken
 echo -e "${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}"
 wget -c https://wordpress.org/latest.tar.gz
