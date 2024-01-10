@@ -61,6 +61,32 @@ echo -e "${YELLOW}PHP-Paket wird nach der Version überprüft...${NC}"
 php -v
 echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 
+#PhpMyAdmin Installation
+# MySQL-Benutzer für phpMyAdmin konfigurieren
+DB_USER="cit"
+DB_PASSWORD="cit"
+echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
+sudo mysql -u root <<MYSQL_SCRIPT
+CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
+
+# Installiere phpMyAdmin mit Apache2
+echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2...${NC}"
+sudo apt-get update
+sudo apt-get install -y phpmyadmin
+echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert!${NC}"
+
+# PhpMyAdmin-Konfiguration für Apache erstellen
+PHPMYADMIN_CONF_FILE="/etc/apache2/conf-available/phpmyadmin.conf"
+echo -e "${YELLOW}PhpMyAdmin Konfiguration wird für Apache erstellt...${NC}"
+sudo ln -s /etc/phpmyadmin/apache.conf $PHPMYADMIN_CONF_FILE
+sudo a2enconf phpmyadmin
+sudo systemctl reload apache2.service
+echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt!${NC}"
+
 # WordPress Installation
 # Datenbankkonfiguration
 DB_NAME="wordpress"
@@ -120,29 +146,5 @@ echo -e "${GREEN}WordPress wurde erfolgreich über die Befehlszeile installiert!
 echo -e "${YELLOW}Neuen Benutzer wird erstellt...${NC}"
 sudo -u www-data wp user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
-
-#PHPmyAdmin Installation
-# MySQL-Benutzer für phpMyAdmin konfigurieren
-DB_USER="cit"
-DB_PASSWORD="cit"
-echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
-sudo mysql -u root -e "CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';"
-sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;"
-sudo mysql -u root -e "FLUSH PRIVILEGES;"
-echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
-
-# Installiere phpMyAdmin mit Apache2
-echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2...${NC}"
-sudo apt-get update
-sudo apt-get install -y phpmyadmin
-echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert!${NC}"
-
-# PhpMyAdmin-Konfiguration für Apache erstellen
-PHPMYADMIN_CONF_FILE="/etc/apache2/conf-available/phpmyadmin.conf"
-echo -e "${YELLOW}PhpMyAdmin Konfiguration wird für Apache erstellt...${NC}"
-sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
-sudo a2enconf phpmyadmin.conf
-sudo systemctl reload apache2.service
-echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
