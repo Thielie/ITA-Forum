@@ -149,17 +149,17 @@ FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Datenbank wurde erfolgreich erstellt!${NC}"
 
-# WordPress-Konfigurationsdatei erstellen
-echo -e "${YELLOW}WordPress-Konfigurationsdatei wird erstellt...${NC}"
+# WordPress Installation mit manuell erstellter wp-config.php
+echo -e "${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}"
+
+# Manuell wp-config.php erstellen
 sudo cp $WP_DIR/wp-config-sample.php $WP_DIR/wp-config.php
 sudo sed -i "s/database_name_here/$DB_NAME/" $WP_DIR/wp-config.php
 sudo sed -i "s/username_here/$DB_USER/" $WP_DIR/wp-config.php
 sudo sed -i "s/password_here/$DB_PASSWORD/" $WP_DIR/wp-config.php
 sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
-echo -e "${GREEN}WordPress-Konfigurationsdatei wurde erfolgreich erstellt!${NC}"
 
-# WordPress Installation mit Datenbankauswahl
-echo -e "${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}"
+# WordPress-Datenbank erstellen
 sudo -u www-data wp core install \
     --url="$WP_URL" \
     --title="$WP_TITLE" \
@@ -167,10 +167,7 @@ sudo -u www-data wp core install \
     --admin_password="$WP_ADMIN_PASSWORD" \
     --admin_email="$WP_ADMIN_EMAIL" \
     --path="$WP_DIR" \
-    --dbhost="$DB_HOST" \
-    --dbname="$DB_NAME" \
-    --dbuser="$DB_USER" \
-    --dbpass="$DB_PASSWORD"
+    --skip-email
 
 # Überprüfen Sie, ob die Installation erfolgreich war
 if [ $? -eq 0 ]; then
