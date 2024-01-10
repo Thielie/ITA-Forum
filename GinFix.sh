@@ -107,7 +107,7 @@ DB_HOST="localhost"
 
 # WordPress Konfiguration
 WP_DIR="/var/www/html"
-WP_URL="127.0.0.1"
+WP_URL="http://localhost"
 WP_TITLE="My WordPress Site"
 WP_ADMIN_USER="admin"
 WP_ADMIN_PASSWORD="admin"
@@ -127,15 +127,6 @@ sudo chmod -R 777 $WP_DIR
 rm latest.tar.gz
 echo -e "${GREEN}WordPress wurde erfolgreich heruntergeladen und entpackt!${NC}"
 
-# WordPress-Konfigurationsdatei erstellen
-echo -e "${YELLOW}WordPress-Konfigurationsdatei wird erstellt...${NC}"
-sudo cp $WP_DIR/wp-config-sample.php $WP_DIR/wp-config.php
-sudo sed -i "s/database_name_here/$DB_NAME/" $WP_DIR/wp-config.php
-sudo sed -i "s/username_here/$DB_USER/" $WP_DIR/wp-config.php
-sudo sed -i "s/password_here/$DB_PASSWORD/" $WP_DIR/wp-config.php
-sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
-echo -e "${GREEN}WordPress-Konfigurationsdatei wurde erfolgreich erstellt!${NC}"
-
 # Apache-Konfiguration für mod_rewrite aktivieren
 echo -e "${YELLOW}Aktiviere mod_rewrite in Apache...${NC}"
 sudo a2enmod rewrite
@@ -148,15 +139,25 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
-# Datenbankverbindung konfigurieren und WordPress installieren
-WP_PATH=$(which wp)
-sudo -u www-data $WP_PATH core install \
+# WordPress-Konfigurationsdatei erstellen
+echo -e "${YELLOW}WordPress-Konfigurationsdatei wird erstellt...${NC}"
+sudo cp $WP_DIR/wp-config-sample.php $WP_DIR/wp-config.php
+sudo sed -i "s/database_name_here/$DB_NAME/" $WP_DIR/wp-config.php
+sudo sed -i "s/username_here/$DB_USER/" $WP_DIR/wp-config.php
+sudo sed -i "s/password_here/$DB_PASSWORD/" $WP_DIR/wp-config.php
+sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
+echo -e "${GREEN}WordPress-Konfigurationsdatei wurde erfolgreich erstellt!${NC}"
+
+# WordPress Installation
+echo -e "${YELLOW}WordPress wird installiert...${NC}"
+sudo -u www-data wp core install \
     --url="$WP_URL" \
     --title="$WP_TITLE" \
     --admin_user="$WP_ADMIN_USER" \
     --admin_password="$WP_ADMIN_PASSWORD" \
     --admin_email="$WP_ADMIN_EMAIL" \
     --path="$WP_DIR" \
+    --prompt=dbhost,dbname,dbuser,dbpass \
     --debug
 
 # Überprüfen Sie, ob die Installation erfolgreich war
@@ -168,7 +169,7 @@ fi
 
 # Neuen Benutzer für WordPress erstellen
 echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
-sudo -u www-data $WP_PATH user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR"
+sudo -u www-data wp user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
