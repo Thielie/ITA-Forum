@@ -155,8 +155,16 @@ chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
 # WordPress über die Befehlszeile installieren
-echo -e "${YELLOW}WordPress wird über die Befehlszeile installiert...${NC}"
+# Datenbankverbindung konfigurieren
 WP_PATH=$(which wp)
+sudo -u www-data $WP_PATH config create \
+    --dbname="deine_datenbank_name" \
+    --dbuser="dein_datenbank_benutzer" \
+    --dbpass="dein_datenbank_passwort" \
+    --dbhost="localhost" \
+    --path="$WP_DIR"
+
+# WordPress-Installation durchführen
 sudo -u www-data $WP_PATH core install \
     --url="$WP_URL" \
     --title="$WP_TITLE" \
@@ -164,11 +172,11 @@ sudo -u www-data $WP_PATH core install \
     --admin_password="$WP_ADMIN_PASSWORD" \
     --admin_email="$WP_ADMIN_EMAIL" \
     --path="$WP_DIR"
+
 echo -e "${GREEN}WordPress wurde erfolgreich über die Befehlszeile installiert!${NC}"
 
 # Neuen Benutzer für WordPress erstellen
-echo -e "${YELLOW}Neuen Benutzer wird erstellt...${NC}"
-WP_PATH=$(which wp)
+echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
 sudo -u www-data $WP_PATH user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
