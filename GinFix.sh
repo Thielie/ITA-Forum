@@ -159,16 +159,24 @@ WP_PATH=$(which wp)
 WP_CONFIG="$WP_DIR/wp-config.php"
 
 # Überprüfen, ob wp-config.php bereits existiert
-if [ ! -f "$WP_CONFIG" ]; then
-    sudo -u www-data $WP_PATH config create \
-        --dbname="deine_datenbank_name" \
-        --dbuser="dein_datenbank_benutzer" \
-        --dbpass="dein_datenbank_passwort" \
-        --dbhost="127.0.0.1" \
-        --path="$WP_DIR"
-else
-    echo -e "${YELLOW}Die wp-config.php Datei existiert bereits.${NC}"
-fi
+check_config() {
+    if [ ! -f "$WP_CONFIG" ]; then
+        sudo -u www-data $WP_PATH config create \
+            --dbname="deine_datenbank_name" \
+            --dbuser="dein_datenbank_benutzer" \
+            --dbpass="dein_datenbank_passwort" \
+            --dbhost="127.0.0.1" \
+            --path="$WP_DIR"
+    else
+        echo -e "${YELLOW}Die wp-config.php Datei existiert bereits.${NC}"
+    fi
+}
+
+# Überprüfung im Hintergrund ausführen
+check_config &
+
+# Warten, bis die Überprüfung abgeschlossen ist
+wait
 
 # Ausgabe der Konfiguration zur Überprüfung
 echo -e "${YELLOW}Überprüfe die wp-config.php Datei:${NC}"
@@ -181,7 +189,8 @@ sudo -u www-data $WP_PATH core install \
     --admin_user="$WP_ADMIN_USER" \
     --admin_password="$WP_ADMIN_PASSWORD" \
     --admin_email="$WP_ADMIN_EMAIL" \
-    --path="$WP_DIR"
+    --path="$WP_DIR" \
+    --debug
 
 # Überprüfen Sie, ob die Installation erfolgreich war
 if [ $? -eq 0 ]; then
@@ -189,6 +198,10 @@ if [ $? -eq 0 ]; then
 else
     echo -e "${RED}Fehler bei der WordPress-Installation.${NC}"
 fi
+
+# Ausgabe von Debug-Informationen
+echo -e "${YELLOW}Debug-Informationen:${NC}"
+cat "$WP_DIR/wp-content/debug.log"
 
 # Neuen Benutzer für WordPress erstellen
 echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
