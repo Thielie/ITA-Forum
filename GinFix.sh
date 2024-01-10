@@ -140,9 +140,9 @@ echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert!${NC}"
 # PhpMyAdmin-Konfiguration für Apache erstellen
 PHPMYADMIN_CONF_FILE="/etc/apache2/conf-available/phpmyadmin.conf"
 echo -e "${YELLOW}PhpMyAdmin Konfiguration wird für Apache erstellt...${NC}"
-#echo "Include /etc/phpmyadmin/apache.conf" | run_sudo tee -a $PHPMYADMIN_CONF_FILE
-sudo a2enconf phpmyadmin
-sudo service apache2 restart
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+sudo a2enconf phpmyadmin.conf
+sudo systemctl reload apache2.service
 echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
