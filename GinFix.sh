@@ -113,6 +113,7 @@ WP_ADMIN_EMAIL="admin@example.com"
 # Neuen Benutzer für WordPress erstellen
 WP_USER="cit"
 WP_USER_PASSWORD="cit"
+WP_USER_EMAIL="cit@example.com"
 
 # MySQL-Root-Passwort
 MYSQL_ROOT_PASSWORD="root"
@@ -178,7 +179,7 @@ fi
 
 # Neuen Benutzer für WordPress erstellen
 echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
-sudo -u www-data wp user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR" '--user-email'="$WP_USER@example.com"
+sudo -u www-data wp user create $WP_USER --role=author --user_email="$WP_USER_EMAIL" --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
