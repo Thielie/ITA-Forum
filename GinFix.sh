@@ -76,6 +76,11 @@ echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!$
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
 export DEBIAN_FRONTEND=noninteractive
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $DB_PASSWORD"
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $DB_PASSWORD"
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $DB_PASSWORD"
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2"
 sudo apt-get update
 sudo apt-get install -y phpmyadmin
 echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert!${NC}"
