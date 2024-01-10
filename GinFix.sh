@@ -163,9 +163,9 @@ echo -e "${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}
 sudo -u www-data wp core install \
     --url="$WP_URL" \
     --title="$WP_TITLE" \
-    --admin-user="$WP_ADMIN_USER" \
-    --admin-password="$WP_ADMIN_PASSWORD" \
-    --admin-email="$WP_ADMIN_EMAIL" \
+    --admin_user="$WP_ADMIN_USER" \
+    --admin_password="$WP_ADMIN_PASSWORD" \
+    --admin_email="$WP_ADMIN_EMAIL" \
     --path="$WP_DIR" \
     --dbhost="$DB_HOST" \
     --dbname="$DB_NAME" \
