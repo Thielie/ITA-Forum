@@ -13,6 +13,7 @@ NC='\033[0m' # No Color
 #if [ "$EUID" -ne 0 ]
 #  then echo "Bitte führen Sie das Skript mit sudo-Rechten aus."
 #  exit
+#fi
 
 # Funktion, um sudo-Befehle mit vorher festgelegtem Passwort auszuführen
 #run_sudo() {
@@ -48,10 +49,14 @@ sudo ufw enable
 sudo ufw allow in "Apache"
 
 # MySQL-Server installation
-echo -e "${YELLOW}MySQL-Server wird installiert...${NC}"
-sudo apt install -y mysql-server
-sudo systemctl enable mysql
-echo -e "${GREEN}Der MySQL-Server wurde erfolgreich installiert!${NC}"
+if ! command -v mysql &> /dev/null
+then
+    echo -e "${YELLOW}MySQL-Server wird installiert...${NC}"
+    sudo apt-get install -y mysql-server
+    sudo service mysql start
+    sudo systemctl enable mysql
+    echo -e "${GREEN}MySQL-Server wurde erfolgreich installiert!${NC}"
+fi
 
 # PHP-Paket wird installiert
 echo -e "${YELLOW}PHP-Paket wird installiert...${NC}"
@@ -61,7 +66,7 @@ echo -e "${YELLOW}PHP-Paket wird nach der Version überprüft...${NC}"
 php -v
 echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 
-#PhpMyAdmin Installation
+# PhpMyAdmin Installation
 # MySQL-Benutzer für phpMyAdmin konfigurieren
 DB_USER="cit"
 DB_PASSWORD="cit"
@@ -111,16 +116,6 @@ WP_ADMIN_EMAIL="admin@example.com"
 # Neuen Benutzer für WordPress erstellen
 WP_USER="cit"
 WP_USER_PASSWORD="cit"
-
-# Überprüfen, ob der MySQL-Server installiert ist
-if ! command -v mysql &> /dev/null
-then
-    echo -e "${YELLOW}MySQL-Server wird installiert...${NC}"
-    sudo apt-get install -y mysql-server
-    sudo service mysql start
-    sudo systemctl enable mysql
-    echo -e "${GREEN}MySQL-Server wurde erfolgreich installiert!${NC}"
-fi
 
 # WordPress herunterladen und entpacken
 echo -e "${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}"
