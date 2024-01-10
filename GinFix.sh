@@ -118,7 +118,7 @@ WP_USER="cit"
 WP_USER_PASSWORD="cit"
 
 # MySQL-Root-Passwort
-MYSQL_ROOT_PASSWORD=""
+MYSQL_ROOT_PASSWORD="cit"
 
 # WordPress herunterladen und entpacken
 echo -e "${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}"
