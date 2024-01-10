@@ -98,7 +98,7 @@ echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt
 DB_NAME="wordpress"
 DB_USER="admin"
 DB_PASSWORD="admin"
-DB_HOST="localhost"
+DB_HOST="127.0.0.1"  # Änderung hier
 
 # WordPress Konfiguration
 WP_DIR="/var/www/html"
@@ -125,9 +125,9 @@ echo -e "${GREEN}WordPress wurde erfolgreich heruntergeladen und entpackt!${NC}"
 # WordPress-Konfigurationsdatei erstellen
 echo -e "${YELLOW}WordPress-Konfigurationsdatei wird erstellt...${NC}"
 sudo cp $WP_DIR/wp-config-sample.php $WP_DIR/wp-config.php
-sudo sed -i "s/wordpress/$DB_NAME/" $WP_DIR/wp-config.php
-sudo sed -i "s/admin/$DB_USER/" $WP_DIR/wp-config.php
-sudo sed -i "s/admin/$DB_PASSWORD/" $WP_DIR/wp-config.php
+sudo sed -i "s/database_name_here/$DB_NAME/" $WP_DIR/wp-config.php
+sudo sed -i "s/username_here/$DB_USER/" $WP_DIR/wp-config.php
+sudo sed -i "s/password_here/$DB_PASSWORD/" $WP_DIR/wp-config.php
 sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
 echo -e "${GREEN}WordPress-Konfigurationsdatei wurde erfolgreich erstellt!${NC}"
 
