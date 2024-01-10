@@ -98,7 +98,7 @@ echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt
 DB_NAME="wordpress"
 DB_USER="admin"
 DB_PASSWORD="admin"
-DB_HOST="127.0.0.1"  # Änderung hier
+DB_HOST="localhost"
 
 # WordPress Konfiguration
 WP_DIR="/var/www/html"
@@ -111,6 +111,16 @@ WP_ADMIN_EMAIL="admin@example.com"
 # Neuen Benutzer für WordPress erstellen
 WP_USER="cit"
 WP_USER_PASSWORD="cit"
+
+# Überprüfen, ob der MySQL-Server installiert ist
+if ! command -v mysql &> /dev/null
+then
+    echo -e "${YELLOW}MySQL-Server wird installiert...${NC}"
+    sudo apt-get install -y mysql-server
+    sudo service mysql start
+    sudo systemctl enable mysql
+    echo -e "${GREEN}MySQL-Server wurde erfolgreich installiert!${NC}"
+fi
 
 # WordPress herunterladen und entpacken
 echo -e "${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}"
