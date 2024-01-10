@@ -148,6 +148,12 @@ sudo a2enmod rewrite
 sudo systemctl restart apache2
 echo -e "${GREEN}mod_rewrite wurde erfolgreich aktiviert und Apache wurde neu gestartet!${NC}"
 
+# WP-CLI installieren
+echo "Installing WP-CLI..."
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar
+sudo mv wp-cli.phar /usr/local/bin/wp
+
 # WordPress über die Befehlszeile installieren
 echo -e "${YELLOW}WordPress wird über die Befehlszeile installiert...${NC}"
 WP_PATH=$(which wp)
@@ -162,6 +168,7 @@ echo -e "${GREEN}WordPress wurde erfolgreich über die Befehlszeile installiert!
 
 # Neuen Benutzer für WordPress erstellen
 echo -e "${YELLOW}Neuen Benutzer wird erstellt...${NC}"
+WP_PATH=$(which wp)
 sudo -u www-data $WP_PATH user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
