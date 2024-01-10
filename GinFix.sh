@@ -150,7 +150,8 @@ echo -e "${GREEN}mod_rewrite wurde erfolgreich aktiviert und Apache wurde neu ge
 
 # WordPress über die Befehlszeile installieren
 echo -e "${YELLOW}WordPress wird über die Befehlszeile installiert...${NC}"
-sudo -u www-data wp core install \
+WP_PATH=$(which wp)
+sudo -u www-data $WP_PATH core install \
     --url="$WP_URL" \
     --title="$WP_TITLE" \
     --admin_user="$WP_ADMIN_USER" \
@@ -161,7 +162,7 @@ echo -e "${GREEN}WordPress wurde erfolgreich über die Befehlszeile installiert!
 
 # Neuen Benutzer für WordPress erstellen
 echo -e "${YELLOW}Neuen Benutzer wird erstellt...${NC}"
-sudo -u www-data wp user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR"
+sudo -u www-data $WP_PATH user create $WP_USER $WP_USER_PASSWORD --role=author --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
