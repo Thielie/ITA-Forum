@@ -154,15 +154,25 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
-# WordPress über die Befehlszeile installieren
 # Datenbankverbindung konfigurieren
 WP_PATH=$(which wp)
-sudo -u www-data $WP_PATH config create \
-    --dbname="deine_datenbank_name" \
-    --dbuser="dein_datenbank_benutzer" \
-    --dbpass="dein_datenbank_passwort" \
-    --dbhost="127.0.0.1" \
-    --path="$WP_DIR"
+WP_CONFIG="$WP_DIR/wp-config.php"
+
+# Überprüfen, ob wp-config.php bereits existiert
+if [ ! -f "$WP_CONFIG" ]; then
+    sudo -u www-data $WP_PATH config create \
+        --dbname="deine_datenbank_name" \
+        --dbuser="dein_datenbank_benutzer" \
+        --dbpass="dein_datenbank_passwort" \
+        --dbhost="127.0.0.1" \
+        --path="$WP_DIR"
+else
+    echo -e "${YELLOW}Die wp-config.php Datei existiert bereits.${NC}"
+fi
+
+# Ausgabe der Konfiguration zur Überprüfung
+echo -e "${YELLOW}Überprüfe die wp-config.php Datei:${NC}"
+cat "$WP_CONFIG"
 
 # WordPress-Installation durchführen
 sudo -u www-data $WP_PATH core install \
@@ -173,7 +183,12 @@ sudo -u www-data $WP_PATH core install \
     --admin_email="$WP_ADMIN_EMAIL" \
     --path="$WP_DIR"
 
-echo -e "${GREEN}WordPress wurde erfolgreich über die Befehlszeile installiert!${NC}"
+# Überprüfen Sie, ob die Installation erfolgreich war
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}WordPress wurde erfolgreich über die Befehlszeile installiert!${NC}"
+else
+    echo -e "${RED}Fehler bei der WordPress-Installation.${NC}"
+fi
 
 # Neuen Benutzer für WordPress erstellen
 echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
