@@ -107,7 +107,7 @@ DB_HOST="localhost"
 
 # WordPress Konfiguration
 WP_DIR="/var/www/html"
-WP_URL="http://localhost"
+WP_URL="127.0.0.1"
 WP_TITLE="My WordPress Site"
 WP_ADMIN_USER="admin"
 WP_ADMIN_PASSWORD="admin"
