@@ -101,8 +101,8 @@ echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt
 # WordPress Installation
 # Datenbankkonfiguration
 DB_NAME="wordpress"
-DB_USER="admin"
-DB_PASSWORD="admin"
+DB_USER="cit"
+DB_PASSWORD="cit"
 DB_HOST="localhost"
 
 # WordPress Konfiguration
@@ -139,7 +139,6 @@ echo -e "${GREEN}WordPress-Konfigurationsdatei wurde erfolgreich erstellt!${NC}"
 # Apache-Konfiguration für mod_rewrite aktivieren
 echo -e "${YELLOW}Aktiviere mod_rewrite in Apache...${NC}"
 sudo a2enmod rewrite
-#sudo service apache2 restart
 sudo systemctl restart apache2
 echo -e "${GREEN}mod_rewrite wurde erfolgreich aktiviert und Apache wurde neu gestartet!${NC}"
 
@@ -149,35 +148,8 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
-# Datenbankverbindung konfigurieren
+# Datenbankverbindung konfigurieren und WordPress installieren
 WP_PATH=$(which wp)
-WP_CONFIG="$WP_DIR/wp-config.php"
-
-# Überprüfen, ob wp-config.php bereits existiert
-check_config() {
-    if [ ! -f "$WP_CONFIG" ]; then
-        sudo -u www-data $WP_PATH config create \
-            --dbname="deine_datenbank_name" \
-            --dbuser="dein_datenbank_benutzer" \
-            --dbpass="dein_datenbank_passwort" \
-            --dbhost="127.0.0.1" \
-            --path="$WP_DIR"
-    else
-        echo -e "${YELLOW}Die wp-config.php Datei existiert bereits.${NC}"
-    fi
-}
-
-# Überprüfung im Hintergrund ausführen
-check_config &
-
-# Warten, bis die Überprüfung abgeschlossen ist
-wait
-
-# Ausgabe der Konfiguration zur Überprüfung
-echo -e "${YELLOW}Überprüfe die wp-config.php Datei:${NC}"
-cat "$WP_CONFIG"
-
-# WordPress-Installation durchführen
 sudo -u www-data $WP_PATH core install \
     --url="$WP_URL" \
     --title="$WP_TITLE" \
@@ -193,10 +165,6 @@ if [ $? -eq 0 ]; then
 else
     echo -e "${RED}Fehler bei der WordPress-Installation.${NC}"
 fi
-
-# Ausgabe von Debug-Informationen
-echo -e "${YELLOW}Debug-Informationen:${NC}"
-cat "$WP_DIR/wp-content/debug.log"
 
 # Neuen Benutzer für WordPress erstellen
 echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
