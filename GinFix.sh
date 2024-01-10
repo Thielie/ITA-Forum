@@ -161,7 +161,7 @@ sudo -u www-data $WP_PATH config create \
     --dbname="deine_datenbank_name" \
     --dbuser="dein_datenbank_benutzer" \
     --dbpass="dein_datenbank_passwort" \
-    --dbhost="localhost" \
+    --dbhost="127.0.0.1" \
     --path="$WP_DIR"
 
 # WordPress-Installation durchführen
