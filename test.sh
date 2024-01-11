@@ -4,16 +4,8 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Setzen Sie Ihre sensiblen Informationen als Umgebungsvariablen
-export MYSQL_ROOT_PASSWORD="root"
-export DB_USER="cit"
-export DB_PASSWORD="cit"
-export WP_ADMIN_USER="admin"
-export WP_ADMIN_PASSWORD="admin"
-export WP_ADMIN_EMAIL="admin@example.com"
-export WP_USER="cit"
-export WP_USER_EMAIL="cit@example.com"
-export WP_USER_PASSWORD="cit"
+# Konfigurationsdatei einbinden
+source config.sh
 
 # Update von Ubuntu
 echo -e "${YELLOW}Aktualisiere das System...${NC}"
