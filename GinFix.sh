@@ -86,7 +86,6 @@ echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!$
 # Zugriffsbeschränkungen für Benutzer "cit"
 echo -e "${YELLOW}Beschränke Zugriff für Benutzer 'cit'...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-CREATE USER 'cit'@'localhost' IDENTIFIED BY 'cit';
 REVOKE ALL PRIVILEGES ON *.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`information_schema\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`mysql\`.* FROM 'cit'@'localhost';
