@@ -69,11 +69,11 @@ echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 
-# Globale Berechtigungen für den Benutzer erteilen
-GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
-
 # Berechtigungen für die ausgeschlossenen Datenbanken entziehen
 $(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON ${db}.* FROM '${DB_USER}'@'localhost';"; done)
+
+# Benutzer darf alle zukünftigen Datenbanken erstellen
+GRANT CREATE, ALTER, CREATE TEMPORARY TABLES ON *.* TO '${DB_USER}'@'localhost';
 
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
