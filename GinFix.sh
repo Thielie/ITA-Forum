@@ -83,6 +83,17 @@ FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Root-Passwort wurde erfolgreich in der MySQL-Konfigurationsdatei gesetzt!${NC}"
 
+# Zugriffsbeschränkungen für Benutzer "cit"
+echo -e "${YELLOW}Beschränke Zugriff für Benutzer 'cit'...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+REVOKE ALL PRIVILEGES ON \`information_schema\`.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`performance_schema\`.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`mysql\`.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`phpmyadmin\`.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`sys\`.* FROM 'cit'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}Zugriffsbeschränkungen für Benutzer 'cit' wurden erfolgreich gesetzt!${NC}"
 
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
