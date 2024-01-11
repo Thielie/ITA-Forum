@@ -75,6 +75,29 @@ FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
+# MySQL-Root-Anmeldung über Socket-Mechanismus
+echo -e "${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}"
+sudo mysql -u root <<MYSQL_SCRIPT
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}"
+
+# Zugriffsbeschränkungen für Benutzer "cit"
+echo -e "${YELLOW}Beschränke Zugriff für Benutzer 'cit'...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+CREATE USER 'cit'@'localhost' IDENTIFIED BY 'cit';
+REVOKE ALL PRIVILEGES ON *.* FROM 'cit'@'localhost';
+GRANT USAGE ON *.* TO 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`information_schema\`.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`mysql\`.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`performance_schema\`.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`phpmyadmin\`.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`sys\`.* FROM 'cit'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}Zugriffsbeschränkungen für Benutzer 'cit' wurden erfolgreich gesetzt!${NC}"
+
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
 export DEBIAN_FRONTEND=noninteractive
@@ -182,5 +205,15 @@ echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
 sudo -u www-data wp user create "$WP_USER" "$WP_USER_EMAIL" --user_pass="cit" --role=author --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
+# MySQL-Benutzer für phpMyAdmin konfigurieren
+DB_USER="wordpress"
+DB_PASSWORD="wordpress"
+echo -e "${YELLOW}MySQL-Benutzer wird für WordPress konfiguriert...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON \`wordpress\`.* TO '${DB_USER}'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für WordPress konfiguriert!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
