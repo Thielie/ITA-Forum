@@ -86,7 +86,7 @@ echo -e "${GREEN}MySQL-Root-Passwort wurde erfolgreich in der MySQL-Konfiguratio
 # Zugriffsbeschränkungen für Benutzer "cit"
 echo -e "${YELLOW}Beschränke Zugriff für Benutzer 'cit'...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-GRANT USAGE ON *.* TO 'cit'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER ON *.* TO 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`information_schema\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`performance_schema\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`mysql\`.* FROM 'cit'@'localhost';
