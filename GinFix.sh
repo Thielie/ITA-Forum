@@ -57,6 +57,8 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 
 # PhpMyAdmin Installation
 # MySQL-Benutzer für phpMyAdmin konfigurieren
+MYSQL_ROOT_PASSWORD="root"
+
 DB_USER="cit"
 DB_PASSWORD="cit"
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
