@@ -66,6 +66,14 @@ GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
+# Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
+echo -e "${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}"
+
 MYSQL_ROOT_PASSWORD="root"
 
 # MySQL-Benutzerrechte für sys, phpmyadmin, mysql, information_schema und performance_schema entziehen
