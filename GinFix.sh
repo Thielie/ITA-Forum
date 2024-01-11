@@ -96,19 +96,6 @@ FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}Zugriffsbeschränkungen für Benutzer 'cit' wurden erfolgreich gesetzt!${NC}"
 
-# MySQL-Konfigurationsdatei öffnen
-sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
-
-# Füge die folgenden Zeilen am Ende der Datei hinzu
-echo -e "[mysqld]" | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf
-echo -e "hide_db=information_schema" | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf
-echo -e "hide_db=performance_schema" | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf
-
-# MySQL-Dienst neu starten
-sudo systemctl restart mysql
-
-echo -e "${GREEN}Zugriffsbeschränkungen für Benutzer 'cit' wurden erfolgreich in der MySQL-Konfigurationsdatei gesetzt!${NC}"
-
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
 export DEBIAN_FRONTEND=noninteractive
