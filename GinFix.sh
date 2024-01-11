@@ -86,6 +86,18 @@ sudo a2enconf phpmyadmin
 sudo systemctl reload apache2.service
 echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt!${NC}"
 
+# MySQL-Benutzerrechte für sys, phpmyadmin, mysql, information_schema und performance_schema entziehen
+echo -e "${YELLOW}Einschränken der MySQL-Benutzerrechte für 'cit' auf bestimmte Datenbanken...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+REVOKE ALL PRIVILEGES ON sys.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON mysql.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON information_schema.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON performance_schema.* FROM 'cit'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Benutzerrechte für 'cit' auf bestimmte Datenbanken wurden erfolgreich eingeschränkt!${NC}"
+
 # WordPress Installation
 # Datenbankkonfiguration
 DB_NAME="wordpress"
@@ -173,5 +185,16 @@ fi
 echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
 sudo -u www-data wp user create "$WP_USER" "$WP_USER_EMAIL" --user_pass="cit" --role=author --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
+
+# MySQL-Benutzerrechte für wordpress einschränken
+echo -e "${YELLOW}Einschränken der MySQL-Benutzerrechte für 'wordpress'...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+REVOKE ALL PRIVILEGES ON *.* FROM 'wordpress'@'localhost';
+GRANT USAGE ON *.* TO 'wordpress'@'localhost';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Benutzerrechte für 'wordpress' wurden erfolgreich eingeschränkt!${NC}"
+
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
