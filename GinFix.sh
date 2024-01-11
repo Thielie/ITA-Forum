@@ -190,8 +190,8 @@ echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 MYSQL_ROOT_PASSWORD="root"
 
 # MySQL-Benutzer für WordPress erstellen
-DB_USER="wordpress"
-DB_PASSWORD="wordpress"
+WP_DB_USER="wordpress"
+WP_DB_PASSWORD="wordpress"
 
 echo -e "${YELLOW}MySQL-Benutzer 'wordpress' wird erstellt...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
