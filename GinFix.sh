@@ -68,6 +68,7 @@ echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON ${WORDPRESS_DB}.* TO '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON sys.* FROM '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON mysql.* FROM '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '${DB_USER}'@'localhost';
