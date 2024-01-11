@@ -73,7 +73,9 @@ GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 # Berechtigungen für die ausgeschlossenen Datenbanken entziehen
 $(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON ${db}.* FROM '${DB_USER}'@'localhost';"; done)
 
+# FLUSH PRIVILEGES nach dem Entziehen der Berechtigungen
 FLUSH PRIVILEGES;
+
 MYSQL_SCRIPT
 
 # Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
