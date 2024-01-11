@@ -70,7 +70,7 @@ sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 
-# Rechte auf die ausgeschlossenen Datenbanken entziehen
+# Berechtigungen für die ausgeschlossenen Datenbanken entziehen
 $(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON ${db}.* FROM '${DB_USER}'@'localhost';"; done)
 
 FLUSH PRIVILEGES;
