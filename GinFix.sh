@@ -63,6 +63,11 @@ echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
+REVOKE ALL PRIVILEGES ON sys.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON mysql.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON information_schema.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON performance_schema.* FROM 'cit'@'localhost';
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
@@ -73,21 +78,6 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}"
-
-MYSQL_ROOT_PASSWORD="root"
-
-# MySQL-Benutzerrechte für sys, phpmyadmin, mysql, information_schema und performance_schema entziehen
-echo -e "${YELLOW}Einschränken der MySQL-Benutzerrechte für 'cit' auf bestimmte Datenbanken...${NC}"
-
-# Starten Sie die MySQL-Interaktion
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-REVOKE ALL PRIVILEGES ON sys.* FROM 'cit'@'localhost';
-REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM 'cit'@'localhost';
-REVOKE ALL PRIVILEGES ON mysql.* FROM 'cit'@'localhost';
-REVOKE ALL PRIVILEGES ON information_schema.* FROM 'cit'@'localhost';
-REVOKE ALL PRIVILEGES ON performance_schema.* FROM 'cit'@'localhost';
-FLUSH PRIVILEGES;
-MYSQL_SCRIPT
 
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
