@@ -92,6 +92,8 @@ REVOKE ALL PRIVILEGES ON \`mysql\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`performance_schema\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`phpmyadmin\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`sys\`.* FROM 'cit'@'localhost';
+DROP USER IF EXISTS 'cit'@'localhost';
+CREATE USER 'cit'@'localhost' IDENTIFIED BY 'cit';
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}Zugriffsbeschränkungen für Benutzer 'cit' wurden erfolgreich gesetzt!${NC}"
