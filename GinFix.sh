@@ -126,8 +126,8 @@ DB_PASSWORD="cit"
 DB_HOST="localhost"
 
 # WordPress Konfiguration
-WP_DIR="/var/www/html"
-WP_URL="http://localhost"
+WP_DIR="/var/www/html/wp"  # Hier wird der Ordner "wp" erstellt
+WP_URL="http://localhost/wp"
 WP_TITLE="My WordPress Site"
 WP_ADMIN_USER="admin"
 WP_ADMIN_PASSWORD="admin"
@@ -145,6 +145,7 @@ MYSQL_ROOT_PASSWORD="root"
 echo -e "${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}"
 wget -c https://wordpress.org/latest.tar.gz
 tar -xzvf latest.tar.gz -C /tmp/
+sudo mkdir -p $WP_DIR  # Erstellt den Ordner "wp"
 sudo cp -R /tmp/wordpress/* $WP_DIR
 sudo chown -R www-data:www-data $WP_DIR
 sudo chmod -R 777 $WP_DIR
