@@ -101,11 +101,9 @@ echo -e "${GREEN}Zugriffsbeschränkungen für Benutzer 'cit' wurden erfolgreich 
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Füge die folgenden Zeilen am Ende der Datei hinzu
-cat <<EOL | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf
-[mysqld]
-hide_db=information_schema
-hide_db=performance_schema
-EOL
+echo -e "[mysqld]" | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf
+echo -e "hide_db=information_schema" | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf
+echo -e "hide_db=performance_schema" | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # MySQL-Dienst neu starten
 sudo systemctl restart mysql
