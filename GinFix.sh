@@ -186,15 +186,19 @@ echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
 sudo -u www-data wp user create "$WP_USER" "$WP_USER_EMAIL" --user_pass="cit" --role=author --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
-# MySQL-Benutzerrechte für wordpress einschränken
-echo -e "${YELLOW}Einschränken der MySQL-Benutzerrechte für 'wordpress'...${NC}"
+# MySQL-Root-Passwort
+MYSQL_ROOT_PASSWORD="root"
+
+# MySQL-Benutzer für WordPress erstellen
+DB_USER="wordpress"
+DB_PASSWORD="wordpress"
+
+echo -e "${YELLOW}MySQL-Benutzer 'wordpress' wird erstellt...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-REVOKE ALL PRIVILEGES ON *.* FROM 'wordpress'@'localhost';
-GRANT USAGE ON *.* TO 'wordpress'@'localhost';
-GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';
+CREATE USER '${WP_DB_USER}'@'localhost' IDENTIFIED BY '${WP_DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON wordpress.* TO '${WP_DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
-echo -e "${GREEN}MySQL-Benutzerrechte für 'wordpress' wurden erfolgreich eingeschränkt!${NC}"
-
+echo -e "${GREEN}MySQL-Benutzer 'wordpress' wurde erfolgreich erstellt!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
