@@ -71,7 +71,6 @@ echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
@@ -79,7 +78,7 @@ echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!$
 echo -e "${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}"
 sudo mysql -u root <<MYSQL_SCRIPT
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
-FLUSH PRIVILEGES;
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}"
 
@@ -92,7 +91,6 @@ REVOKE ALL PRIVILEGES ON \`mysql\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`performance_schema\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`phpmyadmin\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`sys\`.* FROM 'cit'@'localhost';
-FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}Zugriffsbeschränkungen für Benutzer 'cit' wurden erfolgreich gesetzt!${NC}"
 
