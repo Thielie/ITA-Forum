@@ -88,7 +88,6 @@ echo -e "${YELLOW}Beschränke Zugriff für Benutzer 'cit'...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER 'cit'@'localhost' IDENTIFIED BY 'cit';
 REVOKE ALL PRIVILEGES ON *.* FROM 'cit'@'localhost';
-GRANT USAGE ON *.* TO 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`information_schema\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`mysql\`.* FROM 'cit'@'localhost';
 REVOKE ALL PRIVILEGES ON \`performance_schema\`.* FROM 'cit'@'localhost';
