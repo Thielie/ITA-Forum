@@ -59,6 +59,7 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 # MySQL-Benutzer für phpMyAdmin konfigurieren
 MYSQL_ROOT_PASSWORD="root"
 WORDPRESS_DB="wordpress"
+EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
 DB_USER="cit"
 DB_PASSWORD="cit"
@@ -68,11 +69,10 @@ echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
-REVOKE ALL PRIVILEGES ON sys.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON mysql.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON information_schema.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON performance_schema.* FROM '${DB_USER}'@'localhost';
+
+# Rechte auf die ausgeschlossenen Datenbanken entziehen
+$(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON ${db}.* FROM '${DB_USER}'@'localhost';"; done)
+
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 
