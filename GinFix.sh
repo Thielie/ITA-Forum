@@ -75,13 +75,13 @@ MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
 # MySQL-Root-Anmeldung über Socket-Mechanismus
-echo -e "${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}"
-sudo mysql -u root <<MYSQL_SCRIPT
+echo -e "${YELLOW}Setze MySQL-Root-Passwort in der MySQL-Konfigurationsdatei...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
-echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}"
+echo -e "${GREEN}MySQL-Root-Passwort wurde erfolgreich in der MySQL-Konfigurationsdatei gesetzt!${NC}"
 
 # Zugriffsbeschränkungen für Benutzer "cit"
 echo -e "${YELLOW}Beschränke Zugriff für Benutzer 'cit'...${NC}"
