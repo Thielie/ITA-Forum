@@ -96,6 +96,15 @@ FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}Zugriffsbeschränkungen für Benutzer 'cit' wurden erfolgreich gesetzt!${NC}"
 
+# Zugriffsbeschränkungen für Benutzer "cit" - Datenbanken ausblenden
+echo -e "${YELLOW}Blende Datenbanken für Benutzer 'cit' aus...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+REVOKE ALL PRIVILEGES ON \`information_schema\`.* FROM 'cit'@'localhost';
+REVOKE ALL PRIVILEGES ON \`performance_schema\`.* FROM 'cit'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}Datenbanken wurden für Benutzer 'cit' erfolgreich ausgeblendet!${NC}"
+
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
 export DEBIAN_FRONTEND=noninteractive
