@@ -72,7 +72,8 @@ GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 
 # Berechtigungen für die ausgeschlossenen Datenbanken entziehen
-$(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON ${db}.* FROM '${DB_USER}'@'localhost';"; done)
+MYSQL_SCRIPT_REVOKE=$(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON ${db}.* FROM '${DB_USER}'@'localhost';"; done)
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "$MYSQL_SCRIPT_REVOKE"
 
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
