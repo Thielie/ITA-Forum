@@ -14,17 +14,17 @@ echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
 
 # Chromium Installation
 echo -e "${YELLOW}Installiere Chromium...${NC}"
-sudo apt install -y chromium-browser
+#sudo apt install -y chromium-browser
 echo -e "${GREEN}Chromium wurde erfolgreich installiert!${NC}"
 
 # Visual Studio Code Installation
 echo -e "${YELLOW}Installiere Visual Studio Code...${NC}"
-sudo snap install --classic code
+#sudo snap install --classic code
 echo -e "${GREEN}Visual Studio Code wurde erfolgreich installiert!${NC}"
 
 # Geany Installation
 echo -e "${YELLOW}Installiere Geany...${NC}"
-sudo apt install -y geany
+#sudo apt install -y geany
 echo -e "${GREEN}Geany wurde erfolgreich installiert!${NC}"
 
 # LAMP-Stack Installation
@@ -58,7 +58,6 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 # PhpMyAdmin Installation
 # MySQL-Benutzer für phpMyAdmin konfigurieren
 MYSQL_ROOT_PASSWORD="root"
-WORDPRESS_DB="wordpress"
 EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
 DB_USER="cit"
