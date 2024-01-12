@@ -70,11 +70,9 @@ CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';
 GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'localhost';
 FLUSH PRIVILEGES;
 
-SQL_QUERY=$(for db in "${EXCLUDED_DATABASES[@]}"; do
+$(for db in "${EXCLUDED_DATABASES[@]}"; do
     echo "REVOKE ALL PRIVILEGES ON $db.* FROM '$DB_USER'@'localhost';"
 done)
-
-echo "${SQL_QUERY}" | sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}"
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 
