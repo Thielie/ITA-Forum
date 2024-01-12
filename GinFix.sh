@@ -72,7 +72,7 @@ FLUSH PRIVILEGES;
 
 $(for db in "${EXCLUDED_DATABASES[@]}"; do
     echo "REVOKE ALL PRIVILEGES ON $db.* FROM '$DB_USER'@'localhost';"
-done | sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}")
+done) | sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}"
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 
