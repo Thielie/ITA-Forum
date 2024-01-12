@@ -73,7 +73,7 @@ DB_PASSWORD="cit"
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON * . * TO '$DB_USER'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'localhost';
 FLUSH PRIVILEGES;
 
 $(for db in "${EXCLUDED_DATABASES[@]}"; do
