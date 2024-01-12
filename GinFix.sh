@@ -75,9 +75,6 @@ GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost';
 # Berechtigungen für die ausgeschlossenen Datenbanken entziehen
 $(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON ${db}.* FROM '${DB_USER}'@'localhost';"; done)
 
-# Benutzer darf alle zukünftigen Datenbanken erstellen
-GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost';
-
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 
