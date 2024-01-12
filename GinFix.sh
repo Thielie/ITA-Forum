@@ -72,12 +72,12 @@ DB_PASSWORD="cit"
 # MySQL-Benutzer für phpMyAdmin konfigurieren
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';
-GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'localhost' WITH GRANT OPTION;
+CREATE USER '$DB_USER''@localhost' IDENTIFIED BY '$DB_PASSWORD';
+GRANT ALL PRIVILEGES ON *.* TO '$DB_USER''@localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 $(for db in "${EXCLUDED_DATABASES[@]}"; do
-echo "REVOKE ALL PRIVILEGES ON $db.* FROM '$DB_USER'@'localhost';")
+echo "REVOKE ALL PRIVILEGES ON $db.* FROM '$DB_USER''@localhost';")
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 
