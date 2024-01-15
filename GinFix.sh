@@ -81,11 +81,11 @@ mysql -u root -p$MYSQL_ROOT_PASSWORD < $SQL_SCRIPT
 echo "Benutzer $DB_USER mit Passwort $DB_PASSWORD erstellt und Berechtigungen gesetzt."
 
 # Entziehe dem Benutzer Zugriff auf Systemdatenbanken
-echo "REVOKE ALL PRIVILEGES ON mysql.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "REVOKE ALL PRIVILEGES ON performance_schema.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "REVOKE ALL PRIVILEGES ON information_schema.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "REVOKE ALL PRIVILEGES ON sys.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
+echo "BLOCK ALL PRIVILEGES ON mysql.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
+echo "BLOCK ALL PRIVILEGES ON performance_schema.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
+echo "BLOCK ALL PRIVILEGES ON information_schema.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
+echo "BLOCK ALL PRIVILEGES ON sys.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
+echo "BLOCK ALL PRIVILEGES ON phpmyadmin.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
 echo "FLUSH PRIVILEGES;" >> $SQL_SCRIPT
 echo "EXIT;" >> $SQL_SCRIPT
 
