@@ -72,6 +72,8 @@ EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
+FLUSH PRIVILEGES;
+
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 REVOKE ALL PRIVILEGES ON mysql.* FROM '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON performance_schema.* FROM '${DB_USER}'@'localhost';
