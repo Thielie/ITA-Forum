@@ -66,26 +66,23 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
-EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema" "database1" "database2")
+#EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema" "database1" "database2")
 
-echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
--- Erstellen des Benutzers
-CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 
--- Gewähren von Berechtigungen auf allen Datenbanken
-GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON *.* TO '${DB_USER}'@'localhost';
-
--- Entziehen von Berechtigungen auf ausgeschlossene Datenbanken
-$(for db in "${EXCLUDED_DATABASES[@]}"; do
-  echo "REVOKE ALL PRIVILEGES ON \`$db\`.* FROM '${DB_USER}'@'localhost';"
-done)
-
--- Aktualisieren der Berechtigungen
+# MySQL-Benutzer erstellen und Berechtigungen setzen
+mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_SCRIPT
+CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';
+GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'localhost' WITH GRANT OPTION;
+REVOKE ALL PRIVILEGES ON mysql.* FROM '$DB_USER'@'localhost';
+REVOKE ALL PRIVILEGES ON performance_schema.* FROM '$DB_USER'@'localhost';
+REVOKE ALL PRIVILEGES ON information_schema.* FROM '$DB_USER'@'localhost';
+REVOKE ALL PRIVILEGES ON sys.* FROM '$DB_USER'@'localhost';
+REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '$DB_USER'@'localhost';
 FLUSH PRIVILEGES;
+EXIT;
 MYSQL_SCRIPT
-echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
+echo "Benutzer $DB_USER mit Passwort $DB_PASSWORD erstellt und Berechtigungen gesetzt."
 
 
 
