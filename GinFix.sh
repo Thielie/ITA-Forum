@@ -66,13 +66,13 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_SCRIPT
 CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
-GRANT ALL PRIVILEGES ON $TARGET_DATABASE TO '${DB_USER}'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 
 # Root-Benutzer entzieht explizit den Zugriff auf Systemdatenbanken
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_REVOKE_SCRIPT
-GRANT USAGE ON .* TO '${DB_USER}'@'localhost';
+GRANT USAGE ON .* FROM '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON mysql.* FROM '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON performance_schema.* FROM '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON information_schema.* FROM '${DB_USER}'@'localhost';
