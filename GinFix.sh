@@ -56,10 +56,10 @@ php -v
 echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 
 
-
-
-
-
+MYSQL_ROOT_PASSWORD="root"
+DB_USER="cit"
+DB_PASSWORD="cit"
+#EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
 # PhpMyAdmin Installation
 # MySQL-Benutzer für phpMyAdmin konfigurieren
