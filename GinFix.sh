@@ -71,8 +71,16 @@ DB_PASSWORD="cit"
 
 # MySQL-Benutzer erstellen und Berechtigungen setzen
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_SCRIPT
-CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';
+CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';
 GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EXIT;
+MYSQL_SCRIPT
+
+echo "Benutzer $DB_USER mit Passwort $DB_PASSWORD erstellt und Berechtigungen gesetzt."
+
+# Root-Benutzer entzieht Zugriff auf Systemdatenbanken
+mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_REVOKE_SCRIPT
 REVOKE ALL PRIVILEGES ON mysql.* FROM '$DB_USER'@'localhost';
 REVOKE ALL PRIVILEGES ON performance_schema.* FROM '$DB_USER'@'localhost';
 REVOKE ALL PRIVILEGES ON information_schema.* FROM '$DB_USER'@'localhost';
@@ -80,9 +88,9 @@ REVOKE ALL PRIVILEGES ON sys.* FROM '$DB_USER'@'localhost';
 REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '$DB_USER'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
-MYSQL_SCRIPT
+MYSQL_REVOKE_SCRIPT
 
-echo "Benutzer $DB_USER mit Passwort $DB_PASSWORD erstellt und Berechtigungen gesetzt."
+echo "Root hat die Zugriffsrechte auf Systemdatenbanken für Benutzer $DB_USER entzogen."
 
 
 
