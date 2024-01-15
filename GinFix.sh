@@ -61,23 +61,15 @@ DB_USER="cit"
 DB_PASSWORD="cit"
 EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
-# PhpMyAdmin Installation
-# MySQL-Benutzer für phpMyAdmin konfigurieren
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
-mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_SCRIPT
-CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
-GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
-REVOKE ALL PRIVILEGES ON ${EXCLUDED_DATABASES[0]}.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON ${EXCLUDED_DATABASES[1]}.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON ${EXCLUDED_DATABASES[2]}.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON ${EXCLUDED_DATABASES[3]}.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON ${EXCLUDED_DATABASES[4]}.* FROM '${DB_USER}'@'localhost';
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+USE mysql;
+CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT CREATE, ALTER, DROP, INSERT, SELECT, UPDATE, DELETE, INDEX, LOCK TABLES ON . TO '${DB_USER}'@'localhost';
+$(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON `$db`.* FROM '${DB_USER}'@'localhost';"; done)
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
-
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
-
-
 
 # Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
 echo -e "${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}"
