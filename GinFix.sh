@@ -68,18 +68,19 @@ DB_USER="cit"
 DB_PASSWORD="cit"
 EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
-echo -e "MySQL-Benutzer wird für phpMyAdmin konfiguriert..."
-
-eval "sudo mysql -u root -p'${MYSQL_ROOT_PASSWORD}' <<MYSQL_SCRIPT
-CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';
-GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'localhost' WITH GRANT OPTION;
-MYSQL_SCRIPT"
-
-for db in "${EXCLUDED_DATABASES[@]}"; do
-    eval "sudo mysql -u root -p'${MYSQL_ROOT_PASSWORD}' -e \"REVOKE ALL PRIVILEGES ON \`$db\`.* FROM '$DB_USER'@'localhost';\""
-done
-
-eval "sudo mysql -u root -p'${MYSQL_ROOT_PASSWORD}' -e 'FLUSH PRIVILEGES;'"
+# Erstellen des Benutzers und Zuweisen von Berechtigungen
+echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
+REVOKE ALL PRIVILEGES ON mysql.* FROM '${DB_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON performance_schema.* FROM '${DB_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON information_schema.* FROM '${DB_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON sys.* FROM '${DB_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '${DB_USER}'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
 
 
