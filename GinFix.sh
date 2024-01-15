@@ -67,14 +67,9 @@ echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_SCRIPT
 CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GARNT OPTION;
-FLUSH PRIVILEGES;
-MYSQL_SCRIPT
-
-# Root-Benutzer entzieht explizit den Zugriff auf Systemdatenbanken
-mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_REVOKE_SCRIPT
 REVOKE ALL PRIVILEGES ON ${EXCLUDED_DATABASES}.* FROM '${DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
-MYSQL_REVOKE_SCRIPT
+MYSQL_SCRIPT
 
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
