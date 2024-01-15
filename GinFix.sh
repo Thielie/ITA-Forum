@@ -69,34 +69,27 @@ DB_PASSWORD="cit"
 #EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 TARGET_DATABASE="*.*"
 
-# Erstelle ein temporäres SQL-Skript
-SQL_SCRIPT=$(mktemp)
-echo "CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';" >> $SQL_SCRIPT
-echo "GRANT ALL PRIVILEGES ON $TARGET_DATABASE TO '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "FLUSH PRIVILEGES;" >> $SQL_SCRIPT
+# MySQL-Benutzer erstellen und Berechtigungen setzen
+echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
+mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_SCRIPT
+CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}'
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost'
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
 
-# Führe das SQL-Skript mit der MySQL-Shell aus
-mysql -u root -p$MYSQL_ROOT_PASSWORD < $SQL_SCRIPT
+# Root-Benutzer entzieht Zugriff auf Systemdatenbanken
+mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_REVOKE_SCRIPT
+GRANT USAGE ON *.* TO '${DB_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON mysql.* FROM '${DB_USER}'@'localhost'
+REVOKE ALL PRIVILEGES ON performance_schema.* FROM '${DB_USER}'@'localhost'
+REVOKE ALL PRIVILEGES ON information_schema.* FROM '${DB_USER}'@'localhost'
+REVOKE ALL PRIVILEGES ON sys.* FROM '${DB_USER}'@'localhost'
+REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '${DB_USER}'@'localhost'
+FLUSH PRIVILEGES
+EXIT;
+MYSQL_REVOKE_SCRIPT
 
-echo "Benutzer $DB_USER mit Passwort $DB_PASSWORD erstellt und Berechtigungen gesetzt."
-
-# Entziehe dem Benutzer Zugriff auf Systemdatenbanken
-echo "BLOCK ALL PRIVILEGES ON mysql.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "BLOCK ALL PRIVILEGES ON performance_schema.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "BLOCK ALL PRIVILEGES ON information_schema.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "BLOCK ALL PRIVILEGES ON sys.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "BLOCK ALL PRIVILEGES ON phpmyadmin.* FROM '$DB_USER'@'localhost';" >> $SQL_SCRIPT
-echo "FLUSH PRIVILEGES;" >> $SQL_SCRIPT
-echo "EXIT;" >> $SQL_SCRIPT
-
-# Führe das zweite SQL-Skript mit der MySQL-Shell aus
-mysql -u root -p$MYSQL_ROOT_PASSWORD < $SQL_SCRIPT
-
-echo "Root hat die Zugriffsrechte auf Systemdatenbanken für Benutzer $DB_USER entzogen."
-
-# Lösche das temporäre SQL-Skript
-rm $SQL_SCRIPT
-
+echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
 
 
