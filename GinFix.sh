@@ -72,7 +72,7 @@ MYSQL_SCRIPT
 
 # Root-Benutzer entzieht explizit den Zugriff auf Systemdatenbanken
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_REVOKE_SCRIPT
-GRANT USAGE ON .* FROM '${DB_USER}'@'localhost';
+GRANT USAGE ON *.* FROM '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON mysql.* FROM '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON performance_schema.* FROM '${DB_USER}'@'localhost';
 REVOKE ALL PRIVILEGES ON information_schema.* FROM '${DB_USER}'@'localhost';
