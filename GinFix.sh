@@ -66,7 +66,7 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
-EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
+EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema" "database1" "database2")
 
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
@@ -76,7 +76,7 @@ USE mysql; -- Wechsel zur 'mysql' Datenbank
 REVOKE ALL PRIVILEGES ON *.* FROM '${DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 
--- Erneutes Gewähren spezifischer Berechtigungen
+-- Erneutes Gewähren spezifischer Berechtigungen ohne Zugriff auf bestimmte Datenbanken
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 
