@@ -66,7 +66,7 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
-#EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema" "database1" "database2")
+#EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
 
 # MySQL-Benutzer erstellen und Berechtigungen setzen
