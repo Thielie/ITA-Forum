@@ -64,23 +64,23 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 # PhpMyAdmin Installation
 # MySQL-Benutzer für phpMyAdmin konfigurieren
 MYSQL_ROOT_PASSWORD="root"
-EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
-
 DB_USER="cit"
 DB_PASSWORD="cit"
+EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
-# MySQL-Benutzer für phpMyAdmin konfigurieren
-echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
+echo -e "MySQL-Benutzer wird für phpMyAdmin konfiguriert..."
+
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-CREATE USER '$DB_USER@localhost' IDENTIFIED BY '$DB_PASSWORD';
-GRANT ALL PRIVILEGES ON *.* TO '$DB_USER@localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-
-$(for db in "${EXCLUDED_DATABASES[@]}"; do
-echo "REVOKE ALL PRIVILEGES ON $db.* FROM '$DB_USER''@localhost';")
-FLUSH PRIVILEGES;
+CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';
+GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'localhost' WITH GRANT OPTION;
 MYSQL_SCRIPT
 
+for db in "${EXCLUDED_DATABASES[@]}"; do
+    echo "sudo mysql -u root -p'${MYSQL_ROOT_PASSWORD}' -e \"REVOKE ALL PRIVILEGES ON \`$db\`.* FROM '$DB_USER'@'localhost';\""
+done | bash
+
+echo "sudo mysql -u root -p'${MYSQL_ROOT_PASSWORD}' -e 'FLUSH PRIVILEGES;'"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES;"
 
 
 
