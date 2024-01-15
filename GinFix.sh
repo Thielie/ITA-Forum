@@ -80,7 +80,6 @@ MYSQL_SCRIPT
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_REVOKE_SCRIPT
 UPDATE mysql.user SET Select_priv='N', Insert_priv='N', Update_priv='N', Delete_priv='N', Create_priv='N', Drop_priv='N' WHERE user='${DB_USER}' AND host='localhost';
 FLUSH PRIVILEGES;
-EXIT;
 MYSQL_REVOKE_SCRIPT
 
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
