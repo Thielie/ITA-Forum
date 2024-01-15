@@ -67,7 +67,6 @@ MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
 #EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
-TARGET_DATABASE="*.*"
 
 # MySQL-Benutzer erstellen und Berechtigungen setzen
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
@@ -79,12 +78,7 @@ MYSQL_SCRIPT
 
 # Root-Benutzer entzieht Zugriff auf Systemdatenbanken
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_REVOKE_SCRIPT
-GRANT USAGE ON *.* TO '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON mysql.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON performance_schema.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON information_schema.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON sys.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '${DB_USER}'@'localhost';
+UPDATE mysql.user SET Select_priv='N', Insert_priv='N', Update_priv='N', Delete_priv='N', Create_priv='N', Drop_priv='N' WHERE user='${DB_USER}' AND host='localhost';
 FLUSH PRIVILEGES;
 EXIT;
 MYSQL_REVOKE_SCRIPT
