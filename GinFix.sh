@@ -72,10 +72,11 @@ echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 -- Erstellen des Benutzers
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
-GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 
--- Löschen spezifischer Berechtigungen für den Benutzer CIT
-$(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON \`$db\`.* FROM '${DB_USER}'@'localhost';"; done)
+-- Gewähren von Berechtigungen auf allen Datenbanken außer den ausgeschlossenen
+$(for db in $(mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "SHOW DATABASES;" | grep -Ev "(Database|${EXCLUDED_DATABASES[*]})"); do
+  echo "GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON \`$db\`.* TO '${DB_USER}'@'localhost';"
+done)
 
 -- Aktualisieren der Berechtigungen
 FLUSH PRIVILEGES;
