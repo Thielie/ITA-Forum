@@ -9,7 +9,7 @@ MYSQL_ROOT_PASSWORD="root"
 
 # Update von Ubuntu
 echo -e "${YELLOW}Aktualisiere das System...${NC}"
-sudo apt update && sudo apt upgrade -y
+#sudo apt update && sudo apt upgrade -y
 echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
 
 # Chromium Installation
@@ -66,18 +66,14 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
-#EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
+EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
 # Erstellen des Benutzers und Zuweisen von Berechtigungen
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
-REVOKE ALL PRIVILEGES ON mysql.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON performance_schema.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON information_schema.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON sys.* FROM '${DB_USER}'@'localhost';
-REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '${DB_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON '${EXCLUDE_DATABASES}'.* FROM '${DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
