@@ -70,15 +70,14 @@ EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance
 
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-USE mysql; -- Wechsel zur 'mysql' Datenbank
-
--- Benutzer löschen, falls vorhanden
-DROP USER IF EXISTS '${DB_USER}'@'localhost';
-
--- Erneutes Erstellen des Benutzers
+-- Erstellen des Benutzers
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
+
+-- Löschen spezifischer Berechtigungen für den Benutzer CIT
 $(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON \`$db\`.* FROM '${DB_USER}'@'localhost';"; done)
+
+-- Aktualisieren der Berechtigungen
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
