@@ -66,26 +66,24 @@ echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
-TARGET_DATABASE="*.*"
 #EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
-#GRANT ALL PRIVILEGES ON $TARGET_DATABASE TO '$DB_USER'@'localhost';
+
 
 # MySQL-Benutzer erstellen und Berechtigungen setzen
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert... Der User ${DB_USER} Bekommt alle Rechte.${NC}"
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_SCRIPT
-CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';
-
+CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 
 # Root-Benutzer entzieht Zugriff auf Systemdatenbanken
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<MYSQL_REVOKE_SCRIPT
-REVOKE ALL PRIVILEGES ON test.* FROM 'cit'@'localhost';
-REVOKE ALL PRIVILEGES ON mysql.* FROM '$DB_USER'@'localhost';
-REVOKE ALL PRIVILEGES ON performance_schema.* FROM '$DB_USER'@'localhost';
-REVOKE ALL PRIVILEGES ON information_schema.* FROM '$DB_USER'@'localhost';
-REVOKE ALL PRIVILEGES ON sys.* FROM '$DB_USER'@'localhost';
-REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '$DB_USER'@'localhost';
+REVOKE ALL PRIVILEGES ON mysql.* FROM '$D{B_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON performance_schema.* FROM '${DB_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON information_schema.* FROM '${DB_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON sys.* FROM '${DB_USER}'@'localhost';
+REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '${DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 MYSQL_REVOKE_SCRIPT
