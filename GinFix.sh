@@ -77,10 +77,21 @@ MYSQL_SCRIPT
 
 echo -e "${YELLOW}Rechte für bestimmte Datenbanken werden entzogen...${NC}"
 
+# Alle Berechtigungen für den Benutzer löschen
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "REVOKE ALL PRIVILEGES, GRANT OPTION FROM '${DB_USER}'@'localhost';"
+
+# Benutzer aus allen Datenbanken entfernen
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "DROP USER IF EXISTS '${DB_USER}'@'localhost';"
+
+# Benutzer mit den gewünschten Berechtigungen neu erstellen
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';"
+
+# Benutzer die benötigten Berechtigungen für bestimmte Datenbanken erteilen
 for db in "${EXCLUDED_DATABASES[@]}"; do
-  sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "DELETE FROM mysql.db WHERE User = '${DB_USER}' AND Host = 'localhost' AND Db = '${db}';"
+  if [ "$db" != "phpmyadmin" ]; then
+    sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON \`${db}\`.* TO '${DB_USER}'@'localhost';"
+  fi
 done
-echo -e "${GREEN}Rechte für bestimmte Datenbanken wurden erfolgreich entzogen!${NC}"
 
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
