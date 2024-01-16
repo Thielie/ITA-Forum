@@ -148,6 +148,7 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 echo -e "${YELLOW}MySQL-Datenbank wird erstellt...${NC}"
 mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE DATABASE IF NOT EXISTS ${DB_NAME};
+MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Datenbank wurde erfolgreich erstellt!${NC}"
 
 # MySQL-Root-Passwort
