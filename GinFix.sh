@@ -55,6 +55,13 @@ echo -e "${YELLOW}PHP-Paket wird nach der Version überprüft...${NC}"
 php -v
 echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 
+# Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
+echo -e "${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
+echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}"
 
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
@@ -71,13 +78,6 @@ FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
-# Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
-echo -e "${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}"
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
-FLUSH PRIVILEGES;
-MYSQL_SCRIPT
-echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}"
 
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
@@ -102,8 +102,6 @@ echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt
 # WordPress Installation
 # Datenbankkonfiguration
 DB_NAME="wordpress"
-DB_USER="cit"
-DB_PASSWORD="cit"
 DB_HOST="localhost"
 
 # WordPress Konfiguration
@@ -119,8 +117,6 @@ WP_USER="cit"
 WP_USER_PASSWORD="cit"
 WP_USER_EMAIL="cit@example.com"
 
-# MySQL-Root-Passwort
-MYSQL_ROOT_PASSWORD="root"
 
 # WordPress herunterladen und entpacken
 echo -e "${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}"
@@ -132,6 +128,9 @@ sudo chown -R www-data:www-data $WP_DIR
 sudo chmod -R 777 $WP_DIR
 rm latest.tar.gz
 echo -e "${GREEN}WordPress wurde erfolgreich heruntergeladen und entpackt!${NC}"
+
+# MySQL-Root-Passwort
+MYSQL_ROOT_PASSWORD="root"
 
 # Apache-Konfiguration für mod_rewrite aktivieren
 echo -e "${YELLOW}Aktiviere mod_rewrite in Apache...${NC}"
@@ -149,11 +148,22 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 echo -e "${YELLOW}MySQL-Datenbank wird erstellt...${NC}"
 mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE DATABASE IF NOT EXISTS ${DB_NAME};
-CREATE USER IF NOT EXISTS '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
-GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost';
+echo -e "${GREEN}MySQL-Datenbank wurde erfolgreich erstellt!${NC}"
+
+# MySQL-Root-Passwort
+MYSQL_ROOT_PASSWORD="root"
+
+# MySQL-Benutzer für WordPress erstellen
+WP_DB_USER="wordpress"
+WP_DB_PASSWORD="wordpress"
+
+echo -e "${YELLOW}MySQL-Benutzer 'wordpress' wird erstellt...${NC}"
+sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+CREATE USER '${WP_DB_USER}'@'localhost' IDENTIFIED BY '${WP_DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON wordpress.* TO '${WP_DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
-echo -e "${GREEN}MySQL-Datenbank wurde erfolgreich erstellt!${NC}"
+echo -e "${GREEN}MySQL-Benutzer 'wordpress' wurde erfolgreich erstellt!${NC}"
 
 # WordPress Installation mit manuell erstellter wp-config.php
 echo -e "${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}"
@@ -161,8 +171,8 @@ echo -e "${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}
 # Manuell wp-config.php erstellen
 sudo cp $WP_DIR/wp-config-sample.php $WP_DIR/wp-config.php
 sudo sed -i "s/database_name_here/$DB_NAME/" $WP_DIR/wp-config.php
-sudo sed -i "s/username_here/$DB_USER/" $WP_DIR/wp-config.php
-sudo sed -i "s/password_here/$DB_PASSWORD/" $WP_DIR/wp-config.php
+sudo sed -i "s/username_here/$WP_DB_USER/" $WP_DIR/wp-config.php
+sudo sed -i "s/password_here/$WP_DB_PASSWORD/" $WP_DIR/wp-config.php
 sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
 
 # WordPress-Datenbank erstellen
@@ -187,19 +197,5 @@ echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
 sudo -u www-data wp user create "$WP_USER" "$WP_USER_EMAIL" --user_pass="cit" --role=author --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
-# MySQL-Root-Passwort
-MYSQL_ROOT_PASSWORD="root"
-
-# MySQL-Benutzer für WordPress erstellen
-WP_DB_USER="wordpress"
-WP_DB_PASSWORD="wordpress"
-
-echo -e "${YELLOW}MySQL-Benutzer 'wordpress' wird erstellt...${NC}"
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-CREATE USER '${WP_DB_USER}'@'localhost' IDENTIFIED BY '${WP_DB_PASSWORD}';
-GRANT ALL PRIVILEGES ON wordpress.* TO '${WP_DB_USER}'@'localhost';
-FLUSH PRIVILEGES;
-MYSQL_SCRIPT
-echo -e "${GREEN}MySQL-Benutzer 'wordpress' wurde erfolgreich erstellt!${NC}"
 
 echo -e "${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}"
