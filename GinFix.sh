@@ -65,8 +65,8 @@ echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 USE mysql;
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
-GRANT CREATE, ALTER, DROP, INSERT, SELECT, UPDATE, DELETE, INDEX, LOCK TABLES ON . TO '${DB_USER}'@'localhost';
-$(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON `$db`.* FROM '${DB_USER}'@'localhost';"; done)
+GRANT CREATE, ALTER, DROP, INSERT, SELECT, UPDATE, DELETE, INDEX, LOCK TABLES ON *.* TO '${DB_USER}'@'localhost';
+$(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON \`${db}\`.* FROM '${DB_USER}'@'localhost';"; done)
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
