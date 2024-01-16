@@ -113,9 +113,9 @@ WP_ADMIN_PASSWORD="admin"
 WP_ADMIN_EMAIL="admin@example.com"
 
 # Neuen Benutzer für WordPress erstellen
-WP_USER="cit"
-WP_USER_PASSWORD="cit"
-WP_USER_EMAIL="cit@example.com"
+WP_USER="wordpress"
+WP_USER_PASSWORD="wordpress"
+WP_USER_EMAIL="wordpress@example.com"
 
 
 # WordPress herunterladen und entpacken
