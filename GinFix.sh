@@ -78,7 +78,7 @@ MYSQL_SCRIPT
 echo -e "${YELLOW}Rechte für bestimmte Datenbanken werden entzogen...${NC}"
 
 for db in "${EXCLUDED_DATABASES[@]}"; do
-  sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "REVOKE ALL PRIVILEGES ON \`${db}\`.* FROM '${DB_USER}'@'localhost';"
+  sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "DELETE FROM mysql.db WHERE User = '${DB_USER}' AND Host = 'localhost' AND Db = '${db}';"
 done
 echo -e "${GREEN}Rechte für bestimmte Datenbanken wurden erfolgreich entzogen!${NC}"
 
