@@ -76,21 +76,8 @@ FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 
 echo -e "${YELLOW}Rechte für bestimmte Datenbanken werden entzogen...${NC}"
-
-# Alle Berechtigungen für den Benutzer löschen
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "REVOKE ALL PRIVILEGES, GRANT OPTION FROM '${DB_USER}'@'localhost';"
-
-# Benutzer aus allen Datenbanken entfernen
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "DROP USER IF EXISTS '${DB_USER}'@'localhost';"
-
-# Benutzer mit den gewünschten Berechtigungen neu erstellen
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';"
-
-# Benutzer die benötigten Berechtigungen für bestimmte Datenbanken erteilen
 for db in "${EXCLUDED_DATABASES[@]}"; do
-  if [ "$db" != "phpmyadmin" ]; then
-    sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON \`${db}\`.* TO '${DB_USER}'@'localhost';"
-  fi
+  sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "UPDATE mysql.db SET Select_priv='N', Insert_priv='N', Update_priv='N', Delete_priv='N', Create_priv='N', Drop_priv='N', Grant_priv='N', References_priv='N', Index_priv='N', Alter_priv='N', Create_tmp_table_priv='N', Lock_tables_priv='N', Create_view_priv='N', Show_view_priv='N', Create_routine_priv='N', Alter_routine_priv='N', Execute_priv='N', Event_priv='N', Trigger_priv='N' WHERE User='${DB_USER}' AND Host='localhost' AND Db='${db}';"
 done
 
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
