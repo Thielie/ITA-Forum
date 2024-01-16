@@ -70,19 +70,20 @@ EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance
 
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-USE mysql;
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
-GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
-echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
+echo -e "${YELLOW}Rechte für bestimmte Datenbanken werden entzogen...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 USE mysql;
 $(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON \`${db}\`.* FROM '${DB_USER}'@'localhost';"; done)
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
+echo -e "${GREEN}Rechte für bestimmte Datenbanken wurden erfolgreich entzogen!${NC}"
 
+echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
