@@ -71,25 +71,15 @@ EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
 
-FLUSH PRIVILEGES;
-<<MYSQL_SCRIPT
-REVOKE ALL PRIVILEGES ON *.* FROM 'cit'@'localhost';
-REVOKE GRANT OPTION ON *.* FROM 'cit'@'localhost';
-GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, FILE, INDEX, ALTER, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, ALTER ROUTINE,
-EXECUTE ON *.* TO 'cit'@'localhost';
-ALTER USER 'cit'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTION 0;
-MYSQL_SCRIPT
 echo -e "${YELLOW}Rechte für bestimmte Datenbanken werden entzogen...${NC}"
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-USE mysql;
-SET @user = '${DB_USER}';
-SET @host = 'localhost';
-$(for db in "${EXCLUDED_DATABASES[@]}"; do
-  echo "DELETE FROM db WHERE user = @user AND host = @host AND db = '${db}';";
-done)
-FLUSH PRIVILEGES;
-MYSQL_SCRIPT
+
+for db in "${EXCLUDED_DATABASES[@]}"; do
+  sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "REVOKE ALL PRIVILEGES ON \`${db}\`.* FROM '${DB_USER}'@'localhost';"
+done
 echo -e "${GREEN}Rechte für bestimmte Datenbanken wurden erfolgreich entzogen!${NC}"
 
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
