@@ -9,17 +9,17 @@ MYSQL_ROOT_PASSWORD="root"
 
 # Update von Ubuntu
 echo -e "${YELLOW}Aktualisiere das System...${NC}"
-#sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
 
 # Chromium Installation
 echo -e "${YELLOW}Installiere Chromium...${NC}"
-#sudo apt install -y chromium-browser
+sudo apt install -y chromium-browser
 echo -e "${GREEN}Chromium wurde erfolgreich installiert!${NC}"
 
 # Visual Studio Code Installation
 echo -e "${YELLOW}Installiere Visual Studio Code...${NC}"
-#sudo snap install --classic code
+sudo snap install --classic code
 echo -e "${GREEN}Visual Studio Code wurde erfolgreich installiert!${NC}"
 
 # Geany Installation
@@ -74,24 +74,6 @@ CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
-
-echo -e "${YELLOW}Rechte für bestimmte Datenbanken werden entzogen...${NC}"
-# Benutzer löschen
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "DROP USER IF EXISTS '${DB_USER}'@'localhost';"
-
-# Benutzer neu erstellen
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';"
-
-# Berechtigungen für die gewünschten Datenbanken erteilen, aber nicht für phpmyadmin
-for db in "${EXCLUDED_DATABASES[@]}"; do
-  if [ "$db" != "phpmyadmin" ]; then
-    sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON \`${db}\`.* TO '${DB_USER}'@'localhost';"
-  fi
-done
-
-# Berechtigungen für phpmyadmin entziehen
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "REVOKE ALL PRIVILEGES ON phpmyadmin.* FROM '${DB_USER}'@'localhost';"
-
 echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!${NC}"
 
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
