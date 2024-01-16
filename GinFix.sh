@@ -78,7 +78,10 @@ MYSQL_SCRIPT
 echo -e "${YELLOW}Rechte für bestimmte Datenbanken werden entzogen...${NC}"
 sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 USE mysql;
-$(for db in "${EXCLUDED_DATABASES[@]}"; do echo "REVOKE ALL PRIVILEGES ON \`${db}\`.* FROM '${DB_USER}'@'localhost';"; done)
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost';
+$(for db in "${EXCLUDED_DATABASES[@]}"; do
+  echo "REVOKE ALL PRIVILEGES ON \`${db}\`.* FROM '${DB_USER}'@'localhost';";
+done)
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${GREEN}Rechte für bestimmte Datenbanken wurden erfolgreich entzogen!${NC}"
