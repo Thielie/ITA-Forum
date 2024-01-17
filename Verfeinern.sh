@@ -18,7 +18,7 @@ read -p "Möchten Sie Chromium installieren? (j/n): " installChoice
 if [ "$installChoice" == "j" ]; then
     # Chromium Installation
     echo -e "${YELLOW}Installiere Chromium...${NC}"
-    sudo apt install -y chromium-browser
+    sudo apt install chromium-browser
     echo -e "${GREEN}Chromium wurde erfolgreich installiert!${NC}"
 else
     echo -e "${YELLOW}Chromium wurde nicht installiert.${NC}"
