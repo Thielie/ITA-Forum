@@ -12,13 +12,16 @@ echo -e "${YELLOW}Aktualisiere das System...${NC}"
 #sudo apt update && sudo apt upgrade -y
 echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
 
+
 # Abfrage, ob die Software installiert werden soll
 read -p "Möchten Sie Chromium installieren? (j/n): " installChoice
+installChoice=$(echo "$installChoice" | tr -d '[:space:]')  # Leerzeichen entfernen
 
-if [ "$installChoice" == "j" ]; then
+if [ "$installChoice" == "j" ] || [ "$installChoice" == "J" ]; then
     # Chromium Installation
     echo -e "${YELLOW}Installiere Chromium...${NC}"
-    sudo apt install chromium-browser
+    sudo apt update
+    sudo apt install -y chromium-browser
     echo -e "${GREEN}Chromium wurde erfolgreich installiert!${NC}"
 else
     echo -e "${YELLOW}Chromium wurde nicht installiert.${NC}"
