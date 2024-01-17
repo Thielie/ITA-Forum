@@ -9,7 +9,7 @@ MYSQL_ROOT_PASSWORD="root"
 
 # Update von Ubuntu
 echo -e "${YELLOW}Aktualisiere das System...${NC}"
-sudo apt update && sudo apt upgrade -y
+#sudo apt update && sudo apt upgrade -y
 echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
 
 # Abfrage, ob die Software installiert werden soll
