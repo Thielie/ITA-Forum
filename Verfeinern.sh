@@ -18,19 +18,17 @@ read -p "Möchten Sie Chromium installieren? (j/n): " installChoice
 
 if [ "$installChoice" == "j" ]; then
     # Chromium Installation
-    echo -e "${YELLOW}Installiere Chromium...${NC}"
-    
-    # Paketmanager aktualisieren
+    echo "Installiere Chromium..."
     sudo apt update
 
-    # Chromium installieren
-    if sudo apt install chromium-browser; then
-        echo -e "${GREEN}Chromium wurde erfolgreich installiert!${NC}"
+    # Installiere Chromium und beachte mögliche Fehler
+    if sudo apt install -y chromium-browser; then
+        echo "Chromium wurde erfolgreich installiert!"
     else
-        echo -e "${YELLOW}Fehler bei der Chromium-Installation.${NC}"
+        echo "Fehler bei der Chromium-Installation."
     fi
 else
-    echo -e "${YELLOW}Chromium wurde nicht installiert.${NC}"
+    echo "Chromium wurde nicht installiert."
 fi
 
 # Visual Studio Code Installation
