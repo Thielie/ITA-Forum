@@ -26,7 +26,7 @@ fi
 
 # Visual Studio Code Installation
 echo -e "${YELLOW}Installiere Visual Studio Code...${NC}"
-sudo snap install --classic code
+#sudo snap install --classic code
 echo -e "${GREEN}Visual Studio Code wurde erfolgreich installiert!${NC}"
 
 # Geany Installation
@@ -37,34 +37,34 @@ echo -e "${GREEN}Geany wurde erfolgreich installiert!${NC}"
 # LAMP-Stack Installation
 # Apache Server installation
 echo -e "${YELLOW}Apache-Server wird installiert...${NC}"
-sudo apt install -y apache2
+#sudo apt install -y apache2
 echo -e "${GREEN}Apache-Server wurde erfolgreich installiert!${NC}"
-sudo ufw enable
-sudo ufw allow in "Apache"
+#sudo ufw enable
+#sudo ufw allow in "Apache"
 
 # MySQL-Server installation
 if ! command -v mysql &> /dev/null
 then
     echo -e "${YELLOW}MySQL-Server wird installiert...${NC}"
-    sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password ${MYSQL_ROOT_PASSWORD}"
-    sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD}"
-    sudo apt-get install -y mysql-server
-    sudo systemctl start mysql
-    sudo systemctl enable mysql
+    #sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password ${MYSQL_ROOT_PASSWORD}"
+   # sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD}"
+   # sudo apt-get install -y mysql-server
+   # sudo systemctl start mysql
+   # sudo systemctl enable mysql
     echo -e "${GREEN}MySQL-Server wurde erfolgreich installiert und gestartet!${NC}"
 fi
 
 # PHP-Paket wird installiert
 echo -e "${YELLOW}PHP-Paket wird installiert...${NC}"
-sudo apt install -y php libapache2-mod-php php-mysql
+#sudo apt install -y php libapache2-mod-php php-mysql
 echo -e "${GREEN}PHP-Paket wurde erfolgreich installiert!${NC}"
 echo -e "${YELLOW}PHP-Paket wird nach der Version überprüft...${NC}"
-php -v
+#php -v
 echo -e "${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}"
 
 # Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
 echo -e "${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}"
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+#sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
@@ -76,7 +76,7 @@ DB_PASSWORD="cit"
 EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+#sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
@@ -86,21 +86,21 @@ echo -e "${GREEN}MySQL-Benutzer wurde erfolgreich für phpMyAdmin konfiguriert!$
 # Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration
 echo -e "${YELLOW}Installiere phpMyAdmin mit Apache2 und überspringe die Paketkonfiguration...${NC}"
 export DEBIAN_FRONTEND=noninteractive
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $DB_PASSWORD"
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $DB_PASSWORD"
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $DB_PASSWORD"
-sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2"
-sudo apt-get update
-sudo apt-get install -y phpmyadmin
+#sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
+#sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $DB_PASSWORD"
+#sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $DB_PASSWORD"
+#sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $DB_PASSWORD"
+#sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2"
+#sudo apt-get update
+#sudo apt-get install -y phpmyadmin
 echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert!${NC}"
 
 # PhpMyAdmin-Konfiguration für Apache erstellen
 PHPMYADMIN_CONF_FILE="/etc/apache2/conf-available/phpmyadmin.conf"
 echo -e "${YELLOW}PhpMyAdmin Konfiguration wird für Apache erstellt...${NC}"
-sudo ln -s /etc/phpmyadmin/apache.conf $PHPMYADMIN_CONF_FILE
-sudo a2enconf phpmyadmin
-sudo systemctl reload apache2.service
+#sudo ln -s /etc/phpmyadmin/apache.conf $PHPMYADMIN_CONF_FILE
+#sudo a2enconf phpmyadmin
+#sudo systemctl reload apache2.service
 echo -e "${GREEN}PhpMyAdmin Konfiguration wurde erfolgreich für Apache erstellt!${NC}"
 
 # WordPress Installation
@@ -124,13 +124,13 @@ WP_USER_EMAIL="wordpress@example.com"
 
 # WordPress herunterladen und entpacken
 echo -e "${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}"
-wget -c https://wordpress.org/latest.tar.gz
-tar -xzvf latest.tar.gz -C /tmp/
-sudo mkdir -p $WP_DIR  # Erstellt den Ordner "wp"
-sudo cp -R /tmp/wordpress/* $WP_DIR
-sudo chown -R www-data:www-data $WP_DIR
-sudo chmod -R 777 $WP_DIR
-rm latest.tar.gz
+#wget -c https://wordpress.org/latest.tar.gz
+#tar -xzvf latest.tar.gz -C /tmp/
+#sudo mkdir -p $WP_DIR  # Erstellt den Ordner "wp"
+#sudo cp -R /tmp/wordpress/* $WP_DIR
+##sudo chown -R www-data:www-data $WP_DIR
+#sudo chmod -R 777 $WP_DIR
+#rm latest.tar.gz
 echo -e "${GREEN}WordPress wurde erfolgreich heruntergeladen und entpackt!${NC}"
 
 # MySQL-Root-Passwort
@@ -138,19 +138,19 @@ MYSQL_ROOT_PASSWORD="root"
 
 # Apache-Konfiguration für mod_rewrite aktivieren
 echo -e "${YELLOW}Aktiviere mod_rewrite in Apache...${NC}"
-sudo a2enmod rewrite
-sudo systemctl restart apache2
+#sudo a2enmod rewrite
+#sudo systemctl restart apache2
 echo -e "${GREEN}mod_rewrite wurde erfolgreich aktiviert und Apache wurde neu gestartet!${NC}"
 
 # WP-CLI installieren
 echo "Installing WP-CLI..."
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x wp-cli.phar
-sudo mv wp-cli.phar /usr/local/bin/wp
+#curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+#chmod +x wp-cli.phar
+#sudo mv wp-cli.phar /usr/local/bin/wp
 
 # MySQL-Datenbank erstellen
 echo -e "${YELLOW}MySQL-Datenbank wird erstellt...${NC}"
-mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+#mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE DATABASE IF NOT EXISTS ${DB_NAME};
 MYSQL_SCRIPT
 echo -e "${GREEN}MySQL-Datenbank wurde erfolgreich erstellt!${NC}"
@@ -163,7 +163,7 @@ WP_DB_USER="wordpress"
 WP_DB_PASSWORD="wordpress"
 
 echo -e "${YELLOW}MySQL-Benutzer 'wordpress' wird erstellt...${NC}"
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+#sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 CREATE USER '${WP_DB_USER}'@'localhost' IDENTIFIED BY '${WP_DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON wordpress.* TO '${WP_DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
@@ -174,14 +174,14 @@ echo -e "${GREEN}MySQL-Benutzer 'wordpress' wurde erfolgreich erstellt!${NC}"
 echo -e "${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}"
 
 # Manuell wp-config.php erstellen
-sudo cp $WP_DIR/wp-config-sample.php $WP_DIR/wp-config.php
-sudo sed -i "s/database_name_here/$DB_NAME/" $WP_DIR/wp-config.php
-sudo sed -i "s/username_here/$WP_DB_USER/" $WP_DIR/wp-config.php
-sudo sed -i "s/password_here/$WP_DB_PASSWORD/" $WP_DIR/wp-config.php
-sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
+#sudo cp $WP_DIR/wp-config-sample.php $WP_DIR/wp-config.php
+#sudo sed -i "s/database_name_here/$DB_NAME/" $WP_DIR/wp-config.php
+#sudo sed -i "s/username_here/$WP_DB_USER/" $WP_DIR/wp-config.php
+#sudo sed -i "s/password_here/$WP_DB_PASSWORD/" $WP_DIR/wp-config.php
+#sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
 
 # WordPress-Datenbank erstellen
-sudo -u www-data wp core install \
+#sudo -u www-data wp core install \
     --url="$WP_URL" \
     --title="$WP_TITLE" \
     --admin_user="$WP_ADMIN_USER" \
@@ -199,7 +199,7 @@ fi
 
 # Neuen Benutzer für WordPress erstellen
 echo -e "${YELLOW}Neuer Benutzer wird erstellt...${NC}"
-sudo -u www-data wp user create "$WP_USER" "$WP_USER_EMAIL" --user_pass="$WP_USER_PASSWORD" --role=administrator --path="$WP_DIR"
+#sudo -u www-data wp user create "$WP_USER" "$WP_USER_EMAIL" --user_pass="$WP_USER_PASSWORD" --role=administrator --path="$WP_DIR"
 echo -e "${GREEN}Neuer Benutzer wurde erfolgreich erstellt!${NC}"
 
 
