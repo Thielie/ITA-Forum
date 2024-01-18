@@ -8,19 +8,18 @@ NC='\033[0m' # No Color
 # Funktion für Fehlermeldung
 error_message() {
     echo -e "${RED}Fehler bei der Installation von $1.${NC}"
-    exit 1
 }
 
 # MySQL-Root-Passwort
 MYSQL_ROOT_PASSWORD="root"
 
 # Update von Ubuntu
-#echo -e "${YELLOW}Aktualisiere das System...${NC}"
-#if sudo apt update && sudo apt upgrade -y; then
-#    echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
-#else
-#    error_message "Systemaktualisierung"
-#fi
+echo -e "${YELLOW}Aktualisiere das System...${NC}"
+if sudo apt update && sudo apt upgrade -y; then
+    echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
+else
+    error_message "Systemaktualisierung"
+fi
 
 # Chromium Installation
 echo -e "${YELLOW}Installiere Chromium...${NC}"
@@ -32,7 +31,7 @@ fi
 
 # Visual Studio Code Installation
 echo -e "${YELLOW}Installiere Visual Studio Code...${NC}"
-#if sudo snap install --classic code; then
+if sudo snap install --classic code; then
     echo -e "${GREEN}Visual Studio Code wurde erfolgreich installiert!${NC}"
 else
     error_message "Visual Studio Code"
@@ -40,7 +39,7 @@ fi
 
 # Geany Installation
 echo -e "${YELLOW}Installiere Geany...${NC}"
-sudo apt install -y geany
+#sudo apt install -y geany
 echo -e "${GREEN}Geany wurde erfolgreich installiert!${NC}"
 
 # LAMP-Stack Installation
