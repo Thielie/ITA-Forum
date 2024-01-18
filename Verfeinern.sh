@@ -15,12 +15,12 @@ error_message() {
 MYSQL_ROOT_PASSWORD="root"
 
 # Update von Ubuntu
-echo -e "${YELLOW}Aktualisiere das System...${NC}"
+#echo -e "${YELLOW}Aktualisiere das System...${NC}"
 #if sudo apt update && sudo apt upgrade -y; then
-    echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
-else
-    error_message "Systemaktualisierung"
-fi
+#    echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
+#else
+#    error_message "Systemaktualisierung"
+#fi
 
 # Chromium Installation
 echo -e "${YELLOW}Installiere Chromium...${NC}"
