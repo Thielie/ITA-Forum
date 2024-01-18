@@ -24,19 +24,14 @@ MYSQL_ROOT_PASSWORD="root"
 #fi
 
 
-# Temporär das Chromium-Repository deaktivieren (Fehler simulieren)
-sudo mv /etc/apt/sources.list.d/*chromium* /tmp
-
 # Chromium Installation
 echo -e "${YELLOW}Installiere Chromium...${NC}"
-if sudo apt install -y chromium-browser; then
+sudo apt install -y non-existent-package  # Non-existent package to simulate an error
+if [ $? -eq 0 ]; then
     echo -e "${GREEN}Chromium wurde erfolgreich installiert!${NC}"
 else
     echo -e "${RED}Fehler bei der Installation von Chromium.${NC}"
 fi
-
-# Repository wiederherstellen (zurücksetzen für weitere Schritte im Skript)
-sudo mv /tmp/*chromium* /etc/apt/sources.list.d/
 
 
 
