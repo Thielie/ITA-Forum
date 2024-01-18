@@ -5,16 +5,6 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-Ja/Nein-Funktion
-yes_no_prompt() {
-    read -p "Möchten Sie Chromium installieren? (Ja/Nein): " yn
-    case $yn in
-        [Jj]* ) return 0;;  # 0 steht für "Ja"
-        [Nn]* ) return 1;;  # 1 steht für "Nein"
-        
-) echo "Bitte antworten Sie mit Ja oder Nein." && return 2;;
-  esac
-}
 
 # Funktion für Fehlermeldung
 error_message() {
@@ -32,6 +22,17 @@ MYSQL_ROOT_PASSWORD="root"
 #else
 #    error_message "Systemaktualisierung"
 #fi
+
+Ja/Nein-Funktion
+yes_no_prompt() {
+    read -p "Möchten Sie Chromium installieren? (Ja/Nein): " yn
+    case $yn in
+        [Jj]* ) return 0;;  # 0 steht für "Ja"
+        [Nn]* ) return 1;;  # 1 steht für "Nein"
+        
+) echo "Bitte antworten Sie mit Ja oder Nein." && return 2;;
+  esac
+}
 
 Ja/Nein-Abfrage aufrufen
 result=$(yes_no_prompt)
