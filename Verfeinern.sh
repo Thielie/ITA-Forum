@@ -15,28 +15,34 @@ error_message() {
 MYSQL_ROOT_PASSWORD="root"
 
 # Update von Ubuntu
-echo -e "${YELLOW}Aktualisiere das System...${NC}"
-if #sudo apt update && sudo apt upgrade -y; 
-then
-    echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
-else
-    error_message "Systemaktualisierung"
-fi
+#echo -e "${YELLOW}Aktualisiere das System...${NC}"#
+#if sudo apt update && sudo apt upgrade -y; 
+#then
+#    echo -e "${GREEN}Das System wurde erfolgreich aktualisiert!${NC}"
+#else
+#    error_message "Systemaktualisierung"
+#fi
 
+
+# Temporär das Chromium-Repository deaktivieren (Fehler simulieren)
+sudo mv /etc/apt/sources.list.d/*chromium* /tmp
 
 # Chromium Installation
 echo -e "${YELLOW}Installiere Chromium...${NC}"
 if sudo apt install -y chromium-browser; then
     echo -e "${GREEN}Chromium wurde erfolgreich installiert!${NC}"
 else
-    error_message "Chromium"
+    echo -e "${RED}Fehler bei der Installation von Chromium.${NC}"
 fi
+
+# Repository wiederherstellen (zurücksetzen für weitere Schritte im Skript)
+sudo mv /tmp/*chromium* /etc/apt/sources.list.d/
 
 
 
 # Visual Studio Code Installation
 echo -e "${YELLOW}Installiere Visual Studio Code...${NC}"
-if #sudo snap install --classic code; 
+if sudo snap install --classic code; 
 then
     echo -e "${GREEN}Visual Studio Code wurde erfolgreich installiert!${NC}"
 else
