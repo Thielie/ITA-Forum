@@ -34,7 +34,7 @@ error_message() {
 }
 
 # Benutzerabfrage für Chromium-Installation
-read -p "Möchten Sie Chromium installieren? (Ja/Nein): " user_choice
+read -p "Möchten Sie Chromium installieren? (Ja/Nein): " user_choice < /dev/tty
 if [[ $user_choice =~ ^[Jj] ]]; then
     echo -e "${YELLOW}Installiere Chromium...${NC}"
     if sudo apt install chromium-browser; then
