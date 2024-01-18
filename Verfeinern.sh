@@ -23,14 +23,14 @@ MYSQL_ROOT_PASSWORD="root"
 #    error_message "Systemaktualisierung"
 #fi
 
-# Ja/Nein-Funktion
+# Funktion für Ja/Nein-Frage
 yes_no_prompt() {
-    while true; do
-        read -p "Möchten Sie Chromium installieren? (Ja/Nein): " yn
-        case $yn in
-            [Jj]* ) return 0;;  # 0 steht für "Ja"
-            [Nn]* ) return 1;;  # 1 steht für "Nein"
-            * ) echo "Bitte antworten Sie mit Ja oder Nein.";;
+    PS3="Möchten Sie Chromium installieren? (Geben Sie die Zahl ein): "
+    select choice in Ja Nein; do
+        case $REPLY in
+            1) return 0;;  # 0 steht für "Ja"
+            2) return 1;;  # 1 steht für "Nein"
+            *) echo "Ungültige Auswahl. Bitte geben Sie die Zahl 1 oder 2 ein.";;
         esac
     done
 }
