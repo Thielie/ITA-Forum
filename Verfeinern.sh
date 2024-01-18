@@ -44,7 +44,8 @@ yes_no_prompt() {
 }
 
 # Ja/Nein-Abfrage aufrufen
-if yes_no_prompt; then
+result=$(yes_no_prompt)
+if [ $result -eq 0 ]; then
     echo -e "${YELLOW}Installiere Chromium...${NC}"
     if sudo apt install -y chromium-browser; then
         success_message "Chromium"
