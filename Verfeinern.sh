@@ -59,8 +59,7 @@ fi
 
 # Visual Studio Code Installation
 echo -e "${YELLOW}Installiere Visual Studio Code...${NC}"
-if sudo snap install --classic code; 
-then
+if sudo snap install --classic code; then
     echo -e "${GREEN}Visual Studio Code wurde erfolgreich installiert!${NC}"
 else
     error_message "Visual Studio Code"
