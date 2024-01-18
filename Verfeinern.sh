@@ -33,21 +33,14 @@ error_message() {
     echo -e "${RED}Fehler bei der Installation von $1.${NC}"
 }
 
-# Ja/Nein-Abfrage
+# Ja/Nein-Abfrage mit dialog
 yes_no_prompt() {
-    while true; do
-        read -p "Möchten Sie Chromium installieren? (Ja/Nein): " yn
-        case $yn in
-            [Jj]* ) return 0;;  # 0 steht für "Ja"
-            [Nn]* ) return 1;;  # 1 steht für "Nein"
-            * ) echo "Bitte antworten Sie mit Ja oder Nein.";;
-        esac
-    done
+    dialog --yesno "Möchten Sie Chromium installieren?" 0 0
+    return $?
 }
 
 # Ja/Nein-Abfrage aufrufen
-result=$(yes_no_prompt)
-if [ $result -eq 0 ]; then
+if yes_no_prompt; then
     echo -e "${YELLOW}Installiere Chromium...${NC}"
     if sudo apt install -y chromium-browser; then
         success_message "Chromium"
