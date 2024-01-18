@@ -25,20 +25,21 @@ MYSQL_ROOT_PASSWORD="root"
 
 # Ja/Nein-Funktion
 yes_no_prompt() {
-    read -p "Möchten Sie Chromium installieren? (Ja/Nein): " yn
-    case $yn in
-        [Jj]* ) return 0;;  # 0 steht für "Ja"
-        [Nn]* ) return 1;;  # 1 steht für "Nein"
-        * ) echo "Bitte antworten Sie mit Ja oder Nein." && return 2;;
-    esac
+    while true; do
+        read -p "Möchten Sie Chromium installieren? (Ja/Nein): " yn
+        case $yn in
+            [Jj]* ) return 0;;  # 0 steht für "Ja"
+            [Nn]* ) return 1;;  # 1 steht für "Nein"
+            * ) echo "Bitte antworten Sie mit Ja oder Nein.";;
+        esac
+    done
 }
 
 # Ja/Nein-Abfrage aufrufen
 result=$(yes_no_prompt)
 if [ $result -eq 0 ]; then
     echo -e "${YELLOW}Installiere Chromium...${NC}"
-    sudo apt install -y chromium-browser
-    if [ $? -eq 0 ]; then
+    if sudo apt install -y chromium-browser; then
         echo -e "${GREEN}Chromium wurde erfolgreich installiert!${NC}"
     else
         echo -e "${RED}Fehler bei der Installation von Chromium.${NC}"
