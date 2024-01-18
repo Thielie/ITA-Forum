@@ -33,10 +33,14 @@ error_message() {
     echo -e "${RED}Fehler bei der Installation von $1.${NC}"
 }
 
-# Ja/Nein-Abfrage mit dialog
+# Ja/Nein-Abfrage über den Terminal-Input
 yes_no_prompt() {
-    dialog --yesno "Möchten Sie Chromium installieren?" 0 0
-    return $?
+    read -p "Möchten Sie Chromium installieren? (Ja/Nein): " yn
+    case $yn in
+        [Jj]* ) return 0;;  # 0 steht für "Ja"
+        [Nn]* ) return 1;;  # 1 steht für "Nein"
+        * ) echo "Bitte antworten Sie mit Ja oder Nein." && return 2;;
+    esac
 }
 
 # Ja/Nein-Abfrage aufrufen
