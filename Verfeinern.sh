@@ -32,9 +32,9 @@ MYSQL_ROOT_PASSWORD="root"
 
 
 # Benutzerabfrage für Chromium-Installation
-read -p "${FAT}${BLUE}Möchten du Chromium installieren? (Ja/Nein)${NC}${FAT}: " user_choice < /dev/tty
+read -p "$(tput bold)$(tput setaf 4)Möchten du Chromium installieren? (Ja/Nein)${NC}: " user_choice < /dev/tty
 if [[ $user_choice =~ ^[Jj] ]]; then
-    echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}${FAT}"
+    echo -e "$(tput bold)${YELLOW}Installiere Chromium...${NC}${FAT}"
     if sudo apt install chromium-browser; then
         success_message "Chromium"
     else
