@@ -20,9 +20,12 @@ error_message() {
 MYSQL_ROOT_PASSWORD="root"
 
 # Benutzerabfrage für Software-Installationen
-read -p "${FAT}$(tput setaf 12)Möchtest du Chromium installieren? (j/n):$(tput sgr0) " chromium_choice < /dev/tty
-read -p "${FAT}$(tput setaf 12)Möchtest du Visual Studio Code installieren? (j/n):$(tput sgr0) " vs_code_choice < /dev/tty
-read -p "${FAT}$(tput setaf 12)Möchtest du Geany installieren? (j/n):$(tput sgr0) " geany_choice < /dev/tty
+read -n 1-p "${FAT}$(tput setaf 12)Möchtest du Chromium installieren? (j/n):$(tput sgr0) " chromium_choice < /dev/tty
+echo ""
+read -n 1-p "${FAT}$(tput setaf 12)Möchtest du Visual Studio Code installieren? (j/n):$(tput sgr0) " vs_code_choice < /dev/tty
+echo ""
+read -n 1-p "${FAT}$(tput setaf 12)Möchtest du Geany installieren? (j/n):$(tput sgr0) " geany_choice < /dev/tty
+echo""
 
 # Update von Ubuntu
 #echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
