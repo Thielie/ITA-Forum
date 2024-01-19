@@ -19,13 +19,13 @@ error_message() {
 MYSQL_ROOT_PASSWORD="root"
 
 # Update von Ubuntu
-#echo -e "$(tput bold)${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"#
-#if sudo apt update && sudo apt upgrade -y; 
-#then
-#    echo -e "$(tput bold)${GREEN}Das System wurde erfolgreich aktualisiert!${NC}$(tput sgr0)"
-#else
-#    error_message "Systemaktualisierung"
-#fi
+echo -e "$(tput bold)${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
+if sudo apt update && sudo apt upgrade -y; 
+then
+    echo -e "$(tput bold)${GREEN}Das System wurde erfolgreich aktualisiert!${NC}$(tput sgr0)"
+else
+    error_message "Systemaktualisierung"
+fi
 
 
 
