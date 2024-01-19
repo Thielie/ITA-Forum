@@ -40,13 +40,13 @@ function ask_for_installation() {
 }
 
 # Update von Ubuntu
-#echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
-#if sudo apt update && sudo apt upgrade -y; 
-#then
-#    echo -e "${FAT}${GREEN}Das System wurde erfolgreich aktualisiert!${NC}$(tput sgr0)"
-#else
-#    error_message "Systemaktualisierung"
-#fi
+echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
+if sudo apt update && sudo apt upgrade -y; 
+then
+    echo -e "${FAT}${GREEN}Das System wurde erfolgreich aktualisiert!${NC}$(tput sgr0)"
+else
+    error_message "Systemaktualisierung"
+fi
 
 
 # Benutzer nach Software-Installationen fragen
