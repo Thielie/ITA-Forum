@@ -29,44 +29,37 @@ fi
 
 
 
-# Benutzerabfrage für Chromium-Installation
-read -p "$(tput bold)$(tput setaf 12)Möchtest du Chromium installieren? (Ja/Nein):$(tput sgr0) " user_choice < /dev/tty
-if [[ $user_choice =~ ^[Jj] ]]; then
+# Benutzerabfrage für Software-Installationen
+read -p "$(tput bold)$(tput setaf 12)Möchtest du Chromium installieren? (Enter für Ja, Backspace für Nein):${NC}$(tput sgr0) " chromium_choice
+read -p "$(tput bold)$(tput setaf 12)Möchtest du Visual Studio Code installieren? (Enter für Ja, Backspace für Nein):${NC}$(tput sgr0) " vs_code_choice
+read -p "$(tput bold)$(tput setaf 12)Möchtest du Geany installieren? (Enter für Ja, Backspace für Nein):${NC}$(tput sgr0) " geany_choice
+
+# Installationen basierend auf Benutzerantworten
+if [[ $chromium_choice == "" ]]; then
     echo -e "$(tput bold)${YELLOW}Installiere Chromium...${NC}$(tput sgr0)"
     if sudo apt install chromium-browser; then
         success_message "Chromium"
     else
         error_message "Chromium"
     fi
-else
-    echo "Chromium-Installation abgebrochen."
 fi
 
-
-# Visual Studio Code Installation
-read -p "$(tput bold)$(tput setaf 12)Möchtest du Visual Studio Code installieren? (Ja/Nein):$(tput sgr0) " user_choice < /dev/tty
-if [[ $user_choice =~ ^[Jj] ]]; then
+if [[ $vs_code_choice == "" ]]; then
     echo -e "$(tput bold)${YELLOW}Installiere Visual Studio Code...${NC}$(tput sgr0)"
     if sudo snap install --classic code; then
-       success_message "Visual Studio Code"
-else
-    error_message "Visual Studio Code"
+        success_message "Visual Studio Code"
+    else
+        error_message "Visual Studio Code"
     fi
-else
-    echo "Visual Studio Code-Installation abgebrochen."
 fi
 
-# Geany Installation
-read -p "$(tput bold)$(tput setaf 12)Möchtest du Geany installieren? (Ja/Nein):$(tput sgr0) " user_choice < /dev/tty
-if [[ $user_choice =~ ^[Jj] ]]; then
+if [[ $geany_choice == "" ]]; then
     echo -e "$(tput bold)${YELLOW}Installiere Geany...${NC}$(tput sgr0)"
     if sudo apt install -y geany; then
         success_message "Geany"
     else
         error_message "Geany"
     fi
-else
-    echo "Geany-Installation abgebrochen."
 fi
 
 # LAMP-Stack Installation
@@ -112,7 +105,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "$(tput bold)${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}$(tput sgr0)"
-
+$(tput bold
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
