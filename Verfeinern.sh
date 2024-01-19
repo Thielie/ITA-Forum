@@ -30,7 +30,7 @@ fi
 
 
 # Benutzerabfrage für Chromium-Installation
-read -p "$(tput bold)$(tput setaf 4)Möchten du Chromium installieren? (Ja/Nein) :$(tput sgr0) " user_choice < /dev/tty
+read -p "$(tput bold)$(tput setaf 12)Möchtest du Chromium installieren? (Ja/Nein):$(tput sgr0) " user_choice < /dev/tty
 if [[ $user_choice =~ ^[Jj] ]]; then
     echo -e "$(tput bold)${YELLOW}Installiere Chromium...${NC}$(tput sgr0)"
     if sudo apt install chromium-browser; then
@@ -44,7 +44,7 @@ fi
 
 
 # Visual Studio Code Installation
-read -p "$(tput bold)$(tput setaf 4)Möchtest du Visual Studio Code installieren? (Ja/Nein) :$(tput sgr0) " user_choice < /dev/tty
+read -p "$(tput bold)$(tput setaf 12)Möchtest du Visual Studio Code installieren? (Ja/Nein):$(tput sgr0) " user_choice < /dev/tty
 if [[ $user_choice =~ ^[Jj] ]]; then
     echo -e "$(tput bold)${YELLOW}Installiere Visual Studio Code...${NC}$(tput sgr0)"
     if sudo snap install --classic code; then
@@ -57,7 +57,7 @@ else
 fi
 
 # Geany Installation
-read -p "$(tput bold)$(tput setaf 4)Möchtest du Geany installieren? (Ja/Nein):$(tput sgr0) " user_choice < /dev/tty
+read -p "$(tput bold)$(tput setaf 12)Möchtest du Geany installieren? (Ja/Nein):$(tput sgr0) " user_choice < /dev/tty
 if [[ $user_choice =~ ^[Jj] ]]; then
     echo -e "$(tput bold)${YELLOW}Installiere Geany...${NC}$(tput sgr0)"
     if sudo apt install -y geany; then
