@@ -162,6 +162,7 @@ DB_NAME="wordpress"
 DB_HOST="localhost"
 
 # WordPress Konfiguration
+html="/var/www/html"
 WP_DIR="/var/www/html/wp"  # Hier wird der Ordner "wp" erstellt
 WP_URL="http://localhost/wp"
 WP_TITLE="My WordPress Site"
@@ -182,6 +183,8 @@ if wget -c https://wordpress.org/latest.tar.gz && tar -xzvf latest.tar.gz -C /tm
 else
     error_message "WordPress (Herunterladen und Entpacken)"
 fi
+
+sudo chmod -R 777 $html # Hier werden volle zugriffsrechte auf den Ordner gewährt
 
 # MySQL-Root-Passwort
 MYSQL_ROOT_PASSWORD="root"
