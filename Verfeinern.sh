@@ -20,12 +20,23 @@ error_message() {
 MYSQL_ROOT_PASSWORD="root"
 
 # Benutzerabfrage für Software-Installationen
-read -n 1 -p "${FAT}$(tput setaf 12)Möchtest du Chromium installieren? (j/n):$(tput sgr0) " chromium_choice < /dev/tty
-echo ""
-read -n 1 -p "${FAT}$(tput setaf 12)Möchtest du Visual Studio Code installieren? (j/n):$(tput sgr0) " vs_code_choice < /dev/tty
-echo ""
-read -n 1 -p "${FAT}$(tput setaf 12)Möchtest du Geany installieren? (j/n):$(tput sgr0) " geany_choice < /dev/tty
-echo""
+function ask_for_installation() {
+    local choice
+    read -n 1 -p "${FAT}$(tput setaf 12)Möchtest du $1 installieren? (j/n):$(tput sgr0) " choice < /dev/tty
+    echo ""
+    
+    while [[ "$choice" != "j" && "$choice" != "n" ]]; do
+        echo -e "${FAT}${RED}Ungültige Eingabe. Bitte nur 'j' oder 'n' eingeben.${NC}$(tput sgr0)"
+        read -n 1 -p "${FAT}$(tput setaf 12)Möchtest du $1 installieren? (j/n):$(tput sgr0) " choice < /dev/tty
+        echo ""
+    done
+    
+    if [ "$choice" = "j" ]; then
+        return 0  # true
+    else
+        return 1  # false
+    fi
+}
 
 # Update von Ubuntu
 #echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
@@ -38,7 +49,7 @@ echo""
 
 
 # Installationen basierend auf Benutzerantworten
-if [[ $chromium_choice =~ ^[Jj]$ ]]; then
+if ask_for_installation "Chromium"; then
     echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}"
     if sudo apt install chromium-browser; then
         success_message "Chromium"
@@ -47,7 +58,7 @@ if [[ $chromium_choice =~ ^[Jj]$ ]]; then
     fi
 fi
 
-if [[ $vs_code_choice =~ ^[Jj]$ ]]; then
+if ask_for_installation "Visual Studio Code"; then
     echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}"
     if sudo snap install --classic code; then
         success_message "Visual Studio Code"
@@ -56,7 +67,7 @@ if [[ $vs_code_choice =~ ^[Jj]$ ]]; then
     fi
 fi
 
-if [[ $geany_choice =~ ^[Jj]$ ]]; then
+if ask_for_installation "Geany"; then
     echo -e "${FAT}${YELLOW}Installiere Geany...${NC}"
     if sudo apt install -y geany; then
         success_message "Geany"
