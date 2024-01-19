@@ -37,10 +37,9 @@ echo""
 #fi
 
 
-
 # Installationen basierend auf Benutzerantworten
-if [[ $chromium_choice == "" ]]; then
-    echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}$(tput sgr0)"
+if [[ $chromium_choice =~ ^[Jj]$ ]]; then
+    echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}"
     if sudo apt install chromium-browser; then
         success_message "Chromium"
     else
@@ -48,8 +47,8 @@ if [[ $chromium_choice == "" ]]; then
     fi
 fi
 
-if [[ $vs_code_choice == "" ]]; then
-    echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}$(tput sgr0)"
+if [[ $vs_code_choice =~ ^[Jj]$ ]]; then
+    echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}"
     if sudo snap install --classic code; then
         success_message "Visual Studio Code"
     else
@@ -57,8 +56,8 @@ if [[ $vs_code_choice == "" ]]; then
     fi
 fi
 
-if [[ $geany_choice == "" ]]; then
-    echo -e "${FAT}${YELLOW}Installiere Geany...${NC}$(tput sgr0)"
+if [[ $geany_choice =~ ^[Jj]$ ]]; then
+    echo -e "${FAT}${YELLOW}Installiere Geany...${NC}"
     if sudo apt install -y geany; then
         success_message "Geany"
     else
