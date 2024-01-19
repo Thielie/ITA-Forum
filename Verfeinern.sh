@@ -18,6 +18,11 @@ error_message() {
 # MySQL-Root-Passwort
 MYSQL_ROOT_PASSWORD="root"
 
+# Benutzerabfrage für Software-Installationen
+read -p "$(tput bold)$(tput setaf 12)Möchtest du Chromium installieren? (Enter für Ja, Backspace für Nein):${NC}$(tput sgr0) " chromium_choice
+read -p "$(tput bold)$(tput setaf 12)Möchtest du Visual Studio Code installieren? (Enter für Ja, Backspace für Nein):${NC}$(tput sgr0) " vs_code_choice
+read -p "$(tput bold)$(tput setaf 12)Möchtest du Geany installieren? (Enter für Ja, Backspace für Nein):${NC}$(tput sgr0) " geany_choice
+
 # Update von Ubuntu
 echo -e "$(tput bold)${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
 if sudo apt update && sudo apt upgrade -y; 
@@ -28,11 +33,6 @@ else
 fi
 
 
-
-# Benutzerabfrage für Software-Installationen
-read -p "$(tput bold)$(tput setaf 12)Möchtest du Chromium installieren? (Enter für Ja, Backspace für Nein):${NC}$(tput sgr0) " chromium_choice
-read -p "$(tput bold)$(tput setaf 12)Möchtest du Visual Studio Code installieren? (Enter für Ja, Backspace für Nein):${NC}$(tput sgr0) " vs_code_choice
-read -p "$(tput bold)$(tput setaf 12)Möchtest du Geany installieren? (Enter für Ja, Backspace für Nein):${NC}$(tput sgr0) " geany_choice
 
 # Installationen basierend auf Benutzerantworten
 if [[ $chromium_choice == "" ]]; then
