@@ -40,46 +40,42 @@ function ask_for_installation() {
 }
 
 # Update von Ubuntu
-echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
-if sudo apt update && sudo apt upgrade -y; 
-then
-    echo -e "${FAT}${GREEN}Das System wurde erfolgreich aktualisiert!${NC}$(tput sgr0)"
-else
-    error_message "Systemaktualisierung"
-fi
+#echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
+#if sudo apt update && sudo apt upgrade -y; 
+#then
+#    echo -e "${FAT}${GREEN}Das System wurde erfolgreich aktualisiert!${NC}$(tput sgr0)"
+#else
+#    error_message "Systemaktualisierung"
+#fi
 
 
 # Benutzer nach Software-Installationen fragen
-if ask_for_installation "Chromium" && \
-   ask_for_installation "Visual Studio Code" && \
-   ask_for_installation "Geany"; then
-
-    if ask_for_installation "Chromium"; then
-        echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}"
-        if sudo apt install chromium-browser; then
-            success_message "Chromium"
-        else
-            error_message "Chromium"
-        fi
+if ask_for_installation "Chromium"; then
+    echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}"
+    if sudo apt install chromium-browser; then
+        success_message "Chromium"
+    else
+        error_message "Chromium"
     fi
+fi
 
-    if ask_for_installation "Visual Studio Code"; then
-        echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}"
-        if sudo snap install --classic code; then
-            success_message "Visual Studio Code"
-        else
-            error_message "Visual Studio Code"
-        fi
+if ask_for_installation "Visual Studio Code"; then
+    echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}"
+    if sudo snap install --classic code; then
+        success_message "Visual Studio Code"
+    else
+        error_message "Visual Studio Code"
     fi
+fi
 
-    if ask_for_installation "Geany"; then
-        echo -e "${FAT}${YELLOW}Installiere Geany...${NC}"
-        if sudo apt install -y geany; then
-            success_message "Geany"
-        else
-            error_message "Geany"
-        fi
+if ask_for_installation "Geany"; then
+    echo -e "${FAT}${YELLOW}Installiere Geany...${NC}"
+    if sudo apt install -y geany; then
+        success_message "Geany"
+    else
+        error_message "Geany"
     fi
+fi
 
 # LAMP-Stack Installation
 # Apache Server installation
