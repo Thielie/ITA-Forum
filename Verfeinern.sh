@@ -3,8 +3,13 @@
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Funktion für erfolgreiche Meldung
+success_message() {
+    echo -e "${GREEN}$1 wurde erfolgreich installiert!${NC}"
+}
 
 # Funktion für Fehlermeldung
 error_message() {
@@ -23,18 +28,10 @@ MYSQL_ROOT_PASSWORD="root"
 #    error_message "Systemaktualisierung"
 #fi
 
-# Funktion für erfolgreiche Meldung
-success_message() {
-    echo -e "${GREEN}$1 wurde erfolgreich installiert!${NC}"
-}
 
-# Funktion für Fehlermeldung
-error_message() {
-    echo -e "${RED}Fehler bei der Installation von $1.${NC}"
-}
 
 # Benutzerabfrage für Chromium-Installation
-read -p "Möchten Sie Chromium installieren? (Ja/Nein): " user_choice < /dev/tty
+read -p "${BLUE}Möchten du Chromium installieren? (Ja/Nein)${NC}: " user_choice < /dev/tty
 if [[ $user_choice =~ ^[Jj] ]]; then
     echo -e "${YELLOW}Installiere Chromium...${NC}"
     if sudo apt install chromium-browser; then
@@ -46,38 +43,38 @@ else
     echo "Chromium-Installation abgebrochen."
 fi
 
-# Chromium Installation
-#echo -e "${YELLOW}Installiere Chromium...${NC}"
-#sudo apt install -y non-existent-package  # Non-existent package to simulate an error
-#if [ $? -eq 0 ]; then
-#    echo -e "${GREEN}Chromium wurde erfolgreich installiert!${NC}"
-#else
-#    echo -e "${RED}Fehler bei der Installation von Chromium.${NC}"
-#fi
-
-
 
 # Visual Studio Code Installation
-echo -e "${YELLOW}Installiere Visual Studio Code...${NC}"
-if sudo snap install --classic code; then
-    echo -e "${GREEN}Visual Studio Code wurde erfolgreich installiert!${NC}"
+read -p "${BLUE}Möchtest du Visual Studio Code installieren? (Ja/Nein)${NC}: " user_choice < /dev/tty
+if [[ $user_choice =~ ^[Jj] ]]; then
+    echo -e "${YELLOW}Installiere Visual Studio Code...${NC}"
+    if sudo snap install --classic code; then
+       success_message "Visual Studio Code"
 else
     error_message "Visual Studio Code"
+    fi
+else
+    echo "Visual Studio Code-Installation abgebrochen."
 fi
 
 # Geany Installation
-echo -e "${YELLOW}Installiere Geany...${NC}"
+read -p "${BLUE}Möchtest du Geany installieren? (Ja/Nein)${NC}: " user_choice < /dev/tty
+if [[ $user_choice =~ ^[Jj] ]]; then
+    echo -e "${YELLOW}Installiere Geany...${NC}"
 if sudo apt install -y geany; then
-    echo -e "${GREEN}Geany wurde erfolgreich installiert!${NC}"
+    success_message "Geany"
 else
-    echo -e "${RED}Fehler bei der Installation von Geany.${NC}"
+    error_message "Geany"
+    fi
+else
+    echo "Geany-Installation abgebrochen."
 fi
 
 # LAMP-Stack Installation
 # Apache Server installation
 echo -e "${YELLOW}Apache-Server wird installiert...${NC}"
 if sudo apt install -y apache2; then
-    echo -e "${GREEN}Apache-Server wurde erfolgreich installiert!${NC}"
+    success_message "Apache-Server"
 else
     error_message "Apache-Server"
 fi
@@ -101,7 +98,7 @@ fi
 # PHP-Paket wird installiert
 echo -e "${YELLOW}PHP-Paket wird installiert...${NC}"
 if sudo apt install -y php libapache2-mod-php php-mysql; then
-    echo -e "${GREEN}PHP-Paket wurde erfolgreich installiert!${NC}"
+    success_message "PHP-Paket"
 else
     error_message "PHP-Paket"
 fi
@@ -120,7 +117,6 @@ echo -e "${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!$
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
-EXCLUDED_DATABASES=("sys" "mysql" "phpmyadmin" "information_schema" "performance_schema")
 
 echo -e "${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}"
 if sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
@@ -143,7 +139,7 @@ sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password
 sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $DB_PASSWORD"
 sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2"
 if sudo apt-get update && sudo apt-get install -y phpmyadmin; then
-    echo -e "${GREEN}phpMyAdmin wurde erfolgreich installiert!${NC}"
+    success_message "phpmyadmin"
 else
     error_message "phpMyAdmin"
 fi
@@ -200,7 +196,7 @@ fi
 # WP-CLI installieren
 echo "Installing WP-CLI..."
 if curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && sudo mv wp-cli.phar /usr/local/bin/wp; then
-    echo -e "${GREEN}WP-CLI wurde erfolgreich installiert!${NC}"
+    success_message "WP-CLI"
 else
     error_message "WP-CLI"
 fi
