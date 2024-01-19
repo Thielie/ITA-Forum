@@ -124,7 +124,6 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 echo -e "${FAT}${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}$(tput sgr0)"
-$(tput bold
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
