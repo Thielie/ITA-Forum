@@ -19,7 +19,7 @@ error_message() {
 # MySQL-Root-Passwort
 MYSQL_ROOT_PASSWORD="root"
 
-# Benutzerabfrage für Software-Installationen
+# Benutzerabfrage für Software-Installation
 function ask_for_installation() {
     local choice
     read -n 1 -p "${FAT}$(tput setaf 12)Möchtest du $1 installieren? (j/n):$(tput sgr0) " choice < /dev/tty
@@ -48,7 +48,7 @@ function ask_for_installation() {
 #fi
 
 
-# Installationen basierend auf Benutzerantworten
+# Benutzer nach Software-Installationen fragen
 if ask_for_installation "Chromium"; then
     echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}"
     if sudo apt install chromium-browser; then
