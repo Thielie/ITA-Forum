@@ -49,34 +49,38 @@ function get_user_choice() {
 
 
 # Benutzer nach Software-Installationen fragen
-#Chromium Installation
 if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Chromium installieren? (j/n):$(tput sgr0) "; then
-    echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}"
-    if sudo apt install chromium-browser; then
-        success_message "Chromium"
+    if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Visual Studio Code installieren? (j/n):$(tput sgr0) "; then
+        if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Geany installieren? (j/n):$(tput sgr0) "; then
+            #Chromium installation
+            echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}"
+            if sudo apt install chromium-browser; then
+                success_message "Chromium"
+            else
+                error_message "Chromium"
+            fi
+            #Visual Studio Code Installation
+            echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}"
+            if sudo snap install --classic code; then
+                success_message "Visual Studio Code"
+            else
+                error_message "Visual Studio Code"
+            fi
+            #Geany Installation
+            echo -e "${FAT}${YELLOW}Installiere Geany...${NC}"
+            if sudo apt install -y geany; then
+                success_message "Geany"
+            else
+                error_message "Geany"
+            fi
+        else
+            echo "Geany-Installation abgebrochen."
+        fi
     else
-        error_message "Chromium"
+        echo "Visual Studio Code-Installation abgebrochen."
     fi
-fi
-
-#Visual Studio Code Installation
-if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Visual Studio Code installieren? (j/n):$(tput sgr0) "; then
-    echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}"
-    if sudo snap install --classic code; then
-        success_message "Visual Studio Code"
-    else
-        error_message "Visual Studio Code"
-    fi
-fi
-
-#Geany Installation
-if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Geany installieren? (j/n):$(tput sgr0) "; then
-    echo -e "${FAT}${YELLOW}Installiere Geany...${NC}"
-    if sudo apt install -y geany; then
-        success_message "Geany"
-    else
-        error_message "Geany"
-    fi
+else
+    echo "Chromium-Installation abgebrochen."
 fi
 
 # LAMP-Stack Installation
