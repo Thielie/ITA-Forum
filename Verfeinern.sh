@@ -22,20 +22,18 @@ MYSQL_ROOT_PASSWORD="root"
 # Funktion für Benutzerantwort mit Prüfung auf 'j' oder 'n'
 function get_user_choice() {
     local choice
-    read -n 1 -p "$1" choice < /dev/tty
-    echo ""
-    
-    while [[ "$choice" != "j" && "$choice" != "n" ]]; do
-        echo -e "${FAT}${RED}Ungültige Eingabe. Bitte nur 'j' oder 'n' eingeben.${NC}$(tput sgr0)"
+    while true; do
         read -n 1 -p "$1" choice < /dev/tty
         echo ""
+        
+        if [ "$choice" = "j" ]; then
+            return 0  # true
+        elif [ "$choice" = "n" ]; then
+            return 1  # false
+        else
+            echo -e "${FAT}${RED}Ungültige Eingabe. Bitte nur 'j' oder 'n' eingeben.${NC}$(tput sgr0)"
+        fi
     done
-    
-    if [ "$choice" = "j" ]; then
-        return 0  # true
-    else
-        return 1  # false
-    fi
 }
 
 # Update von Ubuntu
@@ -49,38 +47,44 @@ function get_user_choice() {
 
 
 # Benutzer nach Software-Installationen fragen
+install_chromium=false
 if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Chromium installieren? (j/n):$(tput sgr0) "; then
-    if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Visual Studio Code installieren? (j/n):$(tput sgr0) "; then
-        if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Geany installieren? (j/n):$(tput sgr0) "; then
-            #Chromium installation
-            echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}"
-            if sudo apt install chromium-browser; then
-                success_message "Chromium"
-            else
-                error_message "Chromium"
-            fi
-            #Visual Studio Code Installation
-            echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}"
-            if sudo snap install --classic code; then
-                success_message "Visual Studio Code"
-            else
-                error_message "Visual Studio Code"
-            fi
-            #Geany Installation
-            echo -e "${FAT}${YELLOW}Installiere Geany...${NC}"
-            if sudo apt install -y geany; then
-                success_message "Geany"
-            else
-                error_message "Geany"
-            fi
-        else
-            echo "Geany-Installation abgebrochen."
-        fi
-    else
-        echo "Visual Studio Code-Installation abgebrochen."
-    fi
+    install_chromium=true
+fi
+
+install_vscode=false
+if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Visual Studio Code installieren? (j/n):$(tput sgr0) "; then
+    install_vscode=true
+fi
+
+install_geany=false
+if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Geany installieren? (j/n):$(tput sgr0) "; then
+    install_geany=true
+fi
+
+# Installationen basierend auf Benutzerantworten
+if $install_chromium; then
+    echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}$(tput sgr0)"
+    sudo apt install chromium-browser
+    success_message "Chromium"
 else
-    echo "Chromium-Installation abgebrochen."
+    echo -e "${FAT}${YELLOW}Chromium-Installation übersprungen.${NC}$(tput sgr0)"
+fi
+
+if $install_vscode; then
+    echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}$(tput sgr0)"
+    sudo snap install --classic code
+    success_message "Visual Studio Code"
+else
+    echo -e "${FAT}${YELLOW}Visual Studio Code-Installation übersprungen.${NC}$(tput sgr0)"
+fi
+
+if $install_geany; then
+    echo -e "${FAT}${YELLOW}Installiere Geany...${NC}$(tput sgr0)"
+    sudo apt install -y geany
+    success_message "Geany"
+else
+    echo -e "${FAT}${YELLOW}Geany-Installation übersprungen.${NC}$(tput sgr0)"
 fi
 
 # LAMP-Stack Installation
