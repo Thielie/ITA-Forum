@@ -28,13 +28,13 @@ read -n 1 -p "${FAT}$(tput setaf 12)Möchtest du Geany installieren? (j/n):$(tpu
 echo""
 
 # Update von Ubuntu
-echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
-if sudo apt update && sudo apt upgrade -y; 
-then
-    echo -e "${FAT}${GREEN}Das System wurde erfolgreich aktualisiert!${NC}$(tput sgr0)"
-else
-    error_message "Systemaktualisierung"
-fi
+#echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}$(tput sgr0)"
+#if sudo apt update && sudo apt upgrade -y; 
+#then
+#    echo -e "${FAT}${GREEN}Das System wurde erfolgreich aktualisiert!${NC}$(tput sgr0)"
+#else
+#    error_message "Systemaktualisierung"
+#fi
 
 
 # Installationen basierend auf Benutzerantworten
