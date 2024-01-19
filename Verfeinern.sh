@@ -19,16 +19,15 @@ error_message() {
 # MySQL-Root-Passwort
 MYSQL_ROOT_PASSWORD="root"
 
-# Benutzerabfrage für Software-Installation
-function ask_for_installation() {
-    local software=$1
+# Funktion für Benutzerantwort mit Prüfung auf 'j' oder 'n'
+function get_user_choice() {
     local choice
-    read -n 1 -p "${FAT}$(tput setaf 12)Möchtest du $software installieren? (j/n):$(tput sgr0) " choice < /dev/tty
+    read -n 1 -p "$1" choice < /dev/tty
     echo ""
     
     while [[ "$choice" != "j" && "$choice" != "n" ]]; do
         echo -e "${FAT}${RED}Ungültige Eingabe. Bitte nur 'j' oder 'n' eingeben.${NC}$(tput sgr0)"
-        read -n 1 -p "${FAT}$(tput setaf 12)Möchtest du $software installieren? (j/n):$(tput sgr0) " choice < /dev/tty
+        read -n 1 -p "$1" choice < /dev/tty
         echo ""
     done
     
@@ -50,7 +49,8 @@ function ask_for_installation() {
 
 
 # Benutzer nach Software-Installationen fragen
-if ask_for_installation "Chromium"; then
+#Chromium Installation
+if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Chromium installieren? (j/n):$(tput sgr0) "; then
     echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}"
     if sudo apt install chromium-browser; then
         success_message "Chromium"
@@ -59,7 +59,8 @@ if ask_for_installation "Chromium"; then
     fi
 fi
 
-if ask_for_installation "Visual Studio Code"; then
+#Visual Studio Code Installation
+if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Visual Studio Code installieren? (j/n):$(tput sgr0) "; then
     echo -e "${FAT}${YELLOW}Installiere Visual Studio Code...${NC}"
     if sudo snap install --classic code; then
         success_message "Visual Studio Code"
@@ -68,7 +69,8 @@ if ask_for_installation "Visual Studio Code"; then
     fi
 fi
 
-if ask_for_installation "Geany"; then
+#Geany Installation
+if get_user_choice "${FAT}$(tput setaf 12)Möchtest du Geany installieren? (j/n):$(tput sgr0) "; then
     echo -e "${FAT}${YELLOW}Installiere Geany...${NC}"
     if sudo apt install -y geany; then
         success_message "Geany"
