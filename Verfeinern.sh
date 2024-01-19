@@ -40,7 +40,7 @@ function get_user_choice() {
 
 # Benutzer nach Software-Installationen fragen
 install_chromium=false
-if get_user_choice "${FAT}${BLUE} Möchtest du Chromium installieren? (j/n):${NF} "; then
+if get_user_choice "${FAT}${BLUE}Möchtest du Chromium installieren? (j/n):${NF} "; then
     install_chromium=true
 fi
 
