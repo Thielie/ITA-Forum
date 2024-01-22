@@ -122,8 +122,11 @@ else
     error_message "PHP-Paket"
 fi
 echo -e "${FAT}${YELLOW}PHP-Paket wird nach der Version überprüft...${NC}${NF}"
-php -v
+if php -v then
 echo -e "${FAT}${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}${NF}"
+else
+    echo "${FAT}${RED}Überprüfung der PHP-Version fehlgeschlagen!${NC}${NF}"
+fi
 
 # Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
 echo -e "${FAT}${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}${NF}"
@@ -131,7 +134,12 @@ sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
-echo -e "${FAT}${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}${NF}"
+then
+    echo -e "${FAT}${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}${NF}"
+else
+    echo -e "${FAT}${RED}Fehler beim Aktivieren der MySQL-Root-Anmeldung über Socket!${NC}${NF}"
+fi
+
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
