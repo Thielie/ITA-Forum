@@ -122,7 +122,7 @@ else
     error_message "PHP-Paket"
 fi
 echo -e "${FAT}${YELLOW}PHP-Paket wird nach der Version überprüft...${NC}${NF}"
-if php -v then
+if php -v; then
 echo -e "${FAT}${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}${NF}"
 else
     echo -e "${FAT}${RED}Überprüfung der PHP-Version fehlgeschlagen!${NC}${NF}"
