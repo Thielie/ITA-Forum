@@ -130,9 +130,9 @@ fi
 
 # Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
 echo -e "${FAT}${YELLOW}Erlaube MySQL-Root-Anmeldung über Socket...${NC}${NF}"
-sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
-FLUSH PRIVILEGES;
+if sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+   ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';
+   FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 then
     echo -e "${FAT}${GREEN}MySQL-Root-Anmeldung über Socket wurde erfolgreich aktiviert!${NC}${NF}"
