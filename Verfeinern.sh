@@ -125,7 +125,7 @@ echo -e "${FAT}${YELLOW}PHP-Paket wird nach der Version überprüft...${NC}${NF}
 if php -v then
 echo -e "${FAT}${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}${NF}"
 else
-    echo "${FAT}${RED}Überprüfung der PHP-Version fehlgeschlagen!${NC}${NF}"
+    echo -e "${FAT}${RED}Überprüfung der PHP-Version fehlgeschlagen!${NC}${NF}"
 fi
 
 # Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
