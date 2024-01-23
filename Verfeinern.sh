@@ -327,8 +327,6 @@ else
     error_message "Neuer Benutzer für WordPress"
 fi
 
-echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
-
 # Benutzer in die Gruppe www-data hinzufügen
 echo -e "${FAT}${YELLOW}Füge den eingeloggten Benutzer zur Gruppe www-data hinzu...${NC}${NF}"
 if sudo usermod -aG www-data $(whoami); then
@@ -336,3 +334,13 @@ if sudo usermod -aG www-data $(whoami); then
 else
     echo -e "${FAT}${RED}Fehler beim Hinzufügen des Benutzers zur Gruppe www-data.${NC}${NF}"
 fi
+
+# Setze die Berechtigungen für die Benutzer in der Gruppe www-data
+sudo chown -R :www-data "$html"
+sudo chmod -R 750 "$html"
+sudo find "$html" -type d -exec chmod g+s {} +
+
+# Erlaube Lese-, Schreib-, Ausführungs- und Erstellungsrechte für die Gruppe www-data
+sudo chmod -R g+rwx "$html"
+
+echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
