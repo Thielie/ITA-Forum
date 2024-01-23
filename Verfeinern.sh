@@ -110,11 +110,16 @@ else
     error_message "error.log-Datei"
 fi
 
-# Ändern der Berechtigungen, um die Datei sichtbar zu machen
-sudo chmod 644 /var/www/html/error.log
+# Ändern der Berechtigungen, um die Datei nur lesbar zu machen
+echo -e "${FAT}${YELLOW}Ändern der Berechtigungen für die error.log-Datei...${NC}${NF}"
+if sudo chmod 444 /var/www/html/error.log; then
+    echo -e "${FAT})${GREEN}Berechtigungen für die error.log-Datei erfolgreich gesetzt!${NC}${NF}"
+else
+    echo -e "${FAT}${RED}Fehler beim Ändern der Berechtigungen für die error.log-Datei${NC}${NF}"
+fi
 
 # Anzeige der verschobenen Datei
-echo -e "${FAT}${GREEN}Die error.log-Datei wurde erfolgreich verschoben und ist jetzt sichtbar.${NC}${NF}"
+echo -e "${FAT}${GREEN}Die error.log-Datei wurde erfolgreich verschoben und ist jetzt nur lesbar.${NC}${NF}"
 
 # MySQL-Server installation
 if ! command -v mysql &> /dev/null; then
