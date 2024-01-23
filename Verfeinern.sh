@@ -328,3 +328,11 @@ else
 fi
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
+
+# Benutzer in die Gruppe www-data hinzufügen
+echo -e "${FAT}${YELLOW}Füge den eingeloggten Benutzer zur Gruppe www-data hinzu...${NC}${NF}"
+if sudo usermod -aG www-data $(whoami); then
+    echo -e "${FAT}${GREEN}Der Benutzer wurde erfolgreich zur Gruppe www-data hinzugefügt!${NC}${NF}"
+else
+    echo -e "${FAT}${RED}Fehler beim Hinzufügen des Benutzers zur Gruppe www-data.${NC}${NF}"
+fi
