@@ -142,11 +142,25 @@ if sudo apt install -y php libapache2-mod-php php-mysql; then
 else
     error_message "PHP-Paket"
 fi
+
+# Pfade konfigurieren und PHP-Fehlerprotokollierung anpassen
+PHP_INI="/etc/php/$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;')/apache2/php.ini"
+ERROR_LOG_PATH="/var/www/html/error.log"
+sudo sed -i "s|;error_log = syslog|error_log = $ERROR_LOG_PATH|" "$PHP_INI"
+
+# Apache Server neustarten
+echo -e "${FAT}${YELLOW}Apache-Server wird neugestartet...${NC}${NF}"
+if sudo systemctl restart apache2; then
+    success_message "Apache-Server Neustart"
+else
+    error_message "Fehler beim Neustart des Apache-Servers"
+fi
+
 echo -e "${FAT}${YELLOW}PHP-Paket wird nach der Version überprüft...${NC}${NF}"
 if php -v; then
-echo -e "${FAT}${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}${NF}"
+    echo -e "${FAT}${GREEN}PHP-Paket wurde erfolgreich nach der Version überprüft!${NC}${NF}"
 else
-    echo -e "${FAT}${RED}Überprüfung der PHP-Version fehlgeschlagen!${NC}${NF}"
+    echo -e "${FAT}${RED}Überprüfung der PHP-Version fehlgeschlagen${NC}${NF}"
 fi
 
 # Erlaube MySQL-Root-Anmeldung über Socket-Mechanismus
