@@ -90,15 +90,31 @@ else
 fi
 
 # LAMP-Stack Installation
-# Apache Server installation
+# Apache Server Installation
 echo -e "${FAT}${YELLOW}Apache-Server wird installiert...${NC}${NF}"
 if sudo apt install -y apache2; then
     success_message "Apache-Server"
 else
     error_message "Apache-Server"
 fi
+
+# Aktivierung der Firewall und Zulassen von Apache-Verbindungen
 sudo ufw enable
 sudo ufw allow in "Apache"
+
+# Verschieben der error.log-Datei in den html-Ordner
+echo -e "${FAT}${YELLOW}Verschieben der error.log-Datei in den html-Ordner...${NC}${NF}"
+if sudo mv /var/log/apache2/error.log /var/www/html/; then
+    success_message "error.log-Datei"
+else
+    error_message "error.log-Datei"
+fi
+
+# Ändern der Berechtigungen, um die Datei sichtbar zu machen
+sudo chmod 644 /var/www/html/error.log
+
+# Anzeige der verschobenen Datei
+echo -e "${FAT}${GREEN}Die error.log-Datei wurde erfolgreich verschoben und ist jetzt sichtbar.${NC}${NF}"
 
 # MySQL-Server installation
 if ! command -v mysql &> /dev/null; then
@@ -209,7 +225,7 @@ else
     error_message "WordPress (Herunterladen und Entpacken)"
 fi
 
-sudo chmod -R 777 $html #Hier werden volle zugriffsrechte auf den Ordner gewährt
+sudo chmod -R 644 $html #Hier werden volle zugriffsrechte auf den Ordner gewährt
 
 # MySQL-Root-Passwort
 MYSQL_ROOT_PASSWORD="root"
