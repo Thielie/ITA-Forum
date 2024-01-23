@@ -225,7 +225,7 @@ else
     error_message "WordPress (Herunterladen und Entpacken)"
 fi
 
-sudo chmod -R 644 $html #Hier werden volle zugriffsrechte auf den Ordner gewährt
+sudo chmod -R 744 $html #Hier werden volle zugriffsrechte auf den Ordner gewährt
 
 # MySQL-Root-Passwort
 MYSQL_ROOT_PASSWORD="root"
