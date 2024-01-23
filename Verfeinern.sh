@@ -336,10 +336,10 @@ else
 fi
 
 # Den Besitz des Ordners auf die Gruppe www-data setzen
-sudo chown :www-data /path/to/html
+sudo chown :www-data $html
 
 # Lese-, Schreib-, Ausführungs- und Erstellungsrechte für die Gruppe www-data setzen
-sudo chmod 770 /path/to/html
+sudo chmod 770 $html
 
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
