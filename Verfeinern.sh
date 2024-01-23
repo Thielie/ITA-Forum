@@ -335,9 +335,11 @@ else
     echo -e "${FAT}${RED}Fehler beim Hinzufügen des Benutzers zur Gruppe www-data.${NC}${NF}"
 fi
 
-sudo chown -R :www-data $html
-sudo chmod -R 750 $html
-sudo find $html -type d -exec chmod g+s {} +
-sudo chmod -R g+rwx $html
+# Den Besitz des Ordners auf die Gruppe www-data setzen
+sudo chown :www-data /path/to/html
+
+# Lese-, Schreib-, Ausführungs- und Erstellungsrechte für die Gruppe www-data setzen
+sudo chmod 770 /path/to/html
+
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
