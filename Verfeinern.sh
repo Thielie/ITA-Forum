@@ -388,11 +388,18 @@ else
 fi
 
 
-# Name für das Lesezeichen
-BOOKMARK_NAME="html"
+# Erstelle einen Desktop-Eintrag für das Lesezeichen
+DESKTOP_FILE="$HOME/.local/share/applications/html-folder.desktop"
 
-# Hinzufügen des Lesezeichens
-gio bookmarks --set "$html" "$BOOKMARK_NAME"
+echo "[Desktop Entry]" > "$DESKTOP_FILE"
+echo "Name=HTML Folder" >> "$DESKTOP_FILE"
+echo "Type=Application" >> "$DESKTOP_FILE"
+echo "Exec=xdg-open $html" >> "$DESKTOP_FILE"
+echo "Icon=folder" >> "$DESKTOP_FILE"
+
+# Füge das Lesezeichen hinzu
+xdg-desktop-menu install --novendor "$DESKTOP_FILE"
+xdg-desktop-icon install --novendor "$DESKTOP_FILE"
 
 # Benachrichtigung
 echo "Das Lesezeichen für den HTML-Ordner wurde hinzugefügt."
