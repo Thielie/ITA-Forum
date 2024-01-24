@@ -178,6 +178,7 @@ fi
 PHP_INI="/etc/php/$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;')/apache2/php.ini"
 ERROR_LOG_PATH="/var/www/html/error.log"
 sudo sed -i "s|;error_log = syslog|error_log = $ERROR_LOG_PATH|" "$PHP_INI"
+sudo sed -i -e "s|display_errors = Off|display_errors = On|" "$PHP_INI"
 
 # Apache Server neustarten
 echo -e "${FAT}${YELLOW}Apache-Server wird neugestartet...${NC}${NF}"
@@ -385,5 +386,22 @@ if sudo chmod 1770 $html; then
 else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
+
+# Erstelle eine .desktop-Datei für den HTML-Ordner
+DESKTOP_FILE="$HOME/.local/share/applications/html-folder.desktop"
+
+echo "[Desktop Entry]" > "$DESKTOP_FILE"
+echo "Name=HTML Folder" >> "$DESKTOP_FILE"
+echo "Comment=HTML Folder" >> "$DESKTOP_FILE"
+echo "Exec=nautilus $HTML_FOLDER" >> "$DESKTOP_FILE"
+echo "Icon=folder" >> "$DESKTOP_FILE"
+echo "Type=Application" >> "$DESKTOP_FILE"
+echo "Categories=Utility;" >> "$DESKTOP_FILE"
+
+# Benachrichtigung
+echo "Der HTML-Ordner wurde dem Anwendungsmenü hinzugefügt."
+
+# Aktualisiere das Anwendungsmenü
+xdg-desktop-menu forceupdate
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
