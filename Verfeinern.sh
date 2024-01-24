@@ -63,6 +63,37 @@ else
     error_message "Systemaktualisierung"
 fi
 
+echo -e "${FAT}Überprüfe, ob der Snap Store installiert ist...${NC}${NF}"
+
+# Überprüfe, ob der Snap Store installiert ist
+if snap list snap-store &> /dev/null; then
+    echo -e "${FAT}${GREEN}Snap Store ist bereits installiert. Überspringe die Installation.${NC}${NF}"
+else
+    echo -e "${FAT}${RED}Snap Store nicht gefunden. Installiere den Snap Store...${NC}${NF}"
+
+    # Installiere den Snap Daemon
+    if sudo apt install snapd -y; then
+        echo "${FAT}${GREEN}Snap Daemon erfolgreich installiert.${NC}${NF}"
+    else
+        echo -e "${FAT}${RED}Fehler beim Installieren des Snap Daemon!${NC}${NF}"
+    fi
+
+    # Starte den Snap Daemon
+    if sudo systemctl start snapd; then
+        echo "${FAT}${GREEN}Snap Daemon erfolgreich gestartet.${NC}${NF}"
+    else
+        echo -e "${FAT}${RED}Fehler beim Starten des Snap Daemon!${NC}${NF}"
+    fi
+
+    # Installiere den Snap Store
+    if sudo snap install snap-store; then
+        echo "${FAT}${GREEN}Snap Store erfolgreich installiert.${NC}${NF}"
+    else
+        echo -e "${FAT}${RED}Fehler beim Installieren des Snap Store!${NC}${NF}"
+    fi
+
+    echo -e "${FAT}${GREEN}Der Snap Store wurde erfolgreich installiert.${NC}${NF}"
+fi
 
 # Installationen basierend auf Benutzerantworten
 if $install_chromium; then
@@ -335,7 +366,7 @@ else
     echo -e "${FAT}${RED}Fehler beim Hinzufügen des Benutzers zur Gruppe www-data.${NC}${NF}"
 fi
 
-echo -e "${FAT}Berechtigungen für das HTML-Verzeichnis aktualisieren...${NC}${NF}"
+echo -e "${FAT}${YELLOW}Berechtigungen für das HTML-Verzeichnis aktualisieren...${NC}${NF}"
 
 # Ändere den Besitzer des HTML-Verzeichnisses zu www-data
 sudo chown :www-data $html
@@ -343,14 +374,14 @@ sudo chown :www-data $html
 
 # Füge den Benutzer zur www-data Gruppe hinzu
 if sudo usermod -aG www-data $(whoami); then
-    echo -e "${FAT}Benutzer erfolgreich zur www-data Gruppe hinzugefügt!${NC}${NF}"
+    echo -e "${FAT}${GREEN}Benutzer erfolgreich zur www-data Gruppe hinzugefügt!${NC}${NF}"
 else
     echo -e "${FAT}${RED}Fehler beim Hinzufügen des Benutzers zur www-data Gruppe!${NC}${NF}"
 fi
 
 # Setze Lese-, Schreib-, Ausführungs- und Erstellungsrechte für den Besitzer und die Gruppe www-data, Sticky Bit hinzufügen
 if sudo chmod 1770 $html; then
-    echo -e "${FAT}Berechtigungen erfolgreich aktualisiert!${NC}${NF}"
+    echo -e "${FAT}${GREEN}Berechtigungen erfolgreich aktualisiert!${NC}${NF}"
 else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
