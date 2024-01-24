@@ -144,7 +144,7 @@ fi
 # Ändern der Berechtigungen, um die Datei nur lesbar zu machen
 echo -e "${FAT}${YELLOW}Ändern der Berechtigungen für die error.log-Datei...${NC}${NF}"
 if sudo chmod 444 /var/www/html/error.log; then
-    echo -e "${FAT})${GREEN}Berechtigungen für die error.log-Datei erfolgreich gesetzt!${NC}${NF}"
+    echo -e "${FAT}${GREEN}Berechtigungen für die error.log-Datei erfolgreich gesetzt!${NC}${NF}"
 else
     echo -e "${FAT}${RED}Fehler beim Ändern der Berechtigungen für die error.log-Datei${NC}${NF}"
 fi
