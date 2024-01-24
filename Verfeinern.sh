@@ -129,7 +129,7 @@ if ! command -v mysql &> /dev/null; then
     if sudo apt-get install -y mysql-server; then
         sudo systemctl start mysql
         sudo systemctl enable mysql
-        echo -e "${FAT})${GREEN}MySQL-Server wurde erfolgreich installiert und gestartet!${NC}${NF}"
+        echo -e "${FAT}${GREEN}MySQL-Server wurde erfolgreich installiert und gestartet!${NC}${NF}"
     else
         error_message "MySQL-Server"
     fi
