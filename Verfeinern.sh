@@ -335,12 +335,11 @@ else
     echo -e "${FAT}${RED}Fehler beim Hinzufügen des Benutzers zur Gruppe www-data.${NC}${NF}"
 fi
 
-# Den Besitz des Ordners auf die Gruppe www-data setzen und deinen Benutzer hinzufügen
 sudo chown :www-data $html
 sudo usermod -aG www-data $(whoami)
 
-# Lese-, Schreib-, Ausführungs- und Erstellungsrechte für den Besitzer und die Gruppe www-data setzen
-sudo chmod 770 $html
+# Lese-, Schreib-, Ausführungs- und Erstellungsrechte für den Besitzer und die Gruppe www-data setzen, Sticky Bit hinzufügen
+sudo chmod 1770 $html
 
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
