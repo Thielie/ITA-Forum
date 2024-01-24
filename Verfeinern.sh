@@ -335,11 +335,24 @@ else
     echo -e "${FAT}${RED}Fehler beim Hinzufügen des Benutzers zur Gruppe www-data.${NC}${NF}"
 fi
 
+echo -e "${FAT}Berechtigungen für das HTML-Verzeichnis aktualisieren...${NC}${NF}"
+
+# Ändere den Besitzer des HTML-Verzeichnisses zu www-data
 sudo chown :www-data $html
-sudo usermod -aG www-data $(whoami)
 
-# Lese-, Schreib-, Ausführungs- und Erstellungsrechte für den Besitzer und die Gruppe www-data setzen, Sticky Bit hinzufügen
-sudo chmod 1770 $html
 
+# Füge den Benutzer zur www-data Gruppe hinzu
+if sudo usermod -aG www-data $(whoami); then
+    echo -e "${FAT}Benutzer erfolgreich zur www-data Gruppe hinzugefügt!${NC}${NF}"
+else
+    echo -e "${FAT}${RED}Fehler beim Hinzufügen des Benutzers zur www-data Gruppe!${NC}${NF}"
+fi
+
+# Setze Lese-, Schreib-, Ausführungs- und Erstellungsrechte für den Besitzer und die Gruppe www-data, Sticky Bit hinzufügen
+if sudo chmod 1770 $html; then
+    echo -e "${FAT}Berechtigungen erfolgreich aktualisiert!${NC}${NF}"
+else
+    echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
+fi
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
