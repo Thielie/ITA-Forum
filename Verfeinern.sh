@@ -387,11 +387,21 @@ else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
 
-# Name für das Lesezeichen
-BOOKMARK_NAME="html"
+# Setze den Pfad zum HTML-Ordner
+HTML_FOLDER= $html
 
-# Hinzufügen des Lesezeichens
-gio bookmarks --set "$HTML_FOLDER" "$BOOKMARK_NAME"
+# Erstelle einen Desktop-Eintrag für das Lesezeichen
+DESKTOP_FILE="$HOME/.local/share/applications/html-folder.desktop"
+
+echo "[Desktop Entry]" > "$DESKTOP_FILE"
+echo "Name=HTML Folder" >> "$DESKTOP_FILE"
+echo "Type=Application" >> "$DESKTOP_FILE"
+echo "Exec=xdg-open $HTML_FOLDER" >> "$DESKTOP_FILE"
+echo "Icon=folder" >> "$DESKTOP_FILE"
+
+# Füge das Lesezeichen hinzu
+xdg-desktop-menu install --novendor "$DESKTOP_FILE"
+xdg-desktop-icon install --novendor "$DESKTOP_FILE"
 
 # Benachrichtigung
 echo "Das Lesezeichen für den HTML-Ordner wurde hinzugefügt."
