@@ -387,11 +387,12 @@ else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
 
+
 # Name für das Lesezeichen
-BOOKMARK_NAME="html"
+BOOKMARK_NAME="HTML Folder"
 
 # Aktualisiere die Lesezeichen
-dconf write /org/gnome/nautilus/bookmarks/"$BOOKMARK_NAME" "'file://$html'"
+dconf write /org/gtk/settings/file-chooser/bookmarks "['file://$html', 'file://$HOME/Desktop']"
 
 # Benachrichtigung
 echo "Das Lesezeichen für den HTML-Ordner wurde zu den Dateien hinzugefügt."
