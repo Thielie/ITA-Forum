@@ -387,21 +387,13 @@ else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
 
+# Name für das Lesezeichen
+BOOKMARK_NAME="html"
 
-# Erstelle einen Desktop-Eintrag für das Lesezeichen
-DESKTOP_FILE="$HOME/.local/share/applications/html-folder.desktop"
-
-echo "[Desktop Entry]" > "$DESKTOP_FILE"
-echo "Name=HTML Folder" >> "$DESKTOP_FILE"
-echo "Type=Application" >> "$DESKTOP_FILE"
-echo "Exec=xdg-open $html" >> "$DESKTOP_FILE"
-echo "Icon=folder" >> "$DESKTOP_FILE"
-
-# Füge das Lesezeichen hinzu
-xdg-desktop-menu install --novendor "$DESKTOP_FILE"
-xdg-desktop-icon install --novendor "$DESKTOP_FILE"
+# Aktualisiere die Lesezeichen
+dconf write /org/gnome/nautilus/bookmarks/"$BOOKMARK_NAME" "'file://$html'"
 
 # Benachrichtigung
-echo "Das Lesezeichen für den HTML-Ordner wurde hinzugefügt."
+echo "Das Lesezeichen für den HTML-Ordner wurde zu den Dateien hinzugefügt."
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
