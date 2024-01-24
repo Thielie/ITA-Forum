@@ -387,21 +387,13 @@ else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
 
-# Erstelle eine .desktop-Datei für den HTML-Ordner
-DESKTOP_FILE="$HOME/.local/share/applications/html-folder.desktop"
+# Name für das Lesezeichen
+BOOKMARK_NAME="html"
 
-echo "[Desktop Entry]" > "$DESKTOP_FILE"
-echo "Name=HTML Folder" >> "$DESKTOP_FILE"
-echo "Comment=HTML Folder" >> "$DESKTOP_FILE"
-echo "Exec=nautilus $HTML_FOLDER" >> "$DESKTOP_FILE"
-echo "Icon=folder" >> "$DESKTOP_FILE"
-echo "Type=Application" >> "$DESKTOP_FILE"
-echo "Categories=Utility;" >> "$DESKTOP_FILE"
+# Hinzufügen des Lesezeichens
+gio bookmarks --set "$HTML_FOLDER" "$BOOKMARK_NAME"
 
 # Benachrichtigung
-echo "Der HTML-Ordner wurde dem Anwendungsmenü hinzugefügt."
-
-# Aktualisiere das Anwendungsmenü
-xdg-desktop-menu forceupdate
+echo "Das Lesezeichen für den HTML-Ordner wurde hinzugefügt."
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
