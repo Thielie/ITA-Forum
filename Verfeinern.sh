@@ -63,7 +63,7 @@ else
     error_message "Systemaktualisierung"
 fi
 
-echo -e "${FAT}Überprüfe, ob der Snap Store installiert ist...${NC}${NF}"
+echo -e "${FAT}${YELLOW}Überprüfe, ob der Snap Store installiert ist...${NC}${NF}"
 
 # Überprüfe, ob der Snap Store installiert ist
 if snap list snap-store &> /dev/null; then
