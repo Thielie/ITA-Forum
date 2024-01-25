@@ -399,10 +399,9 @@ if [ -d "$ziel_ordner" ]; then
     aktuelle_favorite_apps=$(dconf read /org/gnome/shell/favorite-apps)
     neue_favorite_apps="["
     if [ "$aktuelle_favorite_apps" != "[]" ]; then
-        neue_favorite_apps+="$(echo "$aktuelle_favorite_apps" | tr -d "[]")"
-        neue_favorite_apps+=",'$ziel_ordner']"
+        neue_favorite_apps+=$(echo "$aktuelle_favorite_apps" | sed 's/\]$/,'\'"$ziel_ordner"\''\]/')
     else
-        neue_favorite_apps+="'$ziel_ordner']"
+        neue_favorite_apps+="['$ziel_ordner']"
     fi
     dconf write /org/gnome/shell/favorite-apps "$neue_favorite_apps"
 
