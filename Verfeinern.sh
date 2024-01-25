@@ -387,14 +387,15 @@ else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
 
+# Pfad zum Zielordner
+HTML="/var/www/html"
 
-# Name für das Lesezeichen
-BOOKMARK_NAME="HTML Folder"
+# Name des Lesezeichens
+lesezeichen_name="html"
 
-# Aktualisiere die Lesezeichen
-dconf write /org/gtk/settings/file-chooser/bookmarks "['file://$html', 'file://$HOME/Desktop']"
+# Hinzufügen des Ordners zu den Lesezeichen
+gio bookmark --add "$HTML" --label "$lesezeichen_name"
 
-# Benachrichtigung
-echo "Das Lesezeichen für den HTML-Ordner wurde zu den Dateien hinzugefügt."
+echo "Ordner wurde zu den Lesezeichen hinzugefügt: $HTML"
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
