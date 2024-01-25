@@ -396,17 +396,10 @@ lesezeichen_name="html"
 # Prüfen, ob der Ordner existiert
 if [ -d "$ziel_ordner" ]; then
     # Lesezeichen zu den Schnellzugriffen hinzufügen
-    aktuelle_favorite_apps=$(dconf read /org/gnome/shell/favorite-apps)
-    neue_favorite_apps="["
-    if [ "$aktuelle_favorite_apps" != "[]" ]; then
-        neue_favorite_apps+=$(echo "$aktuelle_favorite_apps" | sed 's/\]$/,'\'"$ziel_ordner"\''\]/')
-    else
-        neue_favorite_apps+="['$ziel_ordner']"
-    fi
-    dconf write /org/gnome/shell/favorite-apps "$neue_favorite_apps"
-
+    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed "s/\]$/, '$ziel_ordner']/")"
+    
     # Aktualisiere den Lesezeichen-Namen (falls vorhanden)
-    dconf write /org/gnome/shell/app-picker-layout/custom-folder-v1/custom-entries "[{'name': '$ziel_ordner', 'type': <0>, 'commands': [], 'hide': false, 'position': 0}]"
+    gsettings set org.gnome.shell app-picker-layout custom-folder-v1 "[{'name': '$ziel_ordner', 'type': <0>, 'commands': [], 'hide': false, 'position': 0}]"
 
     echo "Ordner wurde zu den Schnellzugriffen hinzugefügt: $ziel_ordner"
 else
