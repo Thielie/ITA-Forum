@@ -395,8 +395,12 @@ lesezeichen_name="html"
 
 # Prüfen, ob der Ordner existiert
 if [ -d "$HTML" ]; then
-    # Ordner zu den xdg-Benutzerverzeichnissen hinzufügen
-    xdg-user-dirs-update --set "$lesezeichen_name" "$HTML"
+    # Lesezeichen hinzufügen
+    gvfs-set-attribute "$HTML" metadata::custom-icon-name "user-bookmarks"
+    gvfs-set-attribute "$HTML" metadata::custom-icon-is-resizable "true"
+    gvfs-set-attribute "$HTML" metadata::custom-icon "file://$HOME/.local/share/icons/$lesezeichen_name.png"
+    gvfs-set-attribute "$HTML" metadata::nautilus-icon-position 0
+    gvfs-set-attribute "$HTML" metadata::custom-attribute "string $lesezeichen_name"
     echo "Ordner wurde zu den Schnellzugriffen hinzugefügt: $HTML"
 else
     echo "Fehler: Der angegebene Ordner existiert nicht: $HTML"
