@@ -395,12 +395,12 @@ lesezeichen_name="html"
 
 # Prüfen, ob der Ordner existiert
 if [ -d "$HTML" ]; then
-    # Lesezeichen hinzufügen
-    gvfs-set-attribute "$HTML" metadata::custom-icon-name "user-bookmarks"
-    gvfs-set-attribute "$HTML" metadata::custom-icon-is-resizable "true"
-    gvfs-set-attribute "$HTML" metadata::custom-icon "file://$HOME/.local/share/icons/$lesezeichen_name.png"
-    gvfs-set-attribute "$HTML" metadata::nautilus-icon-position 0
-    gvfs-set-attribute "$HTML" metadata::custom-attribute "string $lesezeichen_name"
+    # Lesezeichen zu den Schnellzugriffen hinzufügen
+    dconf write /org/gnome/shell/favorite-apps "$(dconf read /org/gnome/shell/favorite-apps | sed "s/\]/,'$HTML']/")"
+    
+    # Aktualisiere den Lesezeichen-Namen (falls vorhanden)
+    dconf write /org/gnome/shell/app-picker-layout/custom-folder-v1/custom-entries "[{'name': '$HTML', 'type': <0>, 'commands': [], 'hide': false, 'position': 0}]"
+
     echo "Ordner wurde zu den Schnellzugriffen hinzugefügt: $HTML"
 else
     echo "Fehler: Der angegebene Ordner existiert nicht: $HTML"
