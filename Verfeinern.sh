@@ -393,9 +393,13 @@ HTML="/var/www/html"
 # Name des Lesezeichens
 lesezeichen_name="html"
 
-# Hinzufügen des Ordners zu den Lesezeichen
-gio bookmark --add "$HTML" --label "$lesezeichen_name"
-
-echo "Ordner wurde zu den Lesezeichen hinzugefügt: $HTML"
+# Prüfen, ob der Ordner existiert
+if [ -d "$HTML" ]; then
+    # Ordner zu den xdg-Benutzerverzeichnissen hinzufügen
+    xdg-user-dirs-update --set "$lesezeichen_name" "$HTML"
+    echo "Ordner wurde zu den Schnellzugriffen hinzugefügt: $HTML"
+else
+    echo "Fehler: Der angegebene Ordner existiert nicht: $HTML"
+fi
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
