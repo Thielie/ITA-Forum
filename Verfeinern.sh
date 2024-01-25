@@ -396,12 +396,9 @@ lesezeichen_name="html"
 # Prüfen, ob der Ordner existiert
 if [ -d "$ziel_ordner" ]; then
     # Lesezeichen zu den Schnellzugriffen hinzufügen
-    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed "s/\]$/, '$ziel_ordner']/")"
+    xdg-user-dirs-update --set BOOKMARK "$ziel_ordner"
     
-    # Aktualisiere den Lesezeichen-Namen (falls vorhanden)
-    gsettings set org.gnome.shell app-picker-layout custom-folder-v1 "[{'name': '$ziel_ordner', 'type': <0>, 'commands': [], 'hide': false, 'position': 0}]"
-
-    echo "Ordner wurde zu den Schnellzugriffen hinzugefügt: $ziel_ordner"
+    echo "Ordner wurde zu den Lesezeichen hinzugefügt: $ziel_ordner"
 else
     echo "Fehler: Der angegebene Ordner existiert nicht: $ziel_ordner"
 fi
