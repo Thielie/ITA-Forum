@@ -396,8 +396,16 @@ lesezeichen_name="html"
 # Prüfen, ob der Ordner existiert
 if [ -d "$HTML" ]; then
     # Lesezeichen zu den Schnellzugriffen hinzufügen
-    dconf write /org/gnome/shell/favorite-apps "$(dconf read /org/gnome/shell/favorite-apps | sed "s/\]/,'$HTML']/")"
-    
+    aktuelle_favorite_apps=$(dconf read /org/gnome/shell/favorite-apps)
+    neue_favorite_apps="["
+    if [ "$aktuelle_favorite_apps" != "[]" ]; then
+        neue_favorite_apps+="$(echo "$aktuelle_favorite_apps" | tr -d "[]")"
+        neue_favorite_apps+=",'$HTML']"
+    else
+        neue_favorite_apps+="'$HTML']"
+    fi
+    dconf write /org/gnome/shell/favorite-apps "$neue_favorite_apps"
+
     # Aktualisiere den Lesezeichen-Namen (falls vorhanden)
     dconf write /org/gnome/shell/app-picker-layout/custom-folder-v1/custom-entries "[{'name': '$HTML', 'type': <0>, 'commands': [], 'hide': false, 'position': 0}]"
 
