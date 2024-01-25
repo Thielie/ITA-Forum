@@ -387,20 +387,7 @@ else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
 
-# Pfad zum Zielordner
-ziel_ordner="/var/www/html"
-
-# Name des Lesezeichens
-lesezeichen_name="html"
-
-# Prüfen, ob der Ordner existiert
-if [ -d "$ziel_ordner" ]; then
-    # Lesezeichen zu den Schnellzugriffen hinzufügen
-    xdg-user-dirs-update --set BOOKMARK "$ziel_ordner"
-    
-    echo "Ordner wurde zu den Lesezeichen hinzugefügt: $ziel_ordner"
-else
-    echo "Fehler: Der angegebene Ordner existiert nicht: $ziel_ordner"
-fi
+#Link zum html Ordner auf den Desktop
+ln -s /var/www/html html
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
