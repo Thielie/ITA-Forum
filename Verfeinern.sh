@@ -387,4 +387,31 @@ else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
 
+# Pfad zum Zielordner
+ziel_ordner="/var/www/html"
+
+# Name des Lesezeichens
+lesezeichen_name="html"
+
+# Prüfen, ob der Ordner existiert
+if [ -d "$ziel_ordner" ]; then
+    # Lesezeichen zu den Schnellzugriffen hinzufügen
+    aktuelle_favorite_apps=$(dconf read /org/gnome/shell/favorite-apps)
+    neue_favorite_apps="["
+    if [ "$aktuelle_favorite_apps" != "[]" ]; then
+        neue_favorite_apps+="$(echo "$aktuelle_favorite_apps" | tr -d "[]")"
+        neue_favorite_apps+=",'$ziel_ordner']"
+    else
+        neue_favorite_apps+="'$ziel_ordner']"
+    fi
+    dconf write /org/gnome/shell/favorite-apps "$neue_favorite_apps"
+
+    # Aktualisiere den Lesezeichen-Namen (falls vorhanden)
+    dconf write /org/gnome/shell/app-picker-layout/custom-folder-v1/custom-entries "[{'name': '$ziel_ordner', 'type': <0>, 'commands': [], 'hide': false, 'position': 0}]"
+
+    echo "Ordner wurde zu den Schnellzugriffen hinzugefügt: $ziel_ordner"
+else
+    echo "Fehler: Der angegebene Ordner existiert nicht: $ziel_ordner"
+fi
+
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
