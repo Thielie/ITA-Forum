@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Importiere Farbdefinitionen
-source color.sh
+source <(curl -s https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/color.sh)
 
 # Importiere Funktionen
-source functions.sh
+source <(curl -s https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/functions.sh)
 
 # Importiere Konfigurationen
-source config.sh
+source <(curl -s https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/config.sh)
 
 # Benutzer nach Software-Installationen fragen
 install_chromium=false
