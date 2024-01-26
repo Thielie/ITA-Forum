@@ -267,9 +267,6 @@ else
     error_message "MySQL-Datenbank"
 fi
 
-#Wordpress Datenbank benutzer
-WP_DB_USER="wordpress"
-WB_DB_PASSWORD="wordpress"
 
 echo -e "${FAT}${YELLOW}MySQL-Benutzer 'wordpress' wird erstellt...${NC}${NF}"
 if sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
