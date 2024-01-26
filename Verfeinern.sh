@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Importiere Farbdefinitionen
-source colors.sh
+source color.sh
 
 # Importiere Funktionen
-source function.sh
+source functions.sh
 
 # Importiere Konfigurationen
 source config.sh
