@@ -1,42 +1,13 @@
 #!/bin/bash
-# Farbdefinitionen
-FAT="$(tput bold)"
-BLUE="$(tput setaf 12)"
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
-NF="$(tput sgr0)" #Not Fat
 
-# Funktion für erfolgreiche Meldung
-success_message() {
-    echo -e "${FAT}${GREEN}$1 wurde erfolgreich installiert!${NC}${NF}"
-}
+# Importiere Farbdefinitionen
+source colors.sh
 
-# Funktion für Fehlermeldung
-error_message() {
-    echo -e "${FAT}${RED}Fehler bei der Installation von $1.${NC}${NF})"
-}
+# Importiere Funktionen
+source functions.sh
 
-# MySQL-Root-Passwort
-MYSQL_ROOT_PASSWORD="root"
-
-# Funktion für Benutzerantwort mit Prüfung auf 'j' oder 'n'
-function get_user_choice() {
-    local choice
-    while true; do
-        read -n 1 -p "$1" choice < /dev/tty
-        echo ""
-        
-        if [ "$choice" = "j" ]; then
-            return 0  # true
-        elif [ "$choice" = "n" ]; then
-            return 1  # false
-        else
-            echo -e "${FAT}${RED}Ungültige Eingabe. Bitte nur 'j' oder 'n' eingeben.${NC}${NF}"
-        fi
-    done
-}
+# Importiere Konfigurationen
+source config.sh
 
 # Benutzer nach Software-Installationen fragen
 install_chromium=false
@@ -207,9 +178,6 @@ else
     echo -e "${FAT}${RED}Fehler beim Aktivieren der MySQL-Root-Anmeldung über Socket!${NC}${NF}"
 fi
 
-MYSQL_ROOT_PASSWORD="root"
-DB_USER="cit"
-DB_PASSWORD="cit"
 
 echo -e "${FAT}${YELLOW}MySQL-Benutzer wird für phpMyAdmin konfiguriert...${NC}${NF}"
 if sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
@@ -258,14 +226,6 @@ html="/var/www/html"
 WP_DIR="/var/www/html/wp"  # Hier wird der Ordner "wp" erstellt
 WP_URL="http://localhost/wp"
 WP_TITLE="My WordPress Site"
-WP_ADMIN_USER="admin"
-WP_ADMIN_PASSWORD="admin"
-WP_ADMIN_EMAIL="admin@example.com"
-
-# Neuen Benutzer für WordPress erstellen
-WP_USER="wordpress"
-WP_USER_PASSWORD="wordpress"
-WP_USER_EMAIL="wordpress@example.com"
 
 
 # WordPress herunterladen und entpacken
@@ -278,8 +238,7 @@ fi
 
 sudo chmod -R 777 $html #Hier werden volle zugriffsrechte auf den Ordner gewährt
 
-# MySQL-Root-Passwort
-MYSQL_ROOT_PASSWORD="root"
+
 
 # Apache-Konfiguration für mod_rewrite aktivieren
 echo -e "${FAT}${YELLOW}Aktiviere mod_rewrite in Apache...${NC}${NF}"
@@ -308,12 +267,6 @@ else
     error_message "MySQL-Datenbank"
 fi
 
-# MySQL-Root-Passwort
-MYSQL_ROOT_PASSWORD="root"
-
-# MySQL-Benutzer für WordPress erstellen
-WP_DB_USER="wordpress"
-WP_DB_PASSWORD="wordpress"
 
 echo -e "${FAT}${YELLOW}MySQL-Benutzer 'wordpress' wird erstellt...${NC}${NF}"
 if sudo mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
