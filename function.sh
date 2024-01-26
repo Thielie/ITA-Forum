@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # functions.sh
 success_message() {
     echo -e "${FAT}${GREEN}$1 wurde erfolgreich installiert!${NC}${NF}"
