@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # colors.sh
 FAT="$(tput bold)"
 BLUE="$(tput setaf 12)"
