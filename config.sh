@@ -1,12 +1,12 @@
-#!/bin/bash
-
 # config.sh
-export MYSQL_ROOT_PASSWORD="root"
-export DB_USER="cit"
-export DB_PASSWORD="cit"
-export WP_ADMIN_USER="admin"
-export WP_ADMIN_PASSWORD="admin"
-export WP_ADMIN_EMAIL="admin@example.com"
-export WP_USER="cit"
-export WP_USER_EMAIL="cit@example.com"
-export WP_USER_PASSWORD="cit"
+MYSQL_ROOT_PASSWORD="root"
+DB_USER="cit"
+DB_PASSWORD="cit"
+WP_ADMIN_USER="admin"
+WP_ADMIN_PASSWORD="admin"
+WP_ADMIN_EMAIL="admin@example.com"
+WP_USER="wordpress"
+WP_USER_PASSWORD="wordpress"
+WP_USER_EMAIL="wordpress@example.com"
+WP_DB_USER="wordpress"
+WB_DB_PASSWORD="wordpress"
