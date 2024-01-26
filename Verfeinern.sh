@@ -341,6 +341,6 @@ else
 fi
 
 #Link zum html Ordner auf den Desktop
-ln -s /var/www/html html
+ln -s /var/www/html $HOME/Schreibtisch/html
 
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
