@@ -4,7 +4,7 @@
 source colors.sh
 
 # Importiere Funktionen
-source functions.sh
+source function.sh
 
 # Importiere Konfigurationen
 source config.sh
