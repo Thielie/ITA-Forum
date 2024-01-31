@@ -11,11 +11,11 @@ source <(curl -s https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/config.
 
 # Überprüfen, ob curl installiert ist
 if ! command -v curl &> /dev/null; then
-    echo -e "$(tput bold)$(tput setaf 1)Fehler: curl ist nicht installiert. Bitte installieren Sie curl, um fortzufahren. Verwenden Sie dafür folgenden Befehl: sudo apt-get install curl. Gib danach folgenden Begel ein: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
+    echo -e "$(tput bold)$(tput setaf 1)Fehler: curl ist nicht installiert. Bitte installiere curl, um fortzufahren. Verwende dafür folgenden Befehl: sudo apt-get install curl. Gib danach folgenden Befehl ein: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
     exit 1
 fi
 
-echo -e "$(tput bold)$(tput setaf 1)Bitte stelle sicher, dass du das Skript mir curl und folgendem Befehl ausführst: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh$(tput sgr0)"
+echo -e "$(tput bold)$(tput setaf 1)Bitte stelle sicher, dass du das Skript mit curl und folgendem Befehl ausführst: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh$(tput sgr0)"
 
 # Benutzer nach Software-Installationen fragen
 install_chromium=false
