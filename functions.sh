@@ -27,5 +27,5 @@ get_user_choice() {
 
 blink_text() {
     local text="$1"
-    echo -e "${TURQUOISE}\033[5m$text${RESET}"
+    echo -e "${TURQUOISE}\033[5m$text${NC}"
 }
