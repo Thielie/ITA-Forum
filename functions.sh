@@ -32,7 +32,7 @@ if ! command -v curl &> /dev/null; then
 fi
 
 # Überprüfen, ob das Skript mit curl von GitHub ausgeführt wird
-if [[ "$1" != "-L" || "$2" != "https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh" ]]; then
+if [[ -z "$CURL_USER_AGENT" ]]; then
     echo "$(tput bold)$(tput setaf 1)Das Skript wird lokal ausgeführt. Bitte folgenden Befehl verwenden: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash.$(tput sgr0)"
     exit 1
 fi
