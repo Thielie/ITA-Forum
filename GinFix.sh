@@ -15,6 +15,15 @@ if ! command -v curl &> /dev/null; then
     exit 1
 fi
 
+# Überprüfen, ob das Skript mit curl ausgeführt wird
+if [ "$(ps -o comm= $PPID)" != "curl" ]; then
+    echo -e "$(tput bold)$(tput setaf 1)Fehler: Das Skript sollte mit curl ausgeführt werden. Verwenden Sie den folgenden Befehl: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash.$(tput sgr0)"
+    exit 1
+fi
+
+# Ihr weiterer Code hier
+echo "Das Skript wird mit curl ausgeführt."
+
 echo -e "$(tput bold)$(tput setaf 1)Bitte stelle sicher, dass du das Skript mit curl und folgendem Befehl ausführst: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh$(tput sgr0)"
 
 # Benutzer nach Software-Installationen fragen
