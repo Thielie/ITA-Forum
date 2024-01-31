@@ -51,10 +51,10 @@ fi
 # Entferne nosnap.pref
 echo -e "${FAT}${YELLOW}Entferne die nosnap.pref Datei${NC}${NF}"
 if sudo rm /etc/apt/preferences.d/nosnap.pref; then
-    echo -e "${FAT}${GREEN}nosnap.pref wurde entfernt${NC}${NF}"
+    echo -e "${FAT}${GREEN}nosnap.pref wurde erfolgreich entfernt${NC}${NF}"
 else
-    echo -e "${FAT}${RED}nosnap.pref konnte nicht entfernt werden.${NC}${NF}"
-fi    
+    echo -e "${FAT}${RED}Fehler beim Entfernen von nosnap.pref.${NC}${NF}"
+fi  
 
 # Überprüfe, ob der Snap Store installiert ist
 echo -e "${FAT}${YELLOW}Überprüfe, ob der Snap Store installiert ist...${NC}${NF}"
