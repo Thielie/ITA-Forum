@@ -27,7 +27,7 @@ get_user_choice() {
 
 # Überprüfen, ob curl installiert ist
 if ! command -v curl &> /dev/null; then
-    echo "$(tput bold)$(tput setaf 1)Fehler: curl ist nicht installiert. Bitte installieren Sie curl, um fortzufahren. Verwenden Sie dafür folgenden Befehl: sudo apt-get install curl. Gib danach folgenden Begel ein: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
+    echo -e "$(tput bold)$(tput setaf 1)Fehler: curl ist nicht installiert. Bitte installieren Sie curl, um fortzufahren. Verwenden Sie dafür folgenden Befehl: sudo apt-get install curl. Gib danach folgenden Begel ein: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
     exit 1
 fi
 
