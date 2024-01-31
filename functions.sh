@@ -38,9 +38,9 @@ if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
     exit 1
 fi
 
-# Überprüfen, ob der Befehl 'curl' aufgerufen wurde
-if [[ "$(ps -o comm= $PPID)" != "curl" ]]; then
-    echo "$(tput bold)$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' von GitHub ausgeführt werden. Bitte folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
+# Überprüfen, ob die spezielle Umgebungsvariable gesetzt ist
+if [[ -z "$CURL_FROM_GITHUB" ]]; then
+    echo "$(tput bold)$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' von GitHub ausgeführt werden. Bitte folgenden Befehl benutzen: CURL_FROM_GITHUB=true curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
     exit 1
 fi
 
