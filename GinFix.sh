@@ -54,6 +54,7 @@ if sudo rm /etc/apt/preferences.d/nosnap.pref; then
     echo -e "${FAT}${GREEN}nosnap.pref wurde entfernt${NC}${NF}"
 else
     echo -e "${FAT}${RED}nosnap.pref konnte nicht entfernt werden.${NC}${NF}"
+fi    
 
 # Überprüfe, ob der Snap Store installiert ist
 echo -e "${FAT}${YELLOW}Überprüfe, ob der Snap Store installiert ist...${NC}${NF}"
