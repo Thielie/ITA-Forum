@@ -31,11 +31,14 @@ if ! command -v curl &> /dev/null; then
     exit 1
 fi
 
-# Überprüfen, ob das Skript mit curl ausgeführt wird
-if [[ -z "$BASH_VERSION" ]]; then
-    echo "$(tput bold)$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' ausgeführt werden. Bitte folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
-    exit 1
+# Überprüfen, ob das Skript mit curl von GitHub ausgeführt wird
+if [[ "$0" == "curl"* ]]; then
+    echo "Das Skript wird mit curl von GitHub ausgeführt."
 fi
+
+# Wenn das Skript nicht mit curl ausgeführt wird, einen Fehler ausgeben
+echo "$(tput bold)$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' von GitHub ausgeführt werden. Bitte folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
+exit 1
 
 blink_text() {
     local text="$1"
