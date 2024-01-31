@@ -32,11 +32,12 @@ if ! command -v curl &> /dev/null; then
 fi
 
 # Überprüfen, ob das Skript mit curl von GitHub ausgeführt wird
-referer=$(curl -s -I https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | grep -i '^Referer:' | cut -d' ' -f2-)
-
-# Vergleichen Sie den Referer mit der GitHub-Raw-URL
-if [[ "$referer" != "https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh" ]]; then
-    echo "$(tput bold)$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' von GitHub ausgeführt werden. Bitte folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
+if [[ -n "$CURL_FROM_GITHUB" ]]; then
+    # Das Skript wurde mit curl von GitHub ausgeführt
+    echo ""
+else
+    # Das Skript wurde nicht mit curl von GitHub ausgeführt
+    echo "$(tput bold)$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' von GitHub ausgeführt werden. Bitte folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | CURL_FROM_GITHUB=true bash$(tput sgr0)"
     exit 1
 fi
 
