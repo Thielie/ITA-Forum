@@ -48,6 +48,7 @@ else
     error_message "Systemaktualisierung"
 fi
 
+# Entferne nosnap.pref
 echo -e "${FAT}${YELLOW}Entferne die nosnap.pref Datei${NC}${NF}"
 if sudo rm /etc/apt/preferences.d/nosnap.pref; then
     echo -e "${FAT}${GREEN}nosnap.pref wurde entfernt${NC}${NF}"
