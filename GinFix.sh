@@ -348,6 +348,8 @@ echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!
 #Neustart nach Abschluss
 echo -e "${FAT}${YELLOW}Das System wird in 10 Sekunden neu gestartet.${NC}${NF}"
 
+blink_text "${FAT}Das System wird in 10 Sekunden neu gestartet.${NF}"
+
 sleep 10
 
 sudo reboot
