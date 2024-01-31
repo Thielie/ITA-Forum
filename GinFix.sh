@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "$(tput bold)$(tput setaf 1)Bitte stelle sicher, dass du das Skript mir curl und folgendem Befehl ausführst: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh$(tput sgr0)"
+
 # Importiere Farbdefinitionen
 source <(curl -s https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/color.sh)
 
