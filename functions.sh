@@ -27,7 +27,7 @@ get_user_choice() {
 
 # Überprüfen, ob curl installiert ist
 if ! command -v curl &> /dev/null; then
-    echo "$(tput bold)$(tput setaf 1)curl ist nicht installiert. Bitte installieren Sie curl, um fortzufahren. Benutze dafür folgenden Befehl: sudo apt-get install curl$(tput sgr0)"
+    echo "$(tput bold)$(tput setaf 1)curl ist nicht installiert. Bitte installieren Sie curl, um fortzufahren. Benutzen Sie dafür folgenden Befehl: sudo apt-get install curl$(tput sgr0)"
     exit 1
 fi
 
