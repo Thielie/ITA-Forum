@@ -32,7 +32,7 @@ if ! command -v curl &> /dev/null; then
 fi
 
 # Überprüfen, ob das Skript mit curl ausgeführt wird
-if [[ ! "${BASH_SOURCE[0]}" =~ "curl" ]]; then
+if [[ "$(ps -o command= -p $$)" != *curl* ]]; then
     echo "$(tput bold)$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' ausgeführt werden. Bitte folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
     exit 1
 fi
