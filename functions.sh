@@ -32,7 +32,7 @@ fi
 
 # Überprüfen, ob das Skript mit curl ausgeführt wird
 if [[ "$(basename "$0")" != "curl" ]]; then
-    echo "${FAT}${RED}Das Skript sollte mit dem Befehl 'curl' ausgeführt werden.${NC}${NF}"
+    echo "${FAT}${RED}Das Skript sollte mit dem Befehl 'curl' ausgeführt werden. Bitte Folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash${NC}${NF}"
     exit 1
 fi
 
