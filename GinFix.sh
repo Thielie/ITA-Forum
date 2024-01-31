@@ -9,6 +9,12 @@ source <(curl -s https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/functio
 # Importiere Konfigurationen
 source <(curl -s https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/config.sh)
 
+
+if ! command -v curl &> /dev/null; then
+    echo "${FAT}${RED}curl ist nicht installiert. Bitte installieren Sie curl, um fortzufahren. Benutze dafür folgenden Befehl: sudo apt-get install curl${NC}${NF}"
+    exit 1
+fi
+
 # Benutzer nach Software-Installationen fragen
 install_chromium=false
 if get_user_choice "${FAT}${BLUE}Möchtest du Chromium installieren? (j/n):${NF} "; then
