@@ -346,8 +346,6 @@ ln -s /var/www/html $HOME/Schreibtisch/html
 echo -e "${FAT}${GREEN}Die gesamte Installation wurde erfolgreich abgeschlossen!${NC}${NF}"
 
 #Neustart nach Abschluss
-echo -e "${FAT}${YELLOW}Das System wird in 10 Sekunden neu gestartet.${NC}${NF}"
-
 blink_text "${FAT}Das System wird in 10 Sekunden neu gestartet.${NF}"
 
 sleep 10
