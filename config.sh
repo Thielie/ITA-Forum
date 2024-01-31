@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# config.sh
+# config
 MYSQL_ROOT_PASSWORD="root"
 DB_USER="cit"
 DB_PASSWORD="cit"
