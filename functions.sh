@@ -31,13 +31,17 @@ if ! command -v curl &> /dev/null; then
     exit 1
 fi
 
-# Warnung anzeigen, wenn das Skript nicht mit curl von GitHub ausgeführt wird
-if [[ "${BASH_SOURCE[0]}" != "${0}" || -n "$1" && "$1" == "-L" && "$2" == "https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh" ]]; then
-    # Das Skript wird mit curl von GitHub ausgeführt
-    echo "Skript wird mit curl von GitHub ausgeführt."
-else
-    # Das Skript wird nicht mit curl von GitHub ausgeführt
-    echo "$(tput bold)$(tput setaf 3)WARNUNG: Das Skript sollte idealerweise mit dem Befehl 'curl' von GitHub ausgeführt werden.$(tput sgr0)"
+# Überprüfen, ob das Skript mit curl von GitHub ausgeführt wird
+if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
+    # Das Skript wird nicht direkt ausgeführt (z.B. mit source oder als Teil eines anderen Skripts)
+    echo "$(tput bold)$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' von GitHub ausgeführt werden. Bitte folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
+    exit 1
+fi
+
+# Überprüfen, ob der Befehl 'curl' aufgerufen wurde
+if [[ "$(ps -o comm= $PPID)" != "curl" ]]; then
+    echo "$(tput bold)$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' von GitHub ausgeführt werden. Bitte folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
+    exit 1
 fi
 
 blink_text() {
