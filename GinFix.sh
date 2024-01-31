@@ -16,8 +16,14 @@ if ! command -v curl &> /dev/null; then
 fi
 
 # Überprüfen, ob das Skript mit curl ausgeführt wird
-if [ "$(ps -o comm= $PPID)" != "curl" ]; then
-    echo -e "$(tput bold)$(tput setaf 1)Fehler: Das Skript sollte mit curl ausgeführt werden. Verwenden Sie den folgenden Befehl: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash.$(tput sgr0)"
+if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
+    echo -e "$(tput bold)$(tput setaf 1)Fehler: Das Skript sollte nicht lokal, sondern mit curl ausgeführt werden. Verwenden Sie den folgenden Befehl: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash.$(tput sgr0)"
+    exit 1
+fi
+
+# Überprüfen, ob der Befehl 'curl' aufgerufen wurde
+if [[ "$(ps -o comm= $PPID)" != "curl" ]]; then
+    echo -e "$(tput bold)$(tput setaf 1)Fehler: Das Skript sollte nicht lokal, sondern mit curl ausgeführt werden. Verwenden Sie den folgenden Befehl: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash.$(tput sgr0)"
     exit 1
 fi
 
