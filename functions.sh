@@ -32,7 +32,7 @@ if ! command -v curl &> /dev/null; then
 fi
 
 # Überprüfen, ob das Skript mit curl von GitHub ausgeführt wird
-if [[ -n "$BASH_VERSION" && -n "$BASH_SOURCE" && "${BASH_SOURCE[0]}" != "${0}" ]]; then
+if [[ "${BASH_SOURCE[0]}" != "${0}" || -n "$1" && "$1" == "-L" && "$2" == "https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh" ]]; then
     # Das Skript wird mit curl von GitHub ausgeführt
     echo "Das Skript wird mit curl von GitHub ausgeführt."
 else
