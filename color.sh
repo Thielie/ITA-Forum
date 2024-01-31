@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# colors.sh
+#Farbdefinition
 FAT="$(tput bold)"
 BLUE="$(tput setaf 12)"
 GREEN='\033[0;32m'
