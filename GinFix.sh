@@ -15,6 +15,12 @@ if ! command -v curl &> /dev/null; then
     exit 1
 fi
 
+# Überprüfen, ob das Skript mit curl ausgeführt wird
+if [[ "$(basename "$0")" != "curl" ]]; then
+    echo "${FAT}${RED}Das Skript sollte mit dem Befehl 'curl' ausgeführt werden.${NC}${NF}"
+    exit 1
+fi
+
 # Benutzer nach Software-Installationen fragen
 install_chromium=false
 if get_user_choice "${FAT}${BLUE}Möchtest du Chromium installieren? (j/n):${NF} "; then
