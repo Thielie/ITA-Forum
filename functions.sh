@@ -26,13 +26,13 @@ get_user_choice() {
 }
 
 if ! command -v curl &> /dev/null; then
-    echo "${FAT}${RED}curl ist nicht installiert. Bitte installieren Sie curl, um fortzufahren. Benutze dafür folgenden Befehl: sudo apt-get install curl${NC}${NF}"
+    echo "${FAT}$(tput setaf 1)curl ist nicht installiert. Bitte installieren Sie curl, um fortzufahren. Benutze dafür folgenden Befehl: sudo apt-get install curl$(tput sgr0)"
     exit 1
 fi
 
 # Überprüfen, ob das Skript mit curl ausgeführt wird
 if [[ "$(basename "$0")" != "curl" ]]; then
-    echo "${FAT}${RED}Das Skript sollte mit dem Befehl 'curl' ausgeführt werden. Bitte Folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash${NC}${NF}"
+    echo "${FAT}$(tput setaf 1)Das Skript sollte mit dem Befehl 'curl' ausgeführt werden. Bitte Folgenden Befehl benutzen: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh | bash$(tput sgr0)"
     exit 1
 fi
 
