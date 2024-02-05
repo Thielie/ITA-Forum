@@ -47,14 +47,6 @@ then
 else
     error_message "Systemaktualisierung"
 fi
-# Update von Ubuntu
-echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}${NF}"
-if sudo apt update && sudo apt upgrade -y; 
-then
-    echo -e "${FAT}${GREEN}Das System wurde erfolgreich aktualisiert!${NC}${NF}"
-else
-    error_message "Systemaktualisierung"
-fi
 
 # Überprüfen, ob die Datei existiert
 if [ -e "$FILE" ]; then
