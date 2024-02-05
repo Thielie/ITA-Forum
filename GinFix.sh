@@ -245,18 +245,6 @@ else
     error_message "Apache-Server-Neustart nach phpMyAdmin-Konfiguration"
 fi
 
-# WordPress Installation
-# Datenbankkonfiguration
-DB_NAME="wordpress"
-DB_HOST="localhost"
-
-# WordPress Konfiguration
-html="/var/www/html"
-WP_DIR="/var/www/html/wp"  # Hier wird der Ordner "wp" erstellt
-WP_URL="http://localhost/wp"
-WP_TITLE="My WordPress Site"
-
-
 # WordPress herunterladen und entpacken
 echo -e "${FAT}${YELLOW}WordPress wird heruntergeladen und entpackt...${NC}$(tput sgr0)"
 if wget -c https://wordpress.org/latest.tar.gz && tar -xzvf latest.tar.gz -C /tmp/ && sudo mkdir -p $WP_DIR && sudo cp -R /tmp/wordpress/* $WP_DIR && sudo chown -R www-data:www-data $WP_DIR && sudo chmod -R 777 $WP_DIR && rm latest.tar.gz; then
