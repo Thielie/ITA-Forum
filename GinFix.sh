@@ -296,15 +296,15 @@ else
     error_message "MySQL-Benutzer 'wordpress'"
 fi
 
-# WordPress Installation mit manuell erstellter wp-config.php
-echo -e "${FAT}${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}${NF}"
-
 # Manuell wp-config.php erstellen
 sudo cp $WP_DIR/wp-config-sample.php $WP_DIR/wp-config.php
 sudo sed -i "s/database_name_here/$DB_NAME/" $WP_DIR/wp-config.php
 sudo sed -i "s/username_here/$WP_DB_USER/" $WP_DIR/wp-config.php
 sudo sed -i "s/password_here/$WP_DB_PASSWORD/" $WP_DIR/wp-config.php
 sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
+
+# WordPress Installation
+echo -e "${FAT}${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}${NF}"
 
 # WordPress-Datenbank erstellen
 if sudo -u www-data wp core install \
