@@ -30,7 +30,7 @@ if get_user_choice "${FAT}${BLUE}Möchtest du Chromium installieren? (j/n):${NF}
 fi
 
 install_vscode=false
-if get_user_choice "${FAT}${BLUE}Möchtest du Visual Studio Code installieren? (j/n):${NF}) "; then
+if get_user_choice "${FAT}${BLUE}Möchtest du Visual Studio Code installieren? (j/n):${NF} "; then
     install_vscode=true
 fi
 
