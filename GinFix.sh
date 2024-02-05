@@ -23,32 +23,21 @@ fi
 
 echo -e "$(tput bold)$(tput setaf 1)Bitte stelle sicher, dass du das Skript mit curl und folgendem Befehl ausführst: curl -L https://raw.githubusercontent.com/Thielie/ITA-Forum/MW3/GinFix.sh$(tput sgr0)"
 
-# Setze die Standardwerte für die Benutzerantworten, falls sie nicht gesetzt sind
-install_chromium=${install_chromium:-false}
-install_vscode=${install_vscode:-false}
-install_geany=${install_geany:-false}
-
 # Benutzer nach Software-Installationen fragen
-if [ "$install_chromium" == false ]; then
-    if get_user_choice "${FAT}${BLUE}Möchtest du Chromium installieren? (j/n):${NF} "; then
-        install_chromium=true
-    fi
+install_chromium=false
+if get_user_choice "${FAT}${BLUE}Möchtest du Chromium installieren? (j/n):${NF} "; then
+    install_chromium=true
 fi
 
-if [ "$install_vscode" == false ]; then
-    if get_user_choice "${FAT}${BLUE}Möchtest du Visual Studio Code installieren? (j/n):${NF}) "; then
-        install_vscode=true
-    fi
+install_vscode=false
+if get_user_choice "${FAT}${BLUE}Möchtest du Visual Studio Code installieren? (j/n):${NF}) "; then
+    install_vscode=true
 fi
 
-if [ "$install_geany" == false ]; then
-    if get_user_choice "${FAT}${BLUE}Möchtest du Geany installieren? (j/n):${NF} "; then
-        install_geany=true
-    fi
+install_geany=false
+if get_user_choice "${FAT}${BLUE}Möchtest du Geany installieren? (j/n):${NF} "; then
+    install_geany=true
 fi
-
-# Speichere die aktuellen Benutzerantworten in der Konfigurationsdatei
-save_config
 
 # Update von Ubuntu
 echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}${NF}"
@@ -58,7 +47,14 @@ then
 else
     error_message "Systemaktualisierung"
 fi
-
+# Update von Ubuntu
+echo -e "${FAT}${YELLOW}Aktualisiere das System...${NC}${NF}"
+if sudo apt update && sudo apt upgrade -y; 
+then
+    echo -e "${FAT}${GREEN}Das System wurde erfolgreich aktualisiert!${NC}${NF}"
+else
+    error_message "Systemaktualisierung"
+fi
 
 # Überprüfen, ob die Datei existiert
 if [ -e "$FILE" ]; then
@@ -74,12 +70,8 @@ else
     echo -e "${FAT}${YELLOW}Die nosnap.pref Datei existiert nicht. Schritt wird übersprungen.${NC}${NF}"
 fi 
 
-# Überprüfe, ob die Konfigurationsdatei vorhanden ist und lade die Einstellungen
-if [ -e "$CONFIG_FILE" ]; then
-    source "$CONFIG_FILE"
-fi
-
 # Überprüfe, ob der Snap Store installiert ist
+echo -e "${FAT}${YELLOW}Überprüfe, ob der Snap Store installiert ist...${NC}${NF}"
 if snap list snap-store &> /dev/null; then
     echo -e "${FAT}${GREEN}Snap Store ist bereits installiert. Überspringe die Installation.${NC}${NF}"
 else
@@ -90,7 +82,6 @@ else
         echo "${FAT}$(tput setaf 2)Snap Daemon erfolgreich installiert.${NF}"
     else
         echo -e "${FAT}${RED}Fehler beim Installieren des Snap Daemon!${NC}${NF}"
-        exit 1
     fi
 
     # Starte den Snap Daemon
@@ -98,18 +89,14 @@ else
         echo "${FAT}$(tput setaf 2)Snap Daemon erfolgreich gestartet.${NF}"
     else
         echo -e "${FAT}${RED}Fehler beim Starten des Snap Daemon!${NC}${NF}"
-        exit 1
     fi
 
     # Installiere den Snap Store
     if sudo snap install snap-store; then
-        echo "${FAT}$(tput setaf 2)Snap Store erfolgreich installiert. 10-Sekunden-Timer gestartet!${NF}"
-        save_config
-        sleep 10
-        exec "$0" "$@"  # Starte das Skript neu
+        echo "${FAT}$(tput setaf 2)Snap Store erfolgreich installiert. 10 Sekunden Timer gestartet!${NF}"
+        start_timer &
     else
         echo -e "${FAT}${RED}Fehler beim Installieren des Snap Store!${NC}${NF}"
-        exit 1
     fi
 fi
 
