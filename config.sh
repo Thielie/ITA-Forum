@@ -2,6 +2,7 @@
 
 # config
 MYSQL_ROOT_PASSWORD="root"
+FILE="/etc/apt/preferences.d/nosnap.pref"
 DB_USER="cit"
 DB_PASSWORD="cit"
 WP_ADMIN_USER="admin"
