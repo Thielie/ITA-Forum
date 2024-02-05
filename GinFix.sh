@@ -72,21 +72,21 @@ else
 
     # Installiere den Snap Daemon
     if sudo apt install snapd -y; then
-        echo "${FAT}${GREEN}Snap Daemon erfolgreich installiert.${NC}${NF}"
+        echo "${FAT}$(tput setaf 2)Snap Daemon erfolgreich installiert.${NF}"
     else
         echo -e "${FAT}${RED}Fehler beim Installieren des Snap Daemon!${NC}${NF}"
     fi
 
     # Starte den Snap Daemon
     if sudo systemctl start snapd; then
-        echo "${FAT}${GREEN}Snap Daemon erfolgreich gestartet.${NC}${NF}"
+        echo "${FAT}$(tput setaf 2)Snap Daemon erfolgreich gestartet.${NF}"
     else
         echo -e "${FAT}${RED}Fehler beim Starten des Snap Daemon!${NC}${NF}"
     fi
 
     # Installiere den Snap Store
     if sudo snap install snap-store; then
-        echo "${FAT}${GREEN}Snap Store erfolgreich installiert.${NC}${NF}"
+        echo "${FAT}$(tput setaf 2)Snap Store erfolgreich installiert.${NF}"
     else
         echo -e "${FAT}${RED}Fehler beim Installieren des Snap Store!${NC}${NF}"
     fi
