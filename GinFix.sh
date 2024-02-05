@@ -48,13 +48,20 @@ else
     error_message "Systemaktualisierung"
 fi
 
-# Entferne nosnap.pref
-echo -e "${FAT}${YELLOW}Entferne die nosnap.pref Datei${NC}${NF}"
-if sudo rm /etc/apt/preferences.d/nosnap.pref; then
-    echo -e "${FAT}${GREEN}nosnap.pref wurde erfolgreich entfernt${NC}${NF}"
+
+# Überprüfen, ob die Datei existiert
+if [ -e "$FILE" ]; then
+    # Datei existiert, lösche sie
+    echo -e "${FAT}${YELLOW}Entferne die nosnap.pref Datei${NC}${NF}"
+    if sudo rm "$FILE"; then
+        echo -e "${FAT}${GREEN}nosnap.pref wurde erfolgreich entfernt${NC}${NF}"
+    else
+        echo -e "${FAT}${RED}Fehler beim Entfernen von nosnap.pref.${NC}${NF}"
+    fi
 else
-    echo -e "${FAT}${RED}Fehler beim Entfernen von nosnap.pref.${NC}${NF}"
-fi  
+    # Datei existiert nicht, überspringe den Schritt
+    echo -e "${FAT}${YELLOW}Die nosnap.pref Datei existiert nicht. Schritt wird übersprungen.${NC}${NF}"
+fi 
 
 # Überprüfe, ob der Snap Store installiert ist
 echo -e "${FAT}${YELLOW}Überprüfe, ob der Snap Store installiert ist...${NC}${NF}"
