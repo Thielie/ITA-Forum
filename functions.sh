@@ -16,6 +16,7 @@ start_timer() {
     echo -e "${FAT}${GREEN}Timer abgelaufen!${NC}${NF}"
 }
 
+
 get_user_choice() {
     local choice
     while true; do
@@ -32,6 +33,12 @@ get_user_choice() {
     done
 }
 
+# Funktion zum Speichern der Benutzerantworten in einer Konfigurationsdatei
+save_config() {
+    echo "install_chromium=$install_chromium" > "$CONFIG_FILE"
+    echo "install_vscode=$install_vscode" >> "$CONFIG_FILE"
+    echo "install_geany=$install_geany" >> "$CONFIG_FILE"
+}
 
 blink_text() {
     local text="$1"
