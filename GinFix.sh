@@ -338,6 +338,13 @@ echo -e "${FAT}${YELLOW}Berechtigungen für das HTML-Verzeichnis aktualisieren..
 # Ändere den Besitzer des HTML-Verzeichnisses zu www-data
 sudo chown :www-data $html
 
+# Füge den Benutzer zur www-data Gruppe hinzu
+if sudo usermod -aG www-data $(whoami); then
+    echo -e "${FAT}${GREEN}Benutzer erfolgreich zur www-data Gruppe hinzugefügt!${NC}${NF}"
+else
+    echo -e "${FAT}${RED}Fehler beim Hinzufügen des Benutzers zur www-data Gruppe!${NC}${NF}"
+fi
+
 # Setze Lese-, Schreib-, Ausführungs- und Erstellungsrechte für den Besitzer und die Gruppe www-data, Sticky Bit hinzufügen
 if sudo chmod 1770 $html; then
     echo -e "${FAT}${GREEN}Berechtigungen erfolgreich aktualisiert!${NC}${NF}"
