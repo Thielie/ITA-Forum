@@ -86,7 +86,6 @@ else
     # Installiere den Snap Store
     if sudo snap install snap-store; then
         echo "${FAT}$(tput setaf 2)Snap Store erfolgreich installiert. 10 Sekunden Timer gestartet!${NF}"
-        start_timer &
     else
         echo -e "${FAT}${RED}Fehler beim Installieren des Snap Store!${NC}${NF}"
     fi
