@@ -9,14 +9,6 @@ error_message() {
     echo -e "${FAT}${RED}Fehler bei der Installation von $1.${NC}${NF})"
 }
 
-# Funktion für den 10-Sekunden-Timer
-start_timer() {
-    echo -e "${FAT}${YELLOW}Timer gestartet. Warte 10 Sekunden...${NC}${NF}"
-    sleep 10
-    echo -e "${FAT}${GREEN}Timer abgelaufen!${NC}${NF}"
-}
-
-
 get_user_choice() {
     local choice
     while true; do
