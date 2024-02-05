@@ -92,6 +92,8 @@ else
         echo -e "${FAT}${RED}Fehler beim Installieren des Snap Store!${NC}${NF}"
     fi
 
+echo -e "${FAT}$(tput setaf 2)Das Skript wird weiter ausgeführt.${NF}"
+
 # Installationen basierend auf Benutzerantworten
 if $install_chromium; then
     echo -e "${FAT}${YELLOW}Installiere Chromium...${NC}${NF}"
