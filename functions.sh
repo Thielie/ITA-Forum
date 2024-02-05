@@ -11,7 +11,7 @@ error_message() {
 
 # Funktion für den 10-Sekunden-Timer
 start_timer() {
-    echo -e "${FAT}${YELLOQ}Timer gestartet. Warte 10 Sekunden...${NC}${NF}"
+    echo -e "${FAT}${YELLOW}Timer gestartet. Warte 10 Sekunden...${NC}${NF}"
     sleep 10
     echo -e "${FAT}${GREEN}Timer abgelaufen!${NC}${NF}"
 }
