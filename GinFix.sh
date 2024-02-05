@@ -91,6 +91,7 @@ else
     else
         echo -e "${FAT}${RED}Fehler beim Installieren des Snap Store!${NC}${NF}"
     fi
+fi
 
 echo -e "${FAT}$(tput setaf 2)Das Skript wird weiter ausgeführt.${NF}"
 
