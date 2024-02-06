@@ -300,6 +300,16 @@ sudo sed -i "s/username_here/$WP_DB_USER/" $WP_DIR/wp-config.php
 sudo sed -i "s/password_here/$WP_DB_PASSWORD/" $WP_DIR/wp-config.php
 sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
 
+# Überprüfen, ob die Zeilen bereits in der Datei vorhanden sind
+if grep -q "define( 'WP_DEBUG', true );" "$config_file"; then
+    echo "${FAT}${YELLOE}Die Konfigurationszeilen sind bereits in der Datei vorhanden. Überspringe...${NC}${NF}"
+fi
+
+# Ersetze die Zeile durch die neuen Zeilen
+sed -i "s|define( 'WP_DEBUG', true );|define( 'WP_DEBUG', true );\ndefine( 'WP_DEBUG_LOG', true );\ndefine( 'WP_DEBUG_DISPLAY', false );|" "$config_file"
+
+echo "${FAT}${GREEN}Die Zeile wurde erfolgreich durch die neuen Zeilen ersetzt.${NC}${NF}"
+
 # WordPress Installation
 echo -e "${FAT}${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NC}${NF}"
 
