@@ -301,8 +301,8 @@ sudo sed -i "s/password_here/$WP_DB_PASSWORD/" $WP_DIR/wp-config.php
 sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
 
 # Überprüfen, ob die Zeilen bereits in der Datei vorhanden sind
-if grep -q "define( 'WP_DEBUG', false );" "$config_file"; then
-    echo "${FAT}${YELLOE}Die Konfigurationszeilen sind bereits in der Datei vorhanden. Überspringe...${NC}${NF}"
+if grep -q "define( 'WP_DEBUG', false );" "/var/www/html/wp/wp-config.php"; then
+    echo "${FAT}${YELLOW}Die Konfigurationszeilen sind bereits in der Datei vorhanden. Überspringe...${NC}${NF}"
 fi
 
 # Ersetze die Zeile durch die neuen Zeilen
