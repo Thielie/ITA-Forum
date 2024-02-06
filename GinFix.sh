@@ -302,13 +302,13 @@ sudo sed -i "s/localhost/$DB_HOST/" $WP_DIR/wp-config.php
 
 # Überprüfen, ob die Zeilen bereits in der Datei vorhanden sind
 if grep -q "define( 'WP_DEBUG', false );" "/var/www/html/wp/wp-config.php"; then
-    echo "${FAT}${YELLOW}Die Konfigurationszeilen sind bereits in der Datei vorhanden. Überspringe...${NF}"
+    echo "${FAT}${YELLOW}Die Konfigurationszeilen werden ersetzt${NF}"
 fi
 
 # Ersetze die Zeile durch die neuen Zeilen
 sed -i "s|define( 'WP_DEBUG', false );|define( 'WP_DEBUG', true );\ndefine( 'WP_DEBUG_LOG', true );\ndefine( 'WP_DEBUG_DISPLAY', false );|" "/var/www/html/wp/wp-config.php"
 
-echo "${FAT}${GREEN}Die Zeile wurde erfolgreich durch die neuen Zeilen ersetzt.${NF}"
+echo "${FAT}${GREEN}Die Konfigurationszeilen wurden erfolgreich durch die neuen Zeilen ersetzt.${NF}"
 
 # WordPress Installation
 echo -e "${FAT}${YELLOW}WordPress wird in der Datenbank '$DB_NAME' installiert...${NF}"
