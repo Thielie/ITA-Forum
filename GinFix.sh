@@ -352,8 +352,6 @@ else
     echo -e "${FAT}${RED}Fehler beim Aktualisieren der Berechtigungen!${NC}${NF}"
 fi
 
-sudo chmod 444 /var/www/html/error.log
-
 #Link zum html Ordner auf den Desktop
 ln -s /var/www/html $HOME/Schreibtisch/html
 
